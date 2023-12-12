@@ -1,4 +1,4 @@
-Hello dear follower, 
+Hello, 
 
 you found my secret stash...
 
