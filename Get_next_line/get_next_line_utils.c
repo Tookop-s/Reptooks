@@ -6,15 +6,27 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:34 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/15 12:51:24 by anferre          ###   ########.fr       */
+/*   Updated: 2023/12/15 17:30:06 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line.h"
+#include "get_next_line.h"
+
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		i++;
+	}
+	return (i);
+}
 
 int	ft_lst_size(t_list *lst)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
 	if (!lst)
@@ -80,7 +92,7 @@ void	*ft_free(t_list **lst)
 	t_list	*next;
 
 	if (!*lst)
-		return(NULL);
+		return (NULL);
 	current = *lst;
 	while (current != NULL)
 	{
@@ -92,4 +104,3 @@ void	*ft_free(t_list **lst)
 	*lst = NULL;
 	return (lst);
 }
-
