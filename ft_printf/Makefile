@@ -1,42 +1,44 @@
-NAME = libftprintf.a
-LIBFT_DIR = libft
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/20 10:47:22 by anferre           #+#    #+#              #
+#    Updated: 2023/12/20 12:36:28 by anferre          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCS = printf_utils.c printf_types.c printf.c
+NAME = libftprintf.a
+
+SRCS = ft_printf_utils.c ft_printf_types.c ft_printf.c 
 
 OBJS = $(SRCS:.c=.o)
 
-CC = cc
+CC = cc -g
 
-AR = ar rcs
+AR = ar rc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror 
 
+$(NAME): $(OBJS)
+	@make -C ./libft
+# $(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(AR) $@ $^
+	chmod +x $(NAME)
 
 all: $(NAME)
 
-$(NAME): libft $(OBJS)
-	$(AR) $@ $^
-# $@ refers to the target 'NAME', $^ refers to all of the prerequisites 'OBJS'
-
-.c.o:
-	$(CC)  $(CFLAGS) -c -o $@ $< 
-# -c: Instructs the compiler to generate object files without linking.
-# $<: Automatic variable representing the first prerequisite (the source file, in this case).
-# -o $@: Specifies the output file (the target), in this case, the object file being built.
-# patern rule
-
 clean:
-	@make -C $(LIBFT_DIR) clean
+	@make clean -C ./libft
 	rm -f $(OBJS)
 
 fclean: clean
-	@make -C $(LIBFT_DIR) fclean
+	@make fclean -C ./libft
 	rm -f $(NAME)
 
 re: fclean all
 
-libft:
-	@make -C $(LIBFT_DIR)
 
-
-.PHONY: clean fclean all re libft
+.PHONY: clean fclean all re

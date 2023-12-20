@@ -14,7 +14,7 @@ OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 CC = cc
 
-AR = ar rcs
+AR = ar rc
 
 CFLAGS = -Wall -Wextra -Werror -g
 

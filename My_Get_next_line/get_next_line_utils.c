@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:34 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/18 15:11:46 by anferre          ###   ########.fr       */
+/*   Updated: 2023/12/18 17:10:39 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_strdup(char *s)
 	i = 0;
 	str = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!str)
-		return (free(s), NULL);
+		return (NULL);
 	while (s[i])
 	{
 		str[i] = s[i];

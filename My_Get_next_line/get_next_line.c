@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:31 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/18 15:23:56 by anferre          ###   ########.fr       */
+/*   Updated: 2023/12/18 17:09:51 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	ft_buff_to_lst(t_list **lst, int fd)
 {
 	int		nb_char;
 	char	*buff;
+	t_list	*temp;
 
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
@@ -42,7 +43,9 @@ int	ft_buff_to_lst(t_list **lst, int fd)
 	buff[nb_char] = '\0';
 	if (nb_char != 0)
 	{
-		ft_lstnew_back(buff, lst);
+		temp = ft_lstnew_back(buff, lst);
+		if (temp == NULL)
+			return (0);
 		free(buff);
 		return (nb_char);
 	}

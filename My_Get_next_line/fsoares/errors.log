@@ -1,0 +1,8 @@
+[1;31mError[0m in test 4: [0;36mget_next_line(5: "1char.txt"):
+[0;35mmalloc [0mprotection check for 2th malloc:
+[0m: 
+Memory leak: 0x55cff20 - 1000001 bytes
+You failed to free the memory allocated at:
+[1;31mError[0m in test 4: [0;36mget_next_line(5: "1char.txt"):
+[0;35mmalloc [0mprotection check for 3th malloc:
+[0m: [1;31mSegmentation fault![0m
