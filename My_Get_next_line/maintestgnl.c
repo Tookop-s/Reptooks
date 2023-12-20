@@ -1,16 +1,107 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   maintestgnl.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 10:36:31 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/20 15:57:32 by anferre          ###   ########.fr       */
+/*   Created: 2023/12/20 15:54:14 by anferre           #+#    #+#             */
+/*   Updated: 2023/12/20 15:54:17 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
+int	ft_lst_size(t_list *lst)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (!lst)
+		return (1);
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	if (i == 0)
+		i += 1;
+	return (i);
+}
+
+char	*ft_strdup(char *s)
+{
+	unsigned int	i;
+	char			*str;
+
+	i = 0;
+	str = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+void	*ft_lstnew_back(char *str, t_list **lst)
+{
+	t_list	*newlst;
+	t_list	*temp;
+
+	newlst = malloc(sizeof(t_list));
+	if (!newlst)
+		return (ft_free(lst), NULL);
+	if (*lst != NULL)
+	{
+		temp = *lst;
+		while ((*lst)->next != NULL)
+			*lst = (*lst)->next;
+		(*lst)->next = newlst;
+		*lst = temp;
+	}
+	else
+		*lst = newlst;
+	newlst->str = ft_strdup(str);
+	newlst->next = NULL;
+	if (!newlst->str)
+		return (ft_free(lst), NULL);
+	return (*lst);
+}
+
+void	*ft_free(t_list **lst)
+{
+	t_list	*current;
+	t_list	*next;
+
+	if (!*lst)
+		return (NULL);
+	current = *lst;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->str);
+		free(current);
+		current = next;
+	}
+	*lst = NULL;
+	return (lst);
+}
 
 int	ft_check_index_new_line(t_list *lst)
 {
@@ -102,7 +193,7 @@ t_list	*ft_copy_del_lst(t_list **lst, int nb_char)
 		*lst = temp;
 		ft_free(lst);
 		if (!newlst->str)
-			return (free(newlst), NULL);
+			return (NULL);
 		return (newlst);
 	}
 	else
@@ -139,23 +230,22 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// #include <stdio.h>
-// #include <fcntl.h>
+#include <stdio.h>
+#include <fcntl.h>
 
-// int main()
-// {
-// 	const char *path = "/home/anferre/sgoinfre/goinfre/Perso/
-//anferre/MyGit/Get_next_line/test.txt";
-// 	int fd;
-// 	char	*str = "start";
+int main()
+{
+	const char *path = "/home/anferre/sgoinfre/goinfre/Perso/anferre/MyGit/My_Get_next_line/test.txt";
+	int fd;             
+	char	*str = "start";
 
-// 	fd=open(path, O_RDONLY);
-// 	while (str != NULL)
-// 	{
-// 		str = get_next_line(fd);
-// 		printf("LINE = $%s$ \n", str);
-// 		free (str);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	fd=open(path, O_RDONLY);
+	while (str != NULL)
+	{
+		str = get_next_line(fd);
+		printf("LINE = $%s$ \n", str);
+		free (str);
+	}
+	printf("%d", close(fd));
+	return (0);
+}

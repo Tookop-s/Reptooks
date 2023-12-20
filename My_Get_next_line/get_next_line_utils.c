@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:34 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/18 17:10:39 by anferre          ###   ########.fr       */
+/*   Updated: 2023/12/20 15:54:48 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	*ft_lstnew_back(char *str, t_list **lst)
 		*lst = newlst;
 	newlst->str = ft_strdup(str);
 	newlst->next = NULL;
+	if (!newlst->str)
+		return (ft_free(lst), NULL);
 	return (*lst);
 }
 
