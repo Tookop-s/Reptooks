@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:54:14 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/20 15:54:17 by anferre          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:30:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	ft_buff_to_lst(t_list **lst, int fd)
 
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
-		return (ft_free(lst), 0);
+		return (ft_free(lst), -1);
 	nb_char = read(fd, buff, BUFFER_SIZE);
 	buff[nb_char] = '\0';
 	if (nb_char != 0)
@@ -137,7 +137,7 @@ int	ft_buff_to_lst(t_list **lst, int fd)
 		temp = ft_lstnew_back(buff, lst);
 		free(buff);
 		if (temp == NULL)
-			return (0);
+			return (-1);
 		return (nb_char);
 	}
 	else
@@ -193,7 +193,7 @@ t_list	*ft_copy_del_lst(t_list **lst, int nb_char)
 		*lst = temp;
 		ft_free(lst);
 		if (!newlst->str)
-			return (NULL);
+			return (free(newlst), NULL);
 		return (newlst);
 	}
 	else
@@ -212,7 +212,7 @@ char	*get_next_line(int fd)
 	if (!lst)
 	{
 		nb_char = ft_buff_to_lst(&lst, fd);
-		if (nb_char == 0)
+		if (nb_char < 0)
 			return (NULL);
 	}
 	else
@@ -221,6 +221,8 @@ char	*get_next_line(int fd)
 	while (nl_index < 0 && nb_char != 0)
 	{
 		nb_char = ft_buff_to_lst(&lst, fd);
+		if (nb_char < 0)
+			return (NULL);
 		nl_index = ft_check_index_new_line(lst);
 	}
 	line = ft_fill_line(lst);

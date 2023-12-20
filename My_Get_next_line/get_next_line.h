@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:38:44 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/15 16:32:19 by anferre          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:12:22 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 16
+#  define BUFFER_SIZE 1
 # endif
 
 # include <stdlib.h>

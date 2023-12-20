@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:31 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/20 15:57:32 by anferre          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:27:49 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ char	*get_next_line(int fd)
 	while (nl_index < 0 && nb_char != 0)
 	{
 		nb_char = ft_buff_to_lst(&lst, fd);
+		if (nb_char == 0)
+			return (NULL);
 		nl_index = ft_check_index_new_line(lst);
 	}
 	line = ft_fill_line(lst);
