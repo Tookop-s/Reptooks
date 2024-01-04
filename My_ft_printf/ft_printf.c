@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 15:34:36 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/03 17:21:33 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/04 12:49:06 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,11 @@ void	ft_check(char c, va_list args, int *ct)
 		ft_percent(ct);
 }
 
-int	ft_printf(const char *s, ...)
+void	ft_browse(const char *s, va_list args, int *ct)
 {
-	int		i;
-	int		count;
-	int		*ct;
-	va_list	args;
+	unsigned int	i;
 
 	i = 0;
-	count = 0;
-	va_start(args, s);
-	ct = &count;
 	while (s[i])
 	{
 		if (s[i] == '%' && s[i + 1] != '\0')
@@ -56,11 +50,24 @@ int	ft_printf(const char *s, ...)
 		{
 			ft_putchar(s[i]);
 			i++;
-			count++;
+			(*ct)++;
 		}
 	}
-	va_end(args);
-	return (*ct);
+}
+
+int	ft_printf(const char *s, ...)
+{
+	int		count;
+	int		*ct;
+	va_list	args;
+
+	count = 0;
+	if (!s)
+		return (0);
+	va_start(args, s);
+	ct = &count;
+	ft_browse(s, args, ct);
+	return (va_end(args), *ct);
 }
 
 // #include <stdio.h>
