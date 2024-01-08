@@ -6,39 +6,45 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:34 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/20 15:54:48 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/08 16:18:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strindex(const char *s, char c)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] && s[i] != c)
 	{
 		i++;
 	}
+	if (s[i] == '\n' && c =='\n')
+		i++;
 	return (i);
 }
 
-int	ft_lst_size(t_list *lst)
+char	*ft_lst_to_line(char *line, t_list *lst)
 {
 	unsigned int	i;
+	unsigned int	k;
 
-	i = 0;
-	if (!lst)
-		return (1);
+	k = 0;
 	while (lst)
 	{
+		i = 0;
+		while (lst->str[i] != '\0')
+		{
+			if (lst->str[i] == '\n')
+				return (line[k++] = '\n', line[k++] = '\0', line);
+			line[k++] = lst->str[i++];
+		}
 		lst = lst->next;
-		i++;
 	}
-	if (i == 0)
-		i += 1;
-	return (i);
+	line[k++] = '\0';
+	return (line);
 }
 
 char	*ft_strdup(char *s)
@@ -47,7 +53,7 @@ char	*ft_strdup(char *s)
 	char			*str;
 
 	i = 0;
-	str = malloc((ft_strlen(s) + 1) * sizeof(char));
+	str = malloc((ft_strindex(s, '\0') + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	while (s[i])
@@ -90,7 +96,7 @@ void	*ft_free(t_list **lst)
 	t_list	*next;
 
 	if (!*lst)
-		return (NULL);
+		return (*lst = NULL, NULL);
 	current = *lst;
 	while (current != NULL)
 	{
@@ -100,5 +106,6 @@ void	*ft_free(t_list **lst)
 		current = next;
 	}
 	*lst = NULL;
+	lst = NULL;
 	return (lst);
 }

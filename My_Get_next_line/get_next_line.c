@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:31 by anferre           #+#    #+#             */
-/*   Updated: 2023/12/20 16:27:49 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/08 17:24:48 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,48 +38,47 @@ int	ft_buff_to_lst(t_list **lst, int fd)
 
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
-		return (ft_free(lst), 0);
+		return (ft_free(lst), -1);
 	nb_char = read(fd, buff, BUFFER_SIZE);
 	buff[nb_char] = '\0';
-	if (nb_char != 0)
+	if (nb_char > 0)
 	{
 		temp = ft_lstnew_back(buff, lst);
 		free(buff);
 		if (temp == NULL)
-			return (0);
+			return (ft_free(lst), -1);
 		return (nb_char);
 	}
 	else
-		return (free(buff), 0);
+		return (free(buff), -1);
 }
 
 char	*ft_fill_line(t_list *lst)
 {
-	unsigned int	k;
-	unsigned int	i;
-	char			*line;
-	t_list			*temp;
+	int		i;
+	int		lstsize;
+	char	*line;
+	t_list	*temp;
 
-	k = 0;
+	i = 0;
 	temp = lst;
-	while (temp->next != NULL)
-		temp = temp->next;
-	line = malloc((BUFFER_SIZE * (ft_lst_size(lst)- 1) \
-	+ ft_strlen(temp->str) + 1) * sizeof(char));
-	if (!line)
-		return (ft_free(&lst), NULL);
-	while (lst)
+	lstsize = 0;
+	if (lst->next != NULL)
 	{
-		i = 0;
-		while (lst->str[i] != '\0' )
-		{
-			if (lst->str[i] == '\n')
-				return (line[k++] = '\n', line[k++] = '\0', line);
-			line[k++] = lst->str[i++];
-		}
-		lst = lst->next;
+		lstsize = ft_strindex(lst->str, '\n');
+		i -= 1;
 	}
-	return (line[k++] = '\0', line);
+	while (lst->next != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	lstsize += BUFFER_SIZE * i + ft_strindex(lst->str, '\n');
+	line = malloc((lstsize + 1) * sizeof(char));
+	if (!line)
+		return (NULL);
+	line = ft_lst_to_line(line, temp);
+	return (line);
 }
 
 t_list	*ft_copy_del_lst(t_list **lst, int nb_char)
@@ -90,19 +89,18 @@ t_list	*ft_copy_del_lst(t_list **lst, int nb_char)
 
 	index = ft_check_index_new_line(*lst);
 	temp = *lst;
-	if ((index + 1) < nb_char)
+	if ((index + 1) < nb_char && index >= 0)
 	{
-		while ((*lst)->next != NULL)
-			*lst = (*lst)->next;
+		while (temp->next != NULL)
+			temp = temp->next;
 		newlst = malloc(sizeof(t_list));
 		if (!newlst)
 			return (ft_free(lst), NULL);
-		newlst->str = ft_strdup(&(*lst)->str[index + 1]);
+		newlst->str = ft_strdup(&temp->str[index + 1]);
 		newlst->next = NULL;
-		*lst = temp;
-		ft_free(lst);
 		if (!newlst->str)
-			return (free(newlst), NULL);
+			return (free(newlst), ft_free(lst), NULL);
+		ft_free(lst);
 		return (newlst);
 	}
 	else
@@ -113,7 +111,6 @@ char	*get_next_line(int fd)
 {
 	static t_list	*lst;
 	char			*line;
-	int				nl_index;
 	int				nb_char;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) < 0)
@@ -121,22 +118,18 @@ char	*get_next_line(int fd)
 	if (!lst)
 	{
 		nb_char = ft_buff_to_lst(&lst, fd);
-		if (nb_char == 0)
+		if (nb_char < 0 && !lst)
 			return (NULL);
 	}
 	else
-		nb_char = ft_strlen(lst->str);
-	nl_index = ft_check_index_new_line(lst);
-	while (nl_index < 0 && nb_char != 0)
-	{
+		nb_char = ft_strindex(lst->str, '\0');
+	while (ft_check_index_new_line(lst) < 0 && nb_char > 0)
 		nb_char = ft_buff_to_lst(&lst, fd);
-		if (nb_char == 0)
-			return (NULL);
-		nl_index = ft_check_index_new_line(lst);
-	}
+	if (nb_char < 0 && !lst)
+		return (NULL);
 	line = ft_fill_line(lst);
 	if (!line)
-		return(NULL);
+		return (ft_free(&lst), NULL);
 	lst = ft_copy_del_lst(&lst, nb_char);
 	return (line);
 }
@@ -146,11 +139,10 @@ char	*get_next_line(int fd)
 
 // int main()
 // {
-// 	const char *path = "/home/anferre/sgoinfre/goinfre/Perso/
-//anferre/MyGit/Get_next_line/test.txt";
-// 	int fd;
+// 	const char *path = "/home/anferre/sgoinfre/
+//goinfre/Perso/anferre/MyGit/My_Get_next_line/test.txt";
+// 	int fd;             
 // 	char	*str = "start";
-
 // 	fd=open(path, O_RDONLY);
 // 	while (str != NULL)
 // 	{
@@ -158,6 +150,6 @@ char	*get_next_line(int fd)
 // 		printf("LINE = $%s$ \n", str);
 // 		free (str);
 // 	}
-// 	close(fd);
+// 	printf("%d", close(fd));
 // 	return (0);
 // }
