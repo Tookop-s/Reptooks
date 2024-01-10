@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:31 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/08 17:24:48 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/09 17:24:44 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ char	*get_next_line(int fd)
 //goinfre/Perso/anferre/MyGit/My_Get_next_line/test.txt";
 // 	int fd;             
 // 	char	*str = "start";
-// 	fd=open(path, O_RDONLY);
+// 	fd =open(path, O_RDONLY);
 // 	while (str != NULL)
 // 	{
 // 		str = get_next_line(fd);

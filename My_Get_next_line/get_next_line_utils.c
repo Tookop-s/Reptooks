@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:34 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/08 16:18:52 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/09 17:24:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t	ft_strindex(const char *s, char c)
 	{
 		i++;
 	}
-	if (s[i] == '\n' && c =='\n')
+	if (s[i] == '\n' && c == '\n')
 		i++;
 	return (i);
 }
