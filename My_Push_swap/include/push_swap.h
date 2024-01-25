@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:36:51 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/24 16:32:05 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/25 16:40:56 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ft_error(void);
 void	ft_stackclear(t_stack **stack);
 int		ft_stacksize(t_stack *head);
 t_stack	*ft_stacknew(void);
+t_stack	*ft_stacklast(t_stack *stack);
+int		ft_is_sorted(t_stack *head_a);
 
 		/*Parsing*/
 int		ft_check_str(char *str);
@@ -58,4 +60,7 @@ void	ft_rra(t_stack **head_a);
 void	ft_rrb(t_stack **head_b);
 void	ft_rrr(t_stack **head_a, t_stack **head_b);
 
+		/*Sorting*/
+
+void	ft_sort(t_stack **head_a, t_stack **head_b);
 #endif

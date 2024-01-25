@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:37:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/24 16:28:26 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:01:16 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ void	ft_rotate(t_stack **head)
 	t_stack	*temppile;
 	t_stack	*curpile;
 
-	temppile = *head;
+	if (ft_stacksize(*head) >= 2)
+	{
+		temppile = *head;
 	*head = (*head)->next;
 	curpile = *head;
 	while (curpile->next != NULL)
 		curpile = curpile->next;
 	curpile->next = temppile;
 	temppile->next = NULL;
+	}
 }
 
 void	ft_ra(t_stack **head_a)

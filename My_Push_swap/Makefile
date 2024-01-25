@@ -2,7 +2,8 @@ NAME = push_swap
 LIBFT_DIR = My_libft
 
 SRCS = push_swap.c push_swap_parsing.c push_swap_utils.c push_swap_opswap.c \
-push_swap_opreverse.c push_swap_oprotate.c push_swap_oppush.c
+push_swap_opreverse.c push_swap_oprotate.c push_swap_oppush.c \
+push_swap_algo.c
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

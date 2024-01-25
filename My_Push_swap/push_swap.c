@@ -6,16 +6,16 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:36:22 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/24 17:06:31 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/25 11:44:33 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "include/push_swap.h"
 #include <stdio.h>
 
 void	print_stack(t_stack *head, char c)
 {
-	printf("Stack_%c\n", c);
+	printf("\nStack_%c\n", c);
 	while (head)
 	{
 		printf("%ld, index = %d \n", head->nb, head->index);
@@ -37,12 +37,9 @@ int main(int argc, char **argv)
 	head_a = ft_parse(argv, argc, head_a);
 	if (!head_a)
 		return (1);
-
-		
+	ft_sort(&head_a, &head_b);
 	print_stack(head_a, 'a');
-	ft_rra(&head_a); 
-	print_stack(head_a, 'a');
-	
+	print_stack(head_b, 'b');
 	ft_stackclear(&head_a);
 	return (0);
 }
