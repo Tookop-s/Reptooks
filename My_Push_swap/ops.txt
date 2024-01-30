@@ -20,3 +20,16 @@ sorting steps :
 1 -> get everything in b with a presort (stack/2)
 
 2 -> sort by replacing in a
+
+4 facons de bien placer dans pile_a
+
+1 pa with rb / rrb
+
+2 pa with ra / rra
+
+3 
+
+4
+
+
+

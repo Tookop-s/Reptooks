@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:36:51 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/25 16:40:56 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/30 17:16:02 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ typedef struct s_stack
 	struct s_stack	*next;
 }					t_stack;
 
-
+		/*prints to delete !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+void	print_stack(t_stack *head, char c);
 		/*Utils*/
 void	ft_error(void);
 void	ft_stackclear(t_stack **stack);
@@ -63,4 +64,9 @@ void	ft_rrr(t_stack **head_a, t_stack **head_b);
 		/*Sorting*/
 
 void	ft_sort(t_stack **head_a, t_stack **head_b);
+void	ft_sort_in_a(t_stack **head_a, t_stack **head_b, int size_a, int size_b);
+int		ft_get_prev_index(int index, t_stack *head);
+int		ft_get_next_index(int index, t_stack *head);
+void	ft_put_all_b(t_stack **head_a, t_stack **head_b, int size_a);
+
 #endif

@@ -6,12 +6,14 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:36:22 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/25 11:44:33 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/30 11:58:32 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/push_swap.h"
 #include <stdio.h>
+
+
 
 void	print_stack(t_stack *head, char c)
 {
@@ -38,8 +40,6 @@ int main(int argc, char **argv)
 	if (!head_a)
 		return (1);
 	ft_sort(&head_a, &head_b);
-	print_stack(head_a, 'a');
-	print_stack(head_b, 'b');
 	ft_stackclear(&head_a);
 	return (0);
 }
