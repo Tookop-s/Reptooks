@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:36:22 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/30 11:58:32 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/31 13:06:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int main(int argc, char **argv)
 	head_a = ft_parse(argv, argc, head_a);
 	if (!head_a)
 		return (1);
+	if (ft_is_sorted(head_a))
+		return (0);
 	ft_sort(&head_a, &head_b);
 	ft_stackclear(&head_a);
 	return (0);

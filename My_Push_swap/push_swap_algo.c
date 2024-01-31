@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 10:40:44 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/30 17:51:51 by anferre          ###   ########.fr       */
+/*   Updated: 2024/01/31 13:31:12 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,30 @@ void	ft_put_all_b(t_stack **head_a, t_stack **head_b, int size_a)
 		else 
 			ft_pb(head_a, head_b);
 		size--;
+		if (ft_stacksize(*head_b) > 3)
+		{
+			if ((*head_b)->next->index > (*head_b)->index)
+				if ((*head_b)->next->index > (*head_b)->next->next->index)
+					if ((*head_b)->next->next->index < (*head_b)->index)
+						ft_sb(head_b);
+		}
+		if (ft_stacksize(*head_b) == 2)
+			if ((*head_b)->next->index >(*head_b)->index)
+				ft_sb(head_b);
 	}
 	while (ft_stacksize(*head_a) > 3)
+	{
+		if (ft_stacksize(*head_b) == (((size / 3) * 2) + 2))
+			if ((*head_b)->next->index >(*head_b)->index)
+				ft_sb(head_b);
 		ft_pb(head_a, head_b);
+		if (ft_stacksize(*head_b) > 3)
+			if ((*head_b)->next->index > (*head_b)->index)
+				if ((*head_b)->next->index > (*head_b)->next->next->index)
+					if ((*head_b)->next->next->index < (*head_b)->index)
+						ft_sb(head_b);
+	}
+		
 }
 
 int	ft_get_next_index(int index, t_stack *head)
