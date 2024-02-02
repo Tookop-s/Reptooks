@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:36:22 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/31 13:06:00 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/02 15:08:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int main(int argc, char **argv)
 	if (ft_is_sorted(head_a))
 		return (0);
 	ft_sort(&head_a, &head_b);
+	print_stack(head_a, 'a');
+	print_stack(head_b, 'b');
 	ft_stackclear(&head_a);
 	return (0);
 }

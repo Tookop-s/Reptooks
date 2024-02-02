@@ -5,251 +5,52 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 10:40:44 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/31 13:31:12 by anferre          ###   ########.fr       */
+/*   Created: 2024/02/02 11:18:02 by anferre           #+#    #+#             */
+/*   Updated: 2024/02/02 18:04:21 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/push_swap.h"
 
-void	ft_put_all_b(t_stack **head_a, t_stack **head_b, int size_a)
+void	ft_sort_in_block(t_stack **head_a, t_stack **head_b, int size, int j)
 {
-	int	size;
-
-	size = ft_stacksize(*head_a);
-	while (head_a && size > 0)
+	int n;
+	int i;
+	int t;
+	int temp_size;
+	
+	n = 6; /*determiner le coefficient*/
+	i = n / 2;
+	t = 0;
+	temp_size = ft_stacksize(*head_a);
+	while (t++ <= temp_size && ft_stacksize(*head_a) > 3)
 	{
-		if ((*head_a)->index < (size_a / 3))
+		if ((*head_a)->index < (size / n * (i - j + 1)) && (*head_a)->index >= (size / n * (i - j)))
 		{
 			ft_pb(head_a, head_b);
 			ft_rb(head_b);
 		}
-		else if ((*head_a)->index > ((size_a / 3) * 2))
-			ft_ra(head_a);
-		else 
-			ft_pb(head_a, head_b);
-		size--;
-		if (ft_stacksize(*head_b) > 3)
+		else if ((*head_a)->index >= (size / n * (i + j - 1)) && (*head_a)->index <= (size / n * (i + j)))
 		{
-			if ((*head_b)->next->index > (*head_b)->index)
-				if ((*head_b)->next->index > (*head_b)->next->next->index)
-					if ((*head_b)->next->next->index < (*head_b)->index)
-						ft_sb(head_b);
+			ft_pb(head_a, head_b);
 		}
-		if (ft_stacksize(*head_b) == 2)
-			if ((*head_b)->next->index >(*head_b)->index)
-				ft_sb(head_b);
+		else
+			ft_ra(head_a);
 	}
+}
+
+void	ft_sort_in_b(t_stack **head_a, t_stack **head_b, int size)
+{
+	int j;
+	
+	j = 1;
 	while (ft_stacksize(*head_a) > 3)
 	{
-		if (ft_stacksize(*head_b) == (((size / 3) * 2) + 2))
-			if ((*head_b)->next->index >(*head_b)->index)
-				ft_sb(head_b);
-		ft_pb(head_a, head_b);
-		if (ft_stacksize(*head_b) > 3)
-			if ((*head_b)->next->index > (*head_b)->index)
-				if ((*head_b)->next->index > (*head_b)->next->next->index)
-					if ((*head_b)->next->next->index < (*head_b)->index)
-						ft_sb(head_b);
+		ft_sort_in_block(head_a, head_b, size, j);
+		j++;
 	}
-		
 }
 
-int	ft_get_next_index(int index, t_stack *head)
-{
-	int	nextindex;
-	
-	nextindex = 0;
-	while (head)
-	{
-		if (head->index == index + 1)
-			return (nextindex);
-		nextindex++;
-		head = head->next;
-	}
-	return (-1);
-}
-
-int	ft_get_prev_index(int index, t_stack *head)
-{
-	int	previndex;
-	
-	previndex = 0;
-	while (head)
-	{
-		if (head->index == index - 1)
-			return (previndex);
-		previndex++;
-		head = head->next;
-	}
-	return (-1);
-}
-
-int	ft_short_path(t_stack *head_a, t_stack *head_b)
-{
-	t_stack *temppile;
-	int		ct;
-
-	ct = 1;
-	temppile = head_a;
-	head_a = head_a->next;
-	while (head_a != NULL)
-	{
-		if (head_b->index > temppile->index && head_b->index < head_a->index)
-			return (ct);
-		if (temppile->index > head_a->index && head_b->index > temppile->index )
-			return (ct);
-		if (temppile->index > head_a->index && head_b->index < head_a->index )
-			return (ct);
-		temppile = head_a;
-		head_a = head_a->next;
-		ct++;
-	}
-	return (ct);
-}
-
-int	ft_choose_path(int nextindex, int previndex, int closeindex, int size_a, int size_b)
-{
-	int diffnext;
-	int	diffprev;
-	int	diffclose;
-	
-	if (closeindex <= size_a/2)
-		diffclose = closeindex;
-	else
-		diffclose = size_a - closeindex;
-	if (nextindex < 0)
-		diffnext = size_a + size_b;
-	else if (nextindex <= size_b/2)
-		diffnext = nextindex;
-	else
-		diffnext = size_b - nextindex;
-	if (previndex < 0)
-		diffprev = size_a + size_b;
-	else if (previndex <= size_b/2)
-		diffprev = previndex;
-	else
-		diffprev = size_b - previndex;
-	if (diffprev <= diffnext && diffprev <= diffclose)
-		return(0);
-	else if (diffnext < diffprev && diffnext < diffclose)
-		return (1);
-	else
-		return (2);
-}
-
-void	ft_check_opti_b(t_stack **head_b, t_stack **head_a)
-{
-	while ((*head_a)->index - ft_stacklast(*head_b)->index < (*head_a)->index - (*head_b)->index)
-		ft_rrb(head_b);
-}
-
-void	ft_sort_in_a(t_stack **head_a, t_stack **head_b, int size_a, int size_b)
-{
-	int	path;
-	int ct;
-	int nextindex;
-	int previndex;
-	int	closeindex;
-	int temp;
-	
-	temp = size_b;
-	ct = 0;
-	while (*head_b != NULL)
-	{
-		ft_check_opti_b(head_b, head_a);
-		nextindex = ft_get_next_index(ft_stacklast(*head_a)->index, *head_b);
-		previndex = ft_get_prev_index((*head_a)->index, *head_b);
-		closeindex = ft_short_path(*head_a, *head_b);
-		size_b = ft_stacksize(*head_b);
-		size_a = ft_stacksize(*head_a);
-		path = ft_choose_path(nextindex, previndex, closeindex, size_a, size_b);
-		if (path == 0)/*previndex*/
-		{
-			
-			if (previndex <= (size_b / 2))
-			{
-				while (previndex != 0)
-				{
-					ft_rb(head_b);
-					ct++;
-					previndex--;
-				}
-				ft_pa(head_a, head_b);
-			}
-			else
-			{
-				while ((size_b - previndex) != 0)
-				{
-					ft_rrb(head_b);
-					previndex++;
-				}
-				ft_pa(head_a, head_b);
-			}
-		}
-		else if (path == 1)/*nextindex*/
-		{
-			if (nextindex <= (size_b / 2))
-			{
-				while (nextindex)
-				{
-					ft_rb(head_b);
-					ct++;
-					nextindex--;
-				}
-				ft_pa(head_a, head_b);
-				ft_ra(head_a);
-			}
-			else
-			{
-				while (nextindex < size_b)
-				{
-					ft_rrb(head_b);
-					nextindex++;
-				}
-				ft_pa(head_a, head_b);
-				ft_ra(head_a);
-			}
-		}
-		else if (path == 2)/*closeindex*/
-		{
-			if (closeindex == size_a || closeindex == 0)
-			{
-				ft_pa(head_a, head_b);
-				while ((*head_b)->index < (*head_a)->index && (*head_b)->index > ft_stacklast(*head_a)->index)
-					ft_pa(head_a, head_b);
-			}
-			else if (closeindex > 0 && closeindex < size_a)
-			{
-				if (closeindex <= size_a / 2)
-				{
-					while (closeindex)
-					{
-						ft_ra(head_a);
-						closeindex--;
-					}
-					ft_pa(head_a, head_b);
-				}
-				else
-				{
-					while (closeindex != size_a)
-					{
-						ft_rra(head_a);
-						closeindex++;
-					}
-					ft_pa(head_a, head_b);
-				}
-			}
-		}
-	}
-
-}
-
-void	ft_order(t_stack **head_a)
-{
-	while ((*head_a)->index != 0)
-		ft_rra(head_a);
-}
 
 void	ft_sort_three(t_stack **head_a)
 {
@@ -270,22 +71,168 @@ void	ft_sort_three(t_stack **head_a)
 		ft_sa(head_a);
 }
 
+void	ft_init_ops(t_stack **head_b)
+{
+	t_stack *tempile;
+	
+	tempile = *head_b;
+	while (tempile)
+	{
+		tempile->pa = 1;
+		tempile->ra = 0;
+		tempile->rb = 0;
+		tempile->rr = 0;
+		tempile->rra = 0;
+		tempile->rrb = 0;
+		tempile->rrr = 0;
+		tempile->totops = 0;
+		tempile = tempile->next;
+	}	
+}
+
+int	ft_ops_a(t_stack *head_a, int index)
+{
+	int ct;
+	t_stack	*temppile;
+
+	ct = 0;
+	if (index < head_a->index && index > ft_stacklast(head_a)->index)
+		return (ct);
+	temppile = head_a;
+	head_a = head_a->next;
+	ct++;
+	while (head_a)
+	{
+		if (index < head_a->index && index > temppile->index)
+			return (ct);
+		else if (index > head_a->index && index > temppile->index \
+		&& temppile->index > head_a->index)
+			return (ct);
+		else if (index < head_a->index && index < temppile->index \
+		&& temppile->index > head_a->index)
+			return (ct);
+		temppile = head_a;
+		head_a = head_a->next;
+		ct++;
+	}
+	return (ct);
+}
+
+void	ft_calculate_ops(t_stack **head_a, t_stack **head_b, int size_a)
+{
+	int i;
+	int temp;
+	int size_b;
+	t_stack	*temppile;
+
+	i = 0;
+	temppile = *head_b;
+	while (temppile)
+	{
+		size_a = ft_stacksize(*head_a);
+		size_b = ft_stacksize(*head_b);
+		if (i < size_b / 2)
+			temppile->rb = i;
+		else
+			temppile->rrb = size_b - i;
+		temp = ft_ops_a(*head_a, temppile->index);
+		if (temp < size_a / 2)
+			temppile->ra = temp;
+		else
+			temppile->rra = size_a - temp;
+		i++;
+		temppile = temppile->next;
+	}
+	
+}
+
+void	ft_optimise_rr_rrr(t_stack **head_b)
+{
+	t_stack *temppile;
+
+	temppile = *head_b;
+	while (temppile)
+	{
+		while (temppile->ra && temppile->rb)
+		{
+			temppile->rr++;
+			temppile->ra--;
+			temppile->rb--;
+		}
+		while (temppile->rra && temppile->rrb)
+		{
+			temppile->rrr++;
+			temppile->rra--;
+			temppile->rrb--;
+		}
+		temppile->totops = temppile->pa + temppile->ra + temppile->rb \
+		+ temppile->rr + temppile->rra + temppile->rrb + temppile->rrr;
+		temppile = temppile->next;
+	}
+}
+
+t_stack *ft_short_path(t_stack *head_b)
+{
+	t_stack *temppile;
+
+	temppile = head_b;
+	while (head_b)
+	{
+		if (head_b->totops < temppile->totops)
+			temppile = head_b;
+		head_b = head_b->next;
+	}
+	return (temppile);
+}
+
+void	ft_do_ops(t_stack **head_a, t_stack **head_b, t_stack *temppile)
+{
+	while (temppile->ra--)
+		ft_ra(head_a);
+	while (temppile->rb--)
+		ft_rb(head_b);
+	while (temppile->rr--)
+		ft_rr(head_a, head_b);
+	while (temppile->rra--)
+		ft_rra(head_a);
+	while (temppile->rrb--)
+		ft_rrb(head_b);
+	while (temppile->rrr--)
+		ft_rrr(head_a, head_b);
+	while (temppile->pa--)
+		ft_pa(head_a, head_b);
+}
+
+void	ft_sort_in_a(t_stack **head_a, t_stack **head_b, int size)
+{
+	t_stack *temppile;
+
+	while (head_b)
+	{
+		ft_init_ops(head_b);
+		ft_calculate_ops(head_a, head_b, size);
+		ft_optimise_rr_rrr(head_b);
+		temppile = ft_short_path(*head_b);
+		ft_do_ops(head_a, head_b, temppile);
+	}
+}
+
+
 void	ft_sort(t_stack **head_a, t_stack **head_b)
 {
-	int	size_a;
-	int size_b;
-
-	size_a = ft_stacksize(*head_a);
-	size_b = ft_stacksize(*head_b);
-	if (size_a <= 2)
+	int size;
+	
+	size = ft_stacksize(*head_a);
+	if (size <= 2)
 	{
 		if(ft_is_sorted(*head_a))
 			exit(0);
 		else
 			ft_sa(head_a);
+		exit(0);
 	}
-	ft_put_all_b(head_a, head_b, size_a);
+	ft_sort_in_b(head_a, head_b, size);
 	ft_sort_three(head_a);
-	ft_sort_in_a(head_a, head_b, size_a, size_b);
-	ft_order(head_a);
+	ft_sort_in_a(head_a, head_b, size);
+	// ft_order(head_a); /* a faire */
 }
