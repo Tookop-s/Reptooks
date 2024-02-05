@@ -6,16 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 12:58:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/25 16:40:39 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:02:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	ft_error(void)
-{
-	write(1, "Error\n", 6);
-}
 
 t_stack	*ft_stacknew(void)
 {

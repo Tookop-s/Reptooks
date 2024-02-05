@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:37:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/24 16:57:18 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:22:22 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ft_push(t_stack **head_move, t_stack **head_receive)
 {
 	t_stack	*temppile;
-	
-	if (ft_stacksize(*head_move)>= 1)
+
+	if (ft_stacksize(*head_move) >= 1)
 	{
 		temppile = *head_move;
 		*head_move = (*head_move)->next;

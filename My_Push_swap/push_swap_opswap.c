@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:37:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/24 16:28:48 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:25:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_swap(t_stack **head)
 {
 	t_stack	*temppile;
 	t_stack	*curpile;
-	
+
 	curpile = *head;
 	if (ft_stacksize(*head) >= 2)
 	{

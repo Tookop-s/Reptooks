@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:54:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/15 16:09:18 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:20:17 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
-int		ft_atoi(const char *str);
+long	ft_atoi(const char *str);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memset(void *s, int c, size_t n);

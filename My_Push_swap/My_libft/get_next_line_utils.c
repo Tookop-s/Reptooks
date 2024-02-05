@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:36:34 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/15 14:43:14 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:32:49 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*ft_lst_to_line(char *line, t_lst *lst)
 	line[k++] = '\0';
 	return (line);
 }
-
 
 void	*ft_lstnew_back(char *str, t_lst **lst)
 {

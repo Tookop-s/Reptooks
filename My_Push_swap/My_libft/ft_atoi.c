@@ -6,17 +6,17 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:48:46 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/24 11:38:41 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:35:43 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	unsigned int	i;
 	int				neg;
-	int				nb;
+	long			nb;
 
 	i = 0;
 	neg = 1;

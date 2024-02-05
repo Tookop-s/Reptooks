@@ -6,12 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:37:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/01/24 17:24:54 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:23:07 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 void	ft_reverse_rotate(t_stack **head)
 {
@@ -25,7 +24,7 @@ void	ft_reverse_rotate(t_stack **head)
 	curpile = curpile->next;
 	temppile->next = NULL;
 	temppile = curpile;
-	curpile	= *head;
+	curpile = *head;
 	(*head) = temppile;
 	(*head)->next = curpile;
 }
@@ -44,7 +43,7 @@ void	ft_rrb(t_stack **head_b)
 
 void	ft_rrr(t_stack **head_a, t_stack **head_b)
 {
-	ft_rotate(head_a);
-	ft_rotate(head_b);
+	ft_reverse_rotate(head_a);
+	ft_reverse_rotate(head_b);
 	write(1, "rrr\n", 4);
 }
