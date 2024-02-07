@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:46:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/07 16:09:05 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:36:50 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+//read from stdin and fill ops
 static void	*ft_read_ops(t_ops **ops)
 {
 	int		nbchar;
@@ -42,6 +43,7 @@ static void	*ft_read_ops(t_ops **ops)
 	return ((void *) 0);
 }
 
+//extract op by op
 static char	*ft_cpy_ops(t_ops **ops, int *index, char *str)
 {
 	int	i;
@@ -68,6 +70,7 @@ static char	*ft_cpy_ops(t_ops **ops, int *index, char *str)
 	return (free(str), str = NULL);
 }
 
+//check if the str is part of the ops and execute the ops otherwise error
 static int	ft_do_ops_checker(char *str, t_stack **head_a, t_stack **head_b)
 {
 	if (ft_strncmp(str, "ra", 3) == 0)
@@ -97,6 +100,7 @@ static int	ft_do_ops_checker(char *str, t_stack **head_a, t_stack **head_b)
 	return (0);
 }
 
+//execute all of the ops
 static int	ft_exec_ops(t_ops **ops, t_stack **head_a)
 {
 	char	*str;

@@ -1,0 +1,22 @@
+sa swap the first 2 on top of a
+sb swap the first 2 on top of b
+ss swap the first 2 on top of a & b
+
+pa take the 1st on top of b to put it on top of a
+pb take the 1st on top of a to put it on top of b
+
+ra shift up
+rb shift up
+rr shift up
+
+rra shift down
+rrb shift down
+rrr shift down
+
+
+
+
+
+
+
+
