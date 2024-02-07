@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:37:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/05 14:25:25 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/06 11:44:57 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "include/push_swap.h"
 
 // if 2 numbers swap
 void	ft_swap(t_stack **head)

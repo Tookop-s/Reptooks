@@ -1,47 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   push_swap_checker_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/11 12:58:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/06 11:45:26 by anferre          ###   ########.fr       */
+/*   Created: 2024/02/06 11:46:04 by anferre           #+#    #+#             */
+/*   Updated: 2024/02/07 16:04:11 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/push_swap.h"
+#include "include/push_swap_checker.h"
 
-t_stack	*ft_stacknew(void)
+t_ops	*ft_opsnew(void)
 {
-	t_stack	*element;
+	t_ops	*element;
 
 	element = malloc(sizeof(*element));
 	if (!element)
 		return (NULL);
-	element->nb = 0;
+	element->buff = NULL;
 	element->next = NULL;
 	return (element);
 }
 
-int	ft_stacksize(t_stack *head)
+void	ft_opsclear(t_ops **stack)
 {
-	unsigned int	size;
-
-	if (!head)
-		return (0);
-	size = 1;
-	while (head->next != NULL)
-	{
-		head = head->next;
-		size++;
-	}
-	return (size);
-}
-
-void	ft_stackclear(t_stack **stack)
-{
-	t_stack	*temp;
+	t_ops	*temp;
 
 	if (!stack)
 		return ;
@@ -49,29 +34,22 @@ void	ft_stackclear(t_stack **stack)
 	{
 		temp = *stack;
 		*stack = (*stack)->next;
+		if (temp->buff)
+			free(temp->buff);
 		free(temp);
 	}
 	*stack = NULL;
 }
 
-t_stack	*ft_stacklast(t_stack *stack)
+void	ft_clear(t_stack **head, t_ops **ops)
 {
-	while (stack->next != NULL)
-		stack = stack->next;
-	return (stack);
+	if (ops)
+		ft_opsclear(ops);
+	if (head)
+		ft_stackclear(head);
 }
 
-int	ft_is_sorted(t_stack *head_a)
+void	ft_ko(void)
 {
-	int	i;
-
-	i = 0;
-	while (head_a)
-	{
-		if (head_a->index != i)
-			return (0);
-		i++;
-		head_a = head_a->next;
-	}
-	return (1);
+	write(2, "KO/n", 3);
 }

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:18:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/05 14:03:50 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/07 16:13:43 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	ft_sort(t_stack **head_a, t_stack **head_b)
 	if (size <= 2)
 	{
 		if (ft_is_sorted(*head_a))
-			exit(0);
+			return (ft_stackclear(head_a), exit(0));
 		else
 			ft_sa(head_a);
-		exit(0);
+		return (ft_stackclear(head_a), exit(0));
 	}
 	ft_sort_in_b(head_a, head_b, size);
 	ft_sort_three(head_a);

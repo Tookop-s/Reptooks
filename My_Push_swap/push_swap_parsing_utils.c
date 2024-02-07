@@ -6,14 +6,14 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 12:58:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/05 16:42:19 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:32:46 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/push_swap.h"
 
 //check that the str has the good format
-int	ft_check_str(char *str)
+int	ft_check_args(char *str)
 {
 	int	i;
 
