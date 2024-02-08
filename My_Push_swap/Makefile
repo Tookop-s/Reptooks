@@ -23,8 +23,9 @@ DEPS_BONUS = $(OBJS_BONUS:.o=.d)
 CC := cc
 CFLAGS = -Wall -Werror -Wextra -g3 -Iinclude
 
+all: FORCE $(NAME)
 
-$(LIBFT_DIR)/libft.a:
+$(LIBFT_DIR)/libft.a: FORCE
 	$(MAKE) -C $(LIBFT_DIR) -s
 
 $(NAME): $(LIBFT_DIR)/libft.a $(OBJS)
@@ -40,11 +41,9 @@ $(OBJ_DIR)/%.o: %.c
 $(OBJ_DIR_BONUS)/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) -MMD -c -o $@ $< $(CFLAGS)
-
-all: FORCE $(LIBFT_DIR)/libft.a $(NAME)
 	
 FORCE:
-	$(MAKE) -C $(LIBFT_DIR) -s
+	 	
 
 clean:
 	@echo "Cleaning"
@@ -65,4 +64,3 @@ bonus: $(NAME_BONUS)
 -include $(DEPS_BONUS)
 
 .PHONY: clean fclean all re bonus
-

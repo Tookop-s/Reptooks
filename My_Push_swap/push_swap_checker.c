@@ -6,13 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:46:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/07 16:36:50 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/08 11:51:11 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/push_swap_checker.h"
-#include <stdio.h>
-#include <fcntl.h>
 
 //read from stdin and fill ops
 static void	*ft_read_ops(t_ops **ops)
