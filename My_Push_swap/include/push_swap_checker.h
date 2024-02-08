@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:55:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/07 16:12:45 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/08 17:36:27 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_ops	*ft_opsnew(void);
 void	ft_ko(void);
 void	ft_opsclear(t_ops **stack);
 void	ft_clear(t_stack **head, t_ops **ops);
+int		ft_line_break(char *str);
 
 		/*Utils_ops*/
 void	ft_rr_no_write(t_stack **head_a, t_stack **head_b);

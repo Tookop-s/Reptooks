@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:37:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/06 11:45:03 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/08 17:36:14 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@ void	ft_reverse_rotate(t_stack **head)
 	t_stack	*temppile;
 	t_stack	*curpile;
 
-	curpile = *head;
-	while (curpile->next->next != NULL)
+	if (ft_stacksize(*head) > 2)
+	{
+		curpile = *head;
+		while (curpile->next->next != NULL)
+			curpile = curpile->next;
+		temppile = curpile;
 		curpile = curpile->next;
-	temppile = curpile;
-	curpile = curpile->next;
-	temppile->next = NULL;
-	temppile = curpile;
-	curpile = *head;
-	(*head) = temppile;
-	(*head)->next = curpile;
+		temppile->next = NULL;
+		temppile = curpile;
+		curpile = *head;
+		(*head) = temppile;
+		(*head)->next = curpile;
+	}
 }
 
 void	ft_rra(t_stack **head_a)

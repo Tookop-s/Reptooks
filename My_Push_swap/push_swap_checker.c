@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:46:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/08 11:51:11 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/08 17:35:58 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,9 @@ int	main(int argc, char **argv)
 	t_stack	*head_a;
 	t_ops	*ops;
 
-	if (argc == 1)
-		return (1);
 	head_a = ft_stacknew();
+	if (argc == 1)
+		return (ft_stackclear(&head_a), 1);
 	ops = ft_opsnew();
 	head_a = ft_parse(argv, argc, head_a);
 	if (!head_a)

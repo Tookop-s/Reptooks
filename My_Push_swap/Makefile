@@ -1,6 +1,6 @@
 NAME = push_swap
 NAME_BONUS = checker
-LIBFT_DIR = My_libft
+LIBFT_DIR = libft
 
 SRCS = push_swap.c push_swap_sort.c push_swap_sort_a.c push_swap_sort_utils.c
 
