@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 12:58:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/07 15:32:46 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/09 11:13:35 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_check_args(char *str)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(str) > 11)
+		return (0);
 	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
 		i++;
 	if (str[i] && (str[i] == '-' || str[i] == '+'))

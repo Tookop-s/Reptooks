@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:46:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/08 17:35:58 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/09 11:22:37 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,10 @@ static int	ft_exec_ops(t_ops **ops, t_stack **head_a)
 		if (!str)
 			break ;
 		if (ft_do_ops_checker(str, head_a, &head_b) < 0)
-			return (ft_error(), ft_clear(head_a, ops), exit(1), 1);
+			return (ft_error(), ft_clear(head_a, ops), free(str), exit(1), 1);
 	}
 	if (head_b || (!(ft_is_sorted(*head_a))))
-		return (ft_stackclear(&head_b), -1);
+		return (ft_stackclear(&head_b), free(str), -1);
 	return (0);
 }
 
