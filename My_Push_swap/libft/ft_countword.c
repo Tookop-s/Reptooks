@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_countword.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 16:30:09 by anferre           #+#    #+#             */
-/*   Updated: 2023/11/20 17:56:32 by anferre          ###   ########.fr       */
+/*   Created: 2024/02/09 16:52:19 by anferre           #+#    #+#             */
+/*   Updated: 2024/02/09 16:55:59 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+int	ft_countword(char *str)
 {
-	char	*s;
+	int	i;
+	int	check;
+	int	sum;
 
-	s = (char *)str;
-	while (*s && *s != (char)c)
-		s++;
-	if (*s == (char)c)
-		return (s);
-	return (0);
+	i = 0;
+	check = 1;
+	sum = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' | str[i] == '\t')
+			check = 1;
+		else if (check == 1)
+		{
+			sum++;
+			check = 0;
+		}
+		i++;
+	}
+	return (sum);
 }
-// returns a pointer to the first occurrence of the character c in the string s.
-// #include<stdio.h>
-
-// int main()
-// {
-// 	const char *s = "teste";
-// 	// char c = 'e';
-// 	printf("%s", ft_strchr(s, 't' + 256));
-// 	return (0);
-// }

@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_countword.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 16:42:31 by anferre           #+#    #+#             */
-/*   Updated: 2023/11/23 11:13:52 by anferre          ###   ########.fr       */
+/*   Created: 2024/02/09 16:52:19 by anferre           #+#    #+#             */
+/*   Updated: 2024/02/09 16:55:59 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_countword(char *str)
 {
-	write(fd, s, ft_strlen(s));
-}
+	int	i;
+	int	check;
+	int	sum;
 
-//Outputs the string ’s’ to the given file descriptor
-// #include <stdio.h>
-// #include <fcntl.h>
-// #include <unistd.h>
-// int main()
-// {
-// 	int fileDescriptor = open("test.txt", O_WRONLY);
-// 	char *s = "Hello World !";
-// 	ft_putstr_fd(s, fileDescriptor);
-// 	close(fileDescriptor);
-// 	return (0);
-// }
+	i = 0;
+	check = 1;
+	sum = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' | str[i] == '\t')
+			check = 1;
+		else if (check == 1)
+		{
+			sum++;
+			check = 0;
+		}
+		i++;
+	}
+	return (sum);
+}
