@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:46:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/08 17:06:51 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/12 12:54:47 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void	ft_clear(t_stack **head, t_ops **ops)
 
 void	ft_ko(void)
 {
-	write(2, "KO/n", 3);
+	write(2, "KO\n", 3);
 }

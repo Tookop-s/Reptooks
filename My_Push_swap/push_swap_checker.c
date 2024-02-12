@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:46:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/09 11:22:37 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/12 12:44:44 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ static int	ft_exec_ops(t_ops **ops, t_stack **head_a)
 	temp = *ops;
 	head_b = NULL;
 	str = malloc (sizeof(char) * 4);
+	if (!str)
+		return (-1);
 	while (str)
 	{
 		str = ft_cpy_ops(&temp, &i, str);
