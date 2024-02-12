@@ -7,7 +7,7 @@ SRCS = push_swap.c push_swap_sort.c push_swap_sort_a.c push_swap_sort_utils.c
 SRCS_SHARED = push_swap_opreverse.c push_swap_oprotate.c push_swap_oppush.c push_swap_opswap.c\
 push_swap_utils.c push_swap_parsing.c push_swap_parsing_utils.c
 
-SRCS_BONUS = push_swap_checker.c push_swap_checker_utils1.c push_swap_checker_utils2.c
+SRCS_BONUS = push_swap_checker_bonus.c push_swap_checker_utils1_bonus.c push_swap_checker_utils2_bonus.c
 
 SRCS_A = $(SRCS) $(SRCS_SHARED)
 SRCS_B = $(SRCS_SHARED) $(SRCS_BONUS)
