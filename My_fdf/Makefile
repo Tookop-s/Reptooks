@@ -1,53 +1,50 @@
-NAME = push_swap
+NAME = fdf
+
 LIBFT_DIR = libft
+MINILIBX_DIR = minilibx
 
-SRCS = push_swap.c push_swap_sort.c push_swap_sort_a.c push_swap_sort_utils.c
-
+SRCS = fdf_main.c fdf_utils.c fdf_parsing.c fdf_parsing_utils.c fdf_projection.c fdf_projection_utils.c
 
 OBJ_DIR = objs
-
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS_A:.c=.o))
-
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 DEPS = $(OBJS:.o=.d)
 
 
-CC := cc
-CFLAGS = -Wall -Werror -Wextra -g3 -Iinclude
+GCC = gcc
+CFLAGS = -Wall -Werror -Wextra -g3 -I./include/ -fPIE
 
-all: FORCE $(NAME)
+all: $(NAME)
 
 $(LIBFT_DIR)/libft.a: FORCE
-	$(MAKE) -C $(LIBFT_DIR) -s
+	$(MAKE) -sC $(LIBFT_DIR) 
 
-$(NAME): $(LIBFT_DIR)/libft.a $(OBJS)
-	$(CC) -o $@ $^ $(LIBFT_DIR)/libft.a $(CFLAGS)
+# $(MINILIBX_DIR)/libmlx.a:
+# 	$(MAKE) -sC $(MINILIBX_DIR)
+
+$(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a 
+	$(GCC) $(CFLAGS) -o $@  $^ $(MINILIBX_DIR)/libmlx.a -lXext -lX11 -lm
 
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) -MMD -c -o $@ $< $(CFLAGS)
+	$(GCC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR_BONUS)/%.o: %.c
-	@mkdir -p $(@D)
-	$(CC) -MMD -c -o $@ $< $(CFLAGS)
-	
 FORCE:
-	 	
 
 clean:
 	@echo "Cleaning"
-	$(MAKE) -C $(LIBFT_DIR) clean -s
-	rm -rf $(OBJ_DIR) $(OBJ_DIR_BONUS)
+	$(MAKE) clean -sC $(LIBFT_DIR)
+# $(MAKE) clean -sC $(MINILIBX_DIR)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@echo "Full Cleaning"
-	$(MAKE) -C $(LIBFT_DIR) fclean -s
-	rm -f $(NAME) $(NAME_BONUS)
+# $(MAKE) fclean -sC $(LIBFT_DIR)
+	rm -f $(NAME)
 
 re: fclean all
 	
-
 -include $(DEPS)
 
 .PHONY: clean fclean all re

@@ -14,7 +14,7 @@ DEPS = $(OBJS:.o=.d)
 
 CC := cc
 AR := ar rc
-CFLAGS = -Wall -Wextra -Werror -g -Iinclude
+CFLAGS = -Wall -Wextra -Werror -g -I./include/ -fPIE
 
 all: $(NAME)
 

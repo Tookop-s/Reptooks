@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:54:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/13 15:46:06 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:43:58 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../libft/include/get_next_line.h"
-# include "../libft/include/ft_printf.h"
+# include "get_next_line.h"
+# include "ft_printf.h"
 
 typedef struct s_list
 {
