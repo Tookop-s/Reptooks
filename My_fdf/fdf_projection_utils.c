@@ -6,48 +6,42 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/14 16:28:14 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/16 17:14:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "include/fdf.h"
 
 void	*ft_new_coor(t_size *size)
 {
-	t_coor	**coor;
+	t_coor	*coor;
 	int	i;
 
 	i = 0;
-	coor = malloc((*size).rows * sizeof(t_coor*));
+	coor = malloc(((*size).rows * (*size).cols) * sizeof(t_coor*));
 	if (!coor)
 		return (NULL);
-	while (i < (*size).rows)
+	while (i < (*size).rows * (*size).cols )
 	{
-		coor[i] = malloc((*size).cols * sizeof(t_coor));
-		if (!coor)
-			return(NULL);
+		coor[i].x = 0;
+		coor[i].y = 0;
 		i++;
 	}
 	return (coor);
 }
 
-void	ft_free_coor(t_coor **coor, t_size *size)
+void	ft_free_coor(t_coor *coor)
 {
-	int	i;
-
-	i = 0;
 	if (!coor)
 		return ;
-	while (i < (*size).rows)
-	{
-		free(coor[i]);
-		i++;
-	}
 	free(coor);
 }
 
-void	ft_free_all(int **array, t_coor **coor, t_size *size)
+void	ft_free_all(int **array, t_coor *coor, t_size *size)
 {
-	ft_free_coor(coor, size);
+	ft_free_coor(coor);
 	ft_free_array(array, size->rows);
+	if (size)
+		free(size);
 }
+
