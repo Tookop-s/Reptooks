@@ -12,12 +12,12 @@ DEPS = $(OBJS:.o=.d)
 
 
 GCC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3 -I./include/ -fPIE
+CFLAGS = -Wall -Werror -Wextra -g3 -Iinclude -fPIE
 
 all: $(NAME)
 
 $(LIBFT_DIR)/libft.a: FORCE
-	$(MAKE) -sC $(LIBFT_DIR) 
+	$(MAKE) -C $(LIBFT_DIR) 
 
 # $(MINILIBX_DIR)/libmlx.a:
 # 	$(MAKE) -sC $(MINILIBX_DIR)
@@ -28,7 +28,7 @@ $(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	$(GCC) $(CFLAGS) -c $< -o $@
+	$(GCC) $(CFLAGS) -MMD -c $< -o $@
 
 FORCE:
 
@@ -40,7 +40,7 @@ clean:
 
 fclean: clean
 	@echo "Full Cleaning"
-# $(MAKE) fclean -sC $(LIBFT_DIR)
+	$(MAKE) fclean -sC $(LIBFT_DIR)
 	rm -f $(NAME)
 
 re: fclean all

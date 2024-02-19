@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/16 17:14:42 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/19 17:51:46 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*mlx_win;
+	t_data	*data_img;
 }				t_mlx;
 
 typedef struct s_coor
 {
-	double	x;
-	double	y;
+	int	x;
+	int	y;
 }				t_coor;
 
 typedef struct s_size
@@ -69,8 +70,8 @@ void	ft_free_split(char **str);
 void	*ft_project(int **array, t_size *size, char *title);
 		/*Utils*/
 void	ft_free_all(int **array, t_coor *coor, t_size *size);
-void	ft_free_coor(t_coor *coor);
 void	*ft_new_coor(t_size *size);
+void	ft_free_coor(t_coor *coor);
 
 		/*mlx*/
 void	*ft_initialize_window(char *title);
