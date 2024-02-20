@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:13 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:49:35 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,3 +45,10 @@ void	ft_free_all(int **array, t_coor *coor, t_size *size)
 		free(size);
 }
 
+double	ft_min(t_dcoor comp)
+{
+	if (comp.x > comp.y)
+		return (comp.y);
+	else
+		return (comp.x);
+}

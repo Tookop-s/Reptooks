@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/19 17:51:46 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:50:07 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define WHITE_COLOR 0xFFFFFF
 
 # define WINDOW_HEIGTH 600
-# define WINDOW_WIDTH 300
+# define WINDOW_WIDTH 600
+# define WINDOW_MARGIN 50
 
 # define ISO_ANGLE 30
 
@@ -52,6 +53,12 @@ typedef struct s_coor
 	int	y;
 }				t_coor;
 
+typedef struct s_dcoor
+{
+	double	x;
+	double	y;
+}				t_dcoor;
+
 typedef struct s_size
 {
 	int	rows;
@@ -72,6 +79,7 @@ void	*ft_project(int **array, t_size *size, char *title);
 void	ft_free_all(int **array, t_coor *coor, t_size *size);
 void	*ft_new_coor(t_size *size);
 void	ft_free_coor(t_coor *coor);
+double	ft_min(t_dcoor comp);
 
 		/*mlx*/
 void	*ft_initialize_window(char *title);

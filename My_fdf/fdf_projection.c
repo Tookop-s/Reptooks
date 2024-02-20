@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:02:10 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/19 18:06:17 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:49:57 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,25 @@ static void	*ft_convert_to_isometric(int **array3d, t_size *size, t_coor *coor)
 	return (coor);
 }
 
-static void ft_get_positive_coor(t_coor *coor, t_size *size, t_coor mincoor)
+static void	ft_rescale(t_coor *coor, t_size *size, t_coor mincoor, t_coor maxcoor)
 {
-	int	i;
+	t_dcoor	scale;
+	double	dscale;
+	int		i;
+	t_coor	delta;
+	t_coor	middlecoor;
 
-	i = 0;
-	if (mincoor.x < 0)
-		mincoor.x = abs(mincoor.x);
-	else
-		mincoor.x = 0;
-	if (mincoor.y < 0)
-		mincoor.y = abs(mincoor.y);
-	else
-		mincoor.y = 0;
-	i = 0;
+	middlecoor.x = maxcoor.x - mincoor.x;
+	middlecoor.y = maxcoor.y - mincoor.y;
+	scale.x = (WINDOW_WIDTH - 2 * WINDOW_MARGIN) / middlecoor.x;
+	scale.y = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / middlecoor.y;
+	dscale = ft_min(scale);
+	delta.x = (WINDOW_WIDTH - 2 * WINDOW_MARGIN) / 2 - (mincoor.x + maxcoor.x) / 2;
+	delta.y = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / 2 - (mincoor.y + maxcoor.y) / 2;
 	while (i < ((*size).rows * (*size).cols))
 	{
-		coor[i].x += mincoor.x;
-		coor[i].y += mincoor.y;
+		coor[i].x = ((int)(coor[i].x - mincoor.x) * dscale + delta.x + WINDOW_MARGIN);
+		coor[i].y = ((int)(coor[i].y - mincoor.y) * dscale + delta.y + WINDOW_MARGIN);
 		i++;
 	}
 }
@@ -108,7 +109,7 @@ static void *ft_resize(t_coor *coor, t_size *size)
 	mincoor.y = 0;
 	maxcoor.x = 0;
 	maxcoor.y = 0;
-	middlecoor = ft_new_coor(&(t_size){1, 0});
+	middlecoor = ft_new_coor(&(t_size){0, 1});
 	while (++i < ((*size).rows * (*size).cols))
 	{
 		if (mincoor.x > coor[i].x) 
@@ -120,49 +121,58 @@ static void *ft_resize(t_coor *coor, t_size *size)
 		if (maxcoor.y < coor[i].y)
 			maxcoor.y = coor[i].y;
 	}
-	ft_get_positive_coor(coor, size, mincoor);
-	(*middlecoor).x = maxcoor.x - mincoor.x;
-	(*middlecoor).y = maxcoor.y - mincoor.y;
-	return (middlecoor);
+	ft_rescale(coor, size, mincoor, maxcoor);
+	return (free(middlecoor), coor);
 }
 
-// static void ft_draw_line(t_coor start, t_coor end, t_data *img, int color) 
-// {
-// 	int x;
-//     float slope;
+static void ft_draw_line(t_coor start, t_coor end, t_data *data_img, int color) 
+{
+	t_coor	diff;
+	t_coor	in;
+	int		i;
+	int		step;
 
-// 	x = start.x;
-// 	slope = (float)(end.y - start.y) / (end.x - start.x);
-//     while (x <= end.x)
-// 	{
-// 		int y = start.y + slope * (x - start.x);
-// 		ft_mlx_pixel_put(img, x, y, color);
-// 		x++;
-// 	}
-// }
+	diff.x = abs(end.x - start.x);
+	diff.y = abs(end.y - start.y);
+	if (diff.x >= diff.y)
+		step = diff.x;
+	else
+		step = diff.y;
+	in.x = diff.x / step;
+	in.y = diff.y / step;
+	i = 0;
+	while (i < step)
+	{
+		ft_mlx_pixel_put(data_img, start.x, start.y, color);
+		start.x = start.x + in.x;
+		start.y = start.y + in.y;
+		i++;
+	}
+}
 
-// static void	ft_print_map(t_coor *coor, t_size *size, t_mlx *mlx, t_data *data)
-// {
-// 	int	i;
-// 	int	j;
 
-// 	i = 0;
-// 	while (i < (*size).rows)
-// 	{
-// 		j = 0;
-// 		while (j < (*size).cols)
-// 		{
-// 			ft_mlx_pixel_put(data, coor[i].x, coor[i].y, RED_COLOR);
-// 			// if (j < (*size).cols - 1)
-// 			// 	ft_draw_line(coor[i], coor[i], img, color);
-// 			// if (i < (*size).rows - 1)
-// 			// 	ft_draw_line(coor[i], coor[i + 1], img, color);
-// 			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, data->img, 0, 0);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
+static void	ft_print_map(t_coor *coor, t_size *size, t_mlx *mlx)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < (*size).rows)
+	{
+		j = 0;
+		while (j < (*size).cols)
+		{
+			ft_mlx_pixel_put(mlx->data_img, coor[(j + i * (*size).cols)].x, coor[(j + i * (*size).cols)].y, RED_COLOR);
+			if (j < (*size).cols - 1)
+				ft_draw_line(coor[i], coor[i + 1], mlx->data_img->img, GREEN_COLOR);
+			// if (i < (*size).rows - 1)
+			// 	ft_draw_line(coor[i], coor[i + 1], mlx->data_img->img, GREEN_COLOR);
+			j++;
+		}
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->data_img->img, 0, 0);
+		i++;
+	}
+}
 
 void	*ft_project(int **array, t_size *size, char *title)
 {
@@ -174,6 +184,7 @@ void	*ft_project(int **array, t_size *size, char *title)
 	ft_convert_to_isometric(array, size, coor);
 	ft_free_array(array, size->rows);
 	middle = ft_resize(coor, size);
+	ft_print_coor(coor, size);
 	if (middle)
 	mlx = ft_initialize_window(title);
 	if (!mlx)
@@ -181,8 +192,8 @@ void	*ft_project(int **array, t_size *size, char *title)
 	mlx->data_img = ft_initialize_image(mlx);
 	if (!mlx->data_img->img)
 		return (NULL);
-	ft_init_background(mlx->data_img->img, WHITE_COLOR);
-	// ft_print_map(coor, size, mlx, img);
+	ft_init_background(mlx->data_img, WHITE_COLOR);
+	ft_print_map(coor, size, mlx);
 	// ft_free_coor(coor, size);
 	// mlx_keyhook(vars.win, 2, (1L<<0), ft_close, &vars);
 	// mlx_hook(vars.win, 17, (1L<<2), ft_close, &vars);
@@ -191,3 +202,17 @@ void	*ft_project(int **array, t_size *size, char *title)
 }
 
 
+// static void ft_draw_line(t_coor start, t_coor end, t_data *img, int color) 
+// {
+// 	int x;
+//     double slope;
+
+// 	x = start.x;
+// 	slope = (end.y - start.y) / (end.x - start.x);
+//     while (x <= end.x)
+// 	{
+// 		int y = start.y + slope * (x - start.x);
+// 		ft_mlx_pixel_put(img, x, y, color);
+// 		x++;
+// 	}
+// }
