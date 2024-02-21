@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:54:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/20 17:17:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/21 16:48:06 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int main(int argc, char **argv)
 		return (1);
 	array3d = ft_parsing(argv, size);
 	if (!array3d)
-		return (ft_free_all(array3d, NULL, size), 1);
+		return (ft_free_all(array3d, NULL, size, NULL), 1);
 	ft_project(array3d, size, argv[1]);
-	return (ft_free_all(array3d, NULL, size), 0);
+	return (ft_free_all(array3d, NULL, size, NULL), 0);
 		
 }
 

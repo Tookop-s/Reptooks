@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/21 14:45:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/21 16:57:28 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,24 @@ void	*ft_new_coor(t_size *size)
 	return (coor);
 }
 
+void	*ft_new_dcoor(t_size *size)
+{
+	t_dcoor	*dcoor;
+	int	i;
+
+	i = 0;
+	dcoor = malloc(((*size).rows * (*size).cols) * sizeof(t_dcoor*));
+	if (!dcoor)
+		return (NULL);
+	while (i < (*size).rows * (*size).cols )
+	{
+		dcoor[i].x = 0;
+		dcoor[i].y = 0;
+		i++;
+	}
+	return (dcoor);
+}
+
 void	ft_free_coor(t_coor *coor)
 {
 	if (!coor)
@@ -37,9 +55,17 @@ void	ft_free_coor(t_coor *coor)
 	free(coor);
 }
 
-void	ft_free_all(int **array, t_coor *coor, t_size *size)
+void	ft_free_dcoor(t_dcoor *dcoor)
+{
+	if (!dcoor)
+		return ;
+	free(dcoor);
+}
+
+void	ft_free_all(int **array, t_coor *coor, t_size *size, t_dcoor *dcoor)
 {
 	ft_free_coor(coor);
+	ft_free_dcoor(dcoor);
 	ft_free_array(array, size->rows);
 	if (size)
 		free(size);
@@ -52,39 +78,39 @@ double	ft_min(t_dcoor comp)
 	else
 		return (comp.x);
 }
-t_coor	ft_get_mincoor(t_coor *coor, t_size *size)
+t_dcoor	ft_get_mincoor(t_dcoor *dcoor, t_size *size)
 {
 	int		i;
-	t_coor	mincoor;
+	t_dcoor	mincoor;
 
 	i = 0;
-	mincoor.x = coor[0].x;
-	mincoor.y = coor[0].y;
+	mincoor.x = dcoor[0].x;
+	mincoor.y = dcoor[0].y;
 	while (i < ((*size).rows * (*size).cols))
 	{
-		if (mincoor.x > coor[i].x) 
-			mincoor.x = coor[i].x;
-		if (mincoor.y > coor[i].y)
-			mincoor.y = coor[i].y;
+		if (mincoor.x > dcoor[i].x) 
+			mincoor.x = dcoor[i].x;
+		if (mincoor.y > dcoor[i].y)
+			mincoor.y = dcoor[i].y;
 		i++;
 	}
 	return (mincoor);
 }
 
-t_coor	ft_get_maxcoor(t_coor *coor, t_size *size)
+t_dcoor	ft_get_maxcoor(t_dcoor *dcoor, t_size *size)
 {
 	int		i;
-	t_coor	maxcoor;
+	t_dcoor	maxcoor;
 
 	i = 0;
-	maxcoor.x = coor[0].x;
-	maxcoor.y = coor[0].y;
+	maxcoor.x = dcoor[0].x;
+	maxcoor.y = dcoor[0].y;
 	while (i < ((*size).rows * (*size).cols))
 	{
-		if (maxcoor.x < coor[i].x)
-			maxcoor.x = coor[i].x;
-		if (maxcoor.y < coor[i].y)
-			maxcoor.y = coor[i].y;
+		if (maxcoor.x < dcoor[i].x)
+			maxcoor.x = dcoor[i].x;
+		if (maxcoor.y < dcoor[i].y)
+			maxcoor.y = dcoor[i].y;
 		i++;
 	}
 	return (maxcoor);
