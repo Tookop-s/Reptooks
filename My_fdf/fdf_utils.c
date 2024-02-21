@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:21:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/19 17:57:53 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/21 12:01:16 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*pixel;
 
+	if (x > WINDOW_WIDTH || y > WINDOW_HEIGTH)
+		return ;
 	pixel = data->addr + (y * data->ll + x * (data->bpp / 8));
 	*(int *)pixel = color;
 }

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/20 14:49:35 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/21 14:45:38 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,41 @@ double	ft_min(t_dcoor comp)
 		return (comp.y);
 	else
 		return (comp.x);
+}
+t_coor	ft_get_mincoor(t_coor *coor, t_size *size)
+{
+	int		i;
+	t_coor	mincoor;
+
+	i = 0;
+	mincoor.x = coor[0].x;
+	mincoor.y = coor[0].y;
+	while (i < ((*size).rows * (*size).cols))
+	{
+		if (mincoor.x > coor[i].x) 
+			mincoor.x = coor[i].x;
+		if (mincoor.y > coor[i].y)
+			mincoor.y = coor[i].y;
+		i++;
+	}
+	return (mincoor);
+}
+
+t_coor	ft_get_maxcoor(t_coor *coor, t_size *size)
+{
+	int		i;
+	t_coor	maxcoor;
+
+	i = 0;
+	maxcoor.x = coor[0].x;
+	maxcoor.y = coor[0].y;
+	while (i < ((*size).rows * (*size).cols))
+	{
+		if (maxcoor.x < coor[i].x)
+			maxcoor.x = coor[i].x;
+		if (maxcoor.y < coor[i].y)
+			maxcoor.y = coor[i].y;
+		i++;
+	}
+	return (maxcoor);
 }
