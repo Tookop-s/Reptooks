@@ -6,13 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:21:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/22 12:07:00 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/22 17:26:42 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-void	*ft_initialize_window(char *title)
+t_mlx	*ft_initialize_window(char *title)
 {
 	t_mlx *mlx;
 	
@@ -24,18 +24,18 @@ void	*ft_initialize_window(char *title)
 	return (mlx);
 }
 
-void	*ft_initialize_image(t_mlx *mlx)
+void	*ft_initialize_image(t_data_img *data_img, t_mlx *mlx)
 {
-	mlx->data_img = malloc(sizeof(t_data));
-	if (!mlx->data_img)
+	data_img = malloc(sizeof(t_data_img));
+	if (!data_img)
 		return (NULL);
-	(*mlx->data_img).img = mlx_new_image(mlx->mlx, WINDOW_WIDTH, WINDOW_HEIGTH);
-	(*mlx->data_img).addr = mlx_get_data_addr((*mlx->data_img).img, &(*mlx->data_img).bpp, \
-	&(*mlx->data_img).ll, &(*mlx->data_img).endian);
-	return (mlx->data_img);
+	data_img->img = mlx_new_image(mlx->mlx, WINDOW_WIDTH, WINDOW_HEIGTH);
+	data_img->addr = mlx_get_data_img_addr(data_img->img, &data_img->bpp, \
+	&data_img->ll, &data_img->endian);
+	return (data_img);
 }
 
-void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	ft_mlx_pixel_put(t_data_img *data, int x, int y, int color)
 {
 	char	*pixel;
 
@@ -45,7 +45,7 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
-void	ft_init_background(t_data *data, int color)
+void	ft_render_background(t_data_img *data, int color)
 {
 	int	i;
 	int	j;

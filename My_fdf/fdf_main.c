@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:54:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/21 16:48:06 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/22 17:34:51 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,42 @@ void	ft_print_coor(t_coor *coor, t_size *size)
 		i++;
 	}
 }
+void	*ft_init_data(char **argv)
+{
+	int fd;
+	t_data *data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
+	data->size = ft_init_size();
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	if (!ft_get_size(fd, data->size))
+		return (NULL);
+	close(fd);
+	data->coor = ft_init_coor(data->size);
+	data->mlx = ft_initialize_window(argv[0]);
+	ft_initialize_image(data->data_img, data->mlx);
+	data->array3d = ft_new_array(data->size);
+	return (data);
+}
 
 int main(int argc, char **argv)
 {
-	int	**array3d;
-	t_size	*size;
+	t_data	*data;
+	
 
 	if (argc != 2)
 		return (1);
-	size = ft_init_size();
-	if (!size)
-		return (1);
-	array3d = ft_parsing(argv, size);
-	if (!array3d)
-		return (ft_free_all(array3d, NULL, size, NULL), 1);
-	ft_project(array3d, size, argv[1]);
-	return (ft_free_all(array3d, NULL, size, NULL), 0);
+
+	data = ft_init_data(argv);
+	data->array3d = ft_parsing(argv, data->size, data->array3d);
+	if (!data->array3d)
+		return (ft_free_struct(data), 1);
+	ft_project(data, argv[1]);
+	return (ft_free_struct(data), 0);
 		
 }
 

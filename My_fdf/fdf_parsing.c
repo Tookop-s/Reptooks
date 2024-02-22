@@ -6,30 +6,32 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/16 11:28:20 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/22 17:35:32 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int	ft_get_size(int	fd, int *rows, int *cols)
+int	ft_get_size(int	fd, t_size *size)
 {
 	char	*str;
 
 	str = get_next_line(fd);
 	if (!str)
 		return (0);
-	*cols = ft_countword(str) - 1;
+	size->cols = ft_countword(str) - 1;
 	while (str)
 	{
 		free (str);
-		(*rows)++;
+		size->rows++;
+		if ((int)ft_strlen(str) != size->cols)
+			return (0);
 		str = get_next_line(fd);
 	}
 	return (1);
 }
 
-static void	*ft_fill_array(int **array3d, int fd, int rows, int cols)
+void	*ft_fill_array(int **array3d, int fd, int rows, int cols)
 {
 	char	*line;
 	char	**tabsplit;
@@ -54,18 +56,10 @@ static void	*ft_fill_array(int **array3d, int fd, int rows, int cols)
 	return (array3d);
 }
 
-void	*ft_parsing(char **argv, t_size *size)
+void	*ft_parsing(char **argv, t_size *size, int **array3d)
 {
 	int		fd;
-	int		**array3d;
 
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	if (!ft_get_size(fd, &(*size).rows, &(*size).cols))
-		return (NULL);
-	close(fd);
-	array3d = ft_new_array((*size).rows, (*size).cols);
 	fd = open(argv[1], O_RDONLY);
 	array3d = ft_fill_array(array3d, fd, (*size).rows, (*size).cols);
 	close(fd);
