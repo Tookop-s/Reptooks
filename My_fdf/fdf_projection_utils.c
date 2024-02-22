@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/21 16:57:28 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/22 10:46:18 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_new_coor(t_size *size)
 	int	i;
 
 	i = 0;
-	coor = malloc(((*size).rows * (*size).cols) * sizeof(t_coor*));
+	coor = malloc(((*size).rows * (*size).cols) * sizeof(t_coor));
 	if (!coor)
 		return (NULL);
 	while (i < (*size).rows * (*size).cols )
@@ -36,7 +36,7 @@ void	*ft_new_dcoor(t_size *size)
 	int	i;
 
 	i = 0;
-	dcoor = malloc(((*size).rows * (*size).cols) * sizeof(t_dcoor*));
+	dcoor = malloc(((*size).rows * (*size).cols) * sizeof(t_dcoor));
 	if (!dcoor)
 		return (NULL);
 	while (i < (*size).rows * (*size).cols )
@@ -71,12 +71,12 @@ void	ft_free_all(int **array, t_coor *coor, t_size *size, t_dcoor *dcoor)
 		free(size);
 }
 
-double	ft_min(t_dcoor comp)
+void	ft_minimum(t_dcoor comp, double *dscale)
 {
 	if (comp.x > comp.y)
-		return (comp.y);
+		*dscale = comp.y;
 	else
-		return (comp.x);
+		*dscale = comp.x;
 }
 t_dcoor	ft_get_mincoor(t_dcoor *dcoor, t_size *size)
 {
