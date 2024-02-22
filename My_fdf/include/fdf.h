@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/21 16:59:18 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/22 11:08:10 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define WINDOW_HEIGTH 1080
 # define WINDOW_WIDTH 1920
-# define WINDOW_MARGIN 50
+# define WINDOW_MARGIN 100
 
 
 typedef struct s_data
@@ -60,7 +60,6 @@ typedef struct s_dcoor
 	double	y;
 }				t_dcoor;
 
-
 typedef struct s_size
 {
 	int	rows;
@@ -85,7 +84,7 @@ void	*ft_new_dcoor(t_size *size);
 void	ft_free_dcoor(t_dcoor *dcoor);
 t_dcoor	ft_get_maxcoor(t_dcoor *dcoor, t_size *size);
 t_dcoor	ft_get_mincoor(t_dcoor *dcoor, t_size *size);
-double	ft_min(t_dcoor comp);
+void	ft_minimum(t_dcoor comp, double *dscale);
 
 		/*mlx*/
 void	*ft_initialize_window(char *title);
