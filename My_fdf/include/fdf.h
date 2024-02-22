@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/21 14:46:34 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/21 16:59:18 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_dcoor
 	double	y;
 }				t_dcoor;
 
+
 typedef struct s_size
 {
 	int	rows;
@@ -77,11 +78,13 @@ void	ft_free_split(char **str);
 		/*Projection*/
 void	*ft_project(int **array, t_size *size, char *title);
 		/*Utils*/
-void	ft_free_all(int **array, t_coor *coor, t_size *size);
+void	ft_free_all(int **array, t_coor *coor, t_size *size, t_dcoor *dcoor);
 void	*ft_new_coor(t_size *size);
 void	ft_free_coor(t_coor *coor);
-t_coor	ft_get_maxcoor(t_coor *coor, t_size *size);
-t_coor	ft_get_mincoor(t_coor *coor, t_size *size);
+void	*ft_new_dcoor(t_size *size);
+void	ft_free_dcoor(t_dcoor *dcoor);
+t_dcoor	ft_get_maxcoor(t_dcoor *dcoor, t_size *size);
+t_dcoor	ft_get_mincoor(t_dcoor *dcoor, t_size *size);
 double	ft_min(t_dcoor comp);
 
 		/*mlx*/

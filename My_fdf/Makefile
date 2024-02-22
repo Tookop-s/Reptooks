@@ -19,10 +19,10 @@ all: $(NAME)
 $(LIBFT_DIR)/libft.a: FORCE
 	$(MAKE) -C $(LIBFT_DIR) 
 
-# $(MINILIBX_DIR)/libmlx.a:
-# 	$(MAKE) -sC $(MINILIBX_DIR)
+$(MINILIBX_DIR)/libmlx.a: FORCE
+	$(MAKE) -C $(MINILIBX_DIR)
 
-$(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a 
+$(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a $(MINILIBX_DIR)/libmlx.a
 	$(GCC) $(CFLAGS) -o $@  $^ $(MINILIBX_DIR)/libmlx.a -lXext -lX11 -lm
 
 
@@ -35,7 +35,7 @@ FORCE:
 clean:
 	@echo "Cleaning"
 	$(MAKE) clean -sC $(LIBFT_DIR)
-# $(MAKE) clean -sC $(MINILIBX_DIR)
+	$(MAKE) clean -sC $(MINILIBX_DIR)	
 	rm -rf $(OBJ_DIR)
 
 fclean: clean

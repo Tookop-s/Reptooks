@@ -6,13 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:02:10 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/21 14:47:00 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/21 17:00:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-static void ft_fill_x(t_coor *coor, double t, int index)
+static void ft_round_double_in_x(t_coor *coor, double t, int index)
 {
 	if (t > 0)
 	{
@@ -28,9 +28,9 @@ static void ft_fill_x(t_coor *coor, double t, int index)
 		else
 			coor[index].x = (int)(t);
 	}
-
 }
-static void ft_fill_y(t_coor *coor, double r, int index)
+
+static void ft_round_double_in_y(t_coor *coor, double r, int index)
 {
 	if (r > 0)
 	{
@@ -48,53 +48,55 @@ static void ft_fill_y(t_coor *coor, double r, int index)
 	}
 }
 
-static void	ft_rescale(t_coor *coor, t_size *size, t_coor mincoor, t_coor maxcoor)
+static void	ft_rescale(t_dcoor *dcoor, t_size *size, double *dscale,  t_dcoor *delta)
 {
-	double	dscale;
-	int		i;
-	t_dcoor	scale;
-	t_dcoor	delta;
-	t_coor	middlecoor;
+	t_dcoor mincoor;
+	t_dcoor maxcoor;
+	t_dcoor	middlecoor;
+	t_dcoor scale;
 
+	mincoor = ft_get_mincoor(dcoor, size);
+	maxcoor = ft_get_maxcoor(dcoor, size);
 	middlecoor.x = maxcoor.x - mincoor.x;
 	middlecoor.y = maxcoor.y - mincoor.y;
 	scale.x = (WINDOW_WIDTH - 2 * WINDOW_MARGIN) / middlecoor.x;
 	scale.y = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / middlecoor.y;
-	dscale = ft_min(scale) * 0.5;
+	*dscale = ft_min(scale);
 	middlecoor.x = (maxcoor.x + mincoor.x) / 2;
 	middlecoor.y = (maxcoor.y + mincoor.y) / 2;
-	delta.x = (WINDOW_WIDTH - 2 * WINDOW_MARGIN) / 2 - middlecoor.x * dscale;
-	delta.y = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / 2 - middlecoor.y * dscale;
-	i = 0;
-	while (i < ((*size).rows * (*size).cols) && dscale)
-	{
-		coor[i].x = (int)(coor[i].x * dscale + delta.x);
-		coor[i].y = (int)(coor[i].y * dscale + delta.y);
-		i++;
-	}
+	delta->x = (WINDOW_WIDTH - 2 * WINDOW_MARGIN) / 2 - middlecoor.x * (*dscale);
+	delta->y = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / 2 - middlecoor.y * (*dscale);
+
 }
 
 
-static void *ft_resize(t_coor *coor, t_size *size)
+static void *ft_resize(t_dcoor *dcoor, t_size *size, t_coor	*coor)
 {
 	int	i;
-	t_coor mincoor;
-	t_coor maxcoor;
+	double *dscale;
+	t_dcoor *delta;
 
-	mincoor = ft_get_mincoor(coor, size);
-	maxcoor = ft_get_maxcoor(coor, size);
-	ft_rescale(coor, size, mincoor, maxcoor);
+	i = 0;
+	dscale = NULL;
+	delta = NULL;
+	ft_rescale(dcoor, size, dscale, delta);
+	while (i < ((*size).rows * (*size).cols))
+	{
+		ft_round_double_in_y(coor, dcoor[i].y * (*dscale) + delta->y, i);
+		ft_round_double_in_x(coor, dcoor[i].x * (*dscale) + delta->x, i);
+		i++;
+	}
 	return (coor);
 }
 
-static void	*ft_convert_to_isometric(int **array3d, t_size *size, t_coor *coor)
+static void	*ft_convert_to_isometric(int **array3d, t_size *size, t_dcoor *dcoor, t_coor *coor)
 {
 	int		i;
 	int		j;
 	double	a;
 	double	b;
 	double	t;
-	double	r;
+	double	u;
 
 	i = 0;
 	a =  35.264 * M_PI / 180;
@@ -105,14 +107,15 @@ static void	*ft_convert_to_isometric(int **array3d, t_size *size, t_coor *coor)
 		while (j < (*size).cols)
 		{
 			t = cos(b) * j + sin(b) * sin(a) * i - sin(b) * cos(a) * array3d[i][j];
-			r = cos(a) * i + sin(a) * array3d[i][j];
-			ft_fill_x(coor, t, (j + i * (*size).cols));
-			ft_fill_y(coor, r, (j + i * (*size).cols));
+			u = cos(a) * i + sin(a) * array3d[i][j];
+			dcoor[j + i * (*size).cols].x = t;
+			dcoor[j + i * (*size).cols].y = u;
 			j++;
 		}
 		i++;
 	}
-	ft_resize(coor, size);
+	coor = ft_resize(dcoor, size, coor);
+	ft_free_dcoor(dcoor);
 	return (coor);
 }
 
@@ -171,11 +174,13 @@ static void	ft_print_map(t_coor *coor, t_size *size, t_mlx *mlx)
 
 void	*ft_project(int **array, t_size *size, char *title)
 {
+	t_dcoor	*dcoor;
 	t_coor	*coor;
 	t_mlx	*mlx;
 
+	dcoor = ft_new_dcoor(size);
 	coor = ft_new_coor(size);
-	ft_convert_to_isometric(array, size, coor);
+	coor = ft_convert_to_isometric(array, size, dcoor, coor);
 	mlx = ft_initialize_window(title);
 	if (!mlx)
 		return (NULL);

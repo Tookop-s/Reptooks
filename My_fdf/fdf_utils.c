@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:21:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/21 12:01:16 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/21 15:39:19 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*ft_initialize_window(char *title)
 	mlx = malloc(sizeof(t_mlx));
 	if (!mlx)
 		return (NULL);
-	(*mlx).mlx = mlx_init();
-	(*mlx).mlx_win = mlx_new_window((*mlx).mlx, WINDOW_WIDTH, WINDOW_HEIGTH, title);
+	mlx->mlx = mlx_init();
+	mlx->mlx_win = mlx_new_window((*mlx).mlx, WINDOW_WIDTH, WINDOW_HEIGTH, title);
 	return (mlx);
 }
 
