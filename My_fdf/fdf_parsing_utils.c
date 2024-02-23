@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/22 16:17:46 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:08:35 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "include/fdf.h"
 
 void	*ft_new_array(t_size *size)
 {
@@ -71,6 +71,29 @@ void	*ft_init_size()
 	size->a = 0;
 	size->b = 0;
 	return (size);
+}
+
+int	ft_countcols(char *str)
+{
+	int	i;
+	int	check;
+	int	sum;
+
+	i = 0;
+	check = 1;
+	sum = 0;
+	while (str[i])
+	{
+		if ((str[i] == ' ') | (str[i] == '\t')| (str[i] == '\n'))
+			check = 1;
+		else if (check == 1)
+		{
+			sum++;
+			check = 0;
+		}
+		i++;
+	}
+	return (sum);
 }
 
 void	ft_free_struct(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/22 16:11:29 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:58:28 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,20 @@ void	ft_free_coor(t_coor *coor)
 	free(coor);
 }
 
-void	ft_free_all(int **array, t_coor *coor, t_size *size, t_coor *coor)
-{
-	ft_free_coor(coor);
-	ft_free_coor(coor);
-	ft_free_array(array, size->rows);
-	if (size)
-		free(size);
-}
+// void	ft_free_all(int **array, t_coor *coor, t_size *size)
+// {
+// 	ft_free_coor(coor);
+// 	ft_free_array(array, size->rows);
+// 	if (size)
+// 		free(size);
+// }
 
-void	ft_minimum(t_coor comp, double *dscale)
+void	ft_minimum(t_coor *comp)
 {
-	if (comp.x > comp.y)
-		*dscale = comp.y;
+	if (comp->dx > comp->dy)
+		comp->x = (int)comp->dy;
 	else
-		*dscale = comp.x;
+		comp->y = (int)comp->dx;
 }
 t_coor	ft_get_mincoor(t_coor *coor, t_size *size)
 {
@@ -62,10 +61,16 @@ t_coor	ft_get_mincoor(t_coor *coor, t_size *size)
 	t_coor	mincoor;
 
 	i = 0;
+	mincoor.dx = coor[0].dx;
+	mincoor.dy = coor[0].dy;
 	mincoor.x = coor[0].x;
 	mincoor.y = coor[0].y;
 	while (i < ((*size).rows * (*size).cols))
 	{
+		if (mincoor.dx > coor[i].dx) 
+			mincoor.dx = coor[i].dx;
+		if (mincoor.dy > coor[i].dy)
+			mincoor.dy = coor[i].dy;
 		if (mincoor.x > coor[i].x) 
 			mincoor.x = coor[i].x;
 		if (mincoor.y > coor[i].y)
@@ -81,11 +86,17 @@ t_coor	ft_get_maxcoor(t_coor *coor, t_size *size)
 	t_coor	maxcoor;
 
 	i = 0;
+	maxcoor.dx = coor[0].dx;
+	maxcoor.dy = coor[0].dy;
 	maxcoor.x = coor[0].x;
 	maxcoor.y = coor[0].y;
 	while (i < ((*size).rows * (*size).cols))
 	{
-		if (maxcoor.x < coor[i].x)
+		if (maxcoor.dx < coor[i].dx)
+			maxcoor.dx = coor[i].dx;
+		if (maxcoor.dy < coor[i].dy)
+			maxcoor.dy = coor[i].dy;
+		if (maxcoor.x < coor[i].x) 
 			maxcoor.x = coor[i].x;
 		if (maxcoor.y < coor[i].y)
 			maxcoor.y = coor[i].y;

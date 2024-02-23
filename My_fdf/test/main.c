@@ -17,3 +17,27 @@ int main (void)
 	int d1 = (int)floor(d);
 	printf("%d = %lf \n",d1 , d);
 }
+
+
+// static void ft_draw_line(t_coor start, t_coor end, t_data_img *img, int color) 
+// {
+// 	int x;
+//     double slope;
+
+// 	x = start.x;
+// 	slope = (end.y - start.y) / (end.x - start.x);
+//     while (x <= end.x)
+// 	{
+// 		int y = start.y + slope * (x - start.x);
+// 		ft_mlx_pixel_put(img, x, y, color);
+// 		x++;
+// 	}
+// }
+//view asin(tan(M_PI / 6))
+// t = cos(b) * j - sin(b) * sin(a) * i + sin(b) * cos(a) * array3d[i][j];
+// u = cos(a) * i - sin(a) * array3d[i][j];
+
+// almost
+// t = cos(b) * j + sin(b) * sin(a) * i + sin(b) * cos(a) * array3d[i][j];
+// u = cos(a) * i - sin(a) * array3d[i][j];
+

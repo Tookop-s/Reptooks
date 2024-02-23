@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/22 17:28:12 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/23 16:58:30 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,13 @@ void	ft_free_array(int **array, int rows);
 void	*ft_init_size();
 void	ft_free_split(char **str);
 int		ft_get_size(int	fd, t_size *size);
+int		ft_countcols(char *str);
 
 		/*Projection*/
-void	*ft_project(t_data *data, char *title);
+void	*ft_project(t_data *data);
+int		ft_render(t_data *data);
+void	ft_print_map(t_data *data);
+void	*ft_convert_to_isometric(int **array3d, t_size *size, t_coor *coor);
 		/*Utils*/
 void	ft_free_struct(t_data *data);
 void	*ft_init_coor(t_size *size);
@@ -91,13 +95,16 @@ void	ft_free_coor(t_coor *coor);
 void	ft_free_coor(t_coor *coor);
 t_coor	ft_get_maxcoor(t_coor *coor, t_size *size);
 t_coor	ft_get_mincoor(t_coor *coor, t_size *size);
-void	ft_minimum(t_coor comp, double *dscale);
+void	ft_minimum(t_coor *comp);
 
 		/*mlx*/
 t_mlx	*ft_initialize_window(char *title);
 void	*ft_initialize_image(t_data_img *data_img, t_mlx *mlx);
 void	ft_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 void	ft_render_background(t_data_img *data, int color);
+int		ft_handle_notify(t_data	*data);
+int		ft_handle_input(int keysym, t_data *data);
+int		ft_render(t_data *data);
 
 void	ft_print_coor(t_coor *coor, t_size *size);
 

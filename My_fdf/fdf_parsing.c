@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/22 17:35:32 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:05:54 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	ft_get_size(int	fd, t_size *size)
 	str = get_next_line(fd);
 	if (!str)
 		return (0);
-	size->cols = ft_countword(str) - 1;
+	size->cols = ft_countcols(str);
 	while (str)
 	{
+		if (ft_countcols(str) != size->cols && str != NULL)
+			return (0);
 		free (str);
 		size->rows++;
-		if ((int)ft_strlen(str) != size->cols)
-			return (0);
 		str = get_next_line(fd);
 	}
 	return (1);

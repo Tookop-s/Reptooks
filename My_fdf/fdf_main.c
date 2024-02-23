@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:54:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/22 17:34:51 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:16:05 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*ft_init_data(char **argv)
 	close(fd);
 	data->coor = ft_init_coor(data->size);
 	data->mlx = ft_initialize_window(argv[0]);
-	ft_initialize_image(data->data_img, data->mlx);
+	data->data_img = ft_initialize_image(data->data_img, data->mlx);
 	data->array3d = ft_new_array(data->size);
 	return (data);
 }
@@ -61,10 +61,12 @@ int main(int argc, char **argv)
 		return (1);
 
 	data = ft_init_data(argv);
+	if (!data)
+		return (ft_free_struct(data), 1);
 	data->array3d = ft_parsing(argv, data->size, data->array3d);
 	if (!data->array3d)
 		return (ft_free_struct(data), 1);
-	ft_project(data, argv[1]);
+	ft_project(data);
 	return (ft_free_struct(data), 0);
 		
 }

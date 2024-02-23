@@ -3,7 +3,7 @@ NAME = fdf
 LIBFT_DIR = libft
 MINILIBX_DIR = minilibx
 
-SRCS = fdf_main.c fdf_utils.c fdf_parsing.c fdf_parsing_utils.c fdf_projection.c fdf_projection_utils.c
+SRCS = fdf_main.c fdf_mlx.c fdf_mlx_utils.c fdf_parsing.c fdf_parsing_utils.c fdf_projection.c fdf_projection_utils.c
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -22,8 +22,8 @@ $(LIBFT_DIR)/libft.a: FORCE
 $(MINILIBX_DIR)/libmlx.a: FORCE
 	$(MAKE) -C $(MINILIBX_DIR)
 
-$(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a $(MINILIBX_DIR)/libmlx.a
-	$(GCC) $(CFLAGS) -o $@  $^ $(MINILIBX_DIR)/libmlx.a -lXext -lX11 -lm
+$(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a $(MINILIBX_DIR)/libmlx.a 
+	$(GCC) $(CFLAGS) -o $@  $^ -lXext -lX11 -lm
 
 
 $(OBJ_DIR)/%.o: %.c
