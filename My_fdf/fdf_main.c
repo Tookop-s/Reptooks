@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:54:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/23 14:16:05 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/26 18:13:22 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 	if (!data->array3d)
 		return (ft_free_struct(data), 1);
 	ft_project(data);
-	return (ft_free_struct(data), 0);
+	return (ft_free_struct(data), free(data->mlx->mlx), free(data), 0);
 		
 }
 

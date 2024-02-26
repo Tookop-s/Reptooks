@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/23 16:58:30 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/26 17:22:45 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # define BLACK_COLOR 0x000000
 
 
-# define WINDOW_HEIGTH 500
-# define WINDOW_WIDTH 1000
+# define WINDOW_HEIGTH 1080
+# define WINDOW_WIDTH 1920
 # define WINDOW_MARGIN 100
 
 
@@ -62,6 +62,10 @@ typedef struct s_size
 	int	cols;
 	double	a;
 	double	b;
+	int		middle_x;
+	int		middle_y;
+	double	scale_x;
+	double	scale_y;
 }				t_size;
 
 typedef struct s_data
@@ -88,6 +92,10 @@ void	*ft_project(t_data *data);
 int		ft_render(t_data *data);
 void	ft_print_map(t_data *data);
 void	*ft_convert_to_isometric(int **array3d, t_size *size, t_coor *coor);
+void	ft_recenter(t_coor *coor, t_size *size, int width, int height);
+void	ft_replace(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y);
+void 	*ft_resize(t_size *size, t_coor	*coor);
+
 		/*Utils*/
 void	ft_free_struct(t_data *data);
 void	*ft_init_coor(t_size *size);
@@ -95,6 +103,7 @@ void	ft_free_coor(t_coor *coor);
 void	ft_free_coor(t_coor *coor);
 t_coor	ft_get_maxcoor(t_coor *coor, t_size *size);
 t_coor	ft_get_mincoor(t_coor *coor, t_size *size);
+void	ft_get_middle_coor(t_coor *coor, t_size *size);
 void	ft_minimum(t_coor *comp);
 
 		/*mlx*/

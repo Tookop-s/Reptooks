@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/23 14:08:35 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/26 18:31:37 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	*ft_new_array(t_size *size)
 	int	i;
 
 	i = 0;
-	array = malloc(size->rows * sizeof(int*));
+	array = malloc(size->rows * sizeof(int *));
 	if (!array)
 		return (NULL);
 	while (i < size->rows)
 	{
 		array[i] = malloc(size->cols * sizeof(int));
-		if (!array)
-			return(NULL);
+		if (!array[i])
+			return(free(array), NULL);
 		i++;
 	}
 	return (array);
@@ -43,7 +43,6 @@ void	ft_free_array(int **array, int rows)
 		free(array[i]);
 		i++;
 	}
-	free(array);
 }
 
 void	ft_free_split(char **str)
@@ -70,6 +69,10 @@ void	*ft_init_size()
 	size->rows = 0;
 	size->a = 0;
 	size->b = 0;
+	size->middle_x = 0;
+	size->middle_y = 0;
+	size->scale_x = 0;
+	size->scale_y = 0;
 	return (size);
 }
 
@@ -101,13 +104,12 @@ void	ft_free_struct(t_data *data)
 	if (data)
 	{
 		ft_free_array(data->array3d, data->size->rows);
+		mlx_destroy_window(data->mlx->mlx, data->mlx->mlx_win);
 		mlx_destroy_image(data->mlx->mlx, data->data_img->img);
 		free(data->data_img);
-		mlx_destroy_window(data->mlx->mlx, data->mlx->mlx_win);
 		mlx_destroy_display(data->mlx->mlx);
-		free(data->mlx->mlx);
+		data->mlx->mlx = NULL;
 		ft_free_coor(data->coor);
-		free(data->size);
+		// free(data->size);
 	}
-	free(data);
 }
