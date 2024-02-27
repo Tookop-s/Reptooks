@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/26 18:31:37 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 14:07:42 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_free_array(int **array, int rows)
 		free(array[i]);
 		i++;
 	}
+	free(array);
 }
 
 void	ft_free_split(char **str)
@@ -73,6 +74,7 @@ void	*ft_init_size()
 	size->middle_y = 0;
 	size->scale_x = 0;
 	size->scale_y = 0;
+	size->scale_z = 1;
 	return (size);
 }
 
@@ -103,13 +105,27 @@ void	ft_free_struct(t_data *data)
 {
 	if (data)
 	{
-		ft_free_array(data->array3d, data->size->rows);
-		mlx_destroy_window(data->mlx->mlx, data->mlx->mlx_win);
-		mlx_destroy_image(data->mlx->mlx, data->data_img->img);
-		free(data->data_img);
-		mlx_destroy_display(data->mlx->mlx);
-		data->mlx->mlx = NULL;
-		ft_free_coor(data->coor);
-		// free(data->size);
+		if (data->array3d && data->size->rows)
+			ft_free_array(data->array3d, data->size->rows);
+		data->array3d = NULL;
+		if (data->mlx->mlx && data->data_img->img)
+			mlx_destroy_image(data->mlx->mlx, data->data_img->img);
+		data->mlx->mlx_win = NULL;
+		if (data->coor)
+			ft_free_coor(data->coor);
+		data->coor = NULL;
+		if (data->data_img)
+			free(data->data_img);
+		data->data_img = NULL;
+		if (data->size)
+			free(data->size);
+		if (data->mlx->mlx)
+			mlx_destroy_display(data->mlx->mlx);
+		if (data->mlx->mlx)
+			free(data->mlx->mlx);
+		if (data->mlx)
+			free(data->mlx);
+		data->mlx = NULL;
+		free(data);
 	}
 }

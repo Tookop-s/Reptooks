@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:54:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/26 18:13:22 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 13:19:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*ft_init_data(char **argv)
 		return (NULL);
 	data->size = ft_init_size();
 	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
+	if (fd < 0 || data->size == NULL)
 		return (NULL);
 	if (!ft_get_size(fd, data->size))
 		return (NULL);
@@ -67,8 +67,8 @@ int main(int argc, char **argv)
 	if (!data->array3d)
 		return (ft_free_struct(data), 1);
 	ft_project(data);
-	return (ft_free_struct(data), free(data->mlx->mlx), free(data), 0);
-		
+	ft_free_struct(data);
+	return (0);
 }
 
 // isometric projection

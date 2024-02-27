@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/23 15:58:28 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 15:37:43 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	*ft_init_coor(t_size *size)
 	{
 		coor[i].x = 0;
 		coor[i].y = 0;
+		coor[i].dz = 0;
 		coor[i].dx = 0;
 		coor[i].dy = 0;
 		i++;
@@ -40,13 +41,6 @@ void	ft_free_coor(t_coor *coor)
 	free(coor);
 }
 
-// void	ft_free_all(int **array, t_coor *coor, t_size *size)
-// {
-// 	ft_free_coor(coor);
-// 	ft_free_array(array, size->rows);
-// 	if (size)
-// 		free(size);
-// }
 
 void	ft_minimum(t_coor *comp)
 {

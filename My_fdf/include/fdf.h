@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/26 17:22:45 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 15:37:29 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
-#include <X11/keysym.h>
+# include <X11/keysym.h>
+# include <errno.h>
 
 # define RED_COLOR 0xFF0000
 # define GREEN_COLOR 0x00FF00
@@ -54,6 +55,7 @@ typedef struct s_coor
 	int	y;
 	double	dx;
 	double	dy;
+	double	dz;
 }				t_coor;
 
 typedef struct s_size
@@ -66,6 +68,7 @@ typedef struct s_size
 	int		middle_y;
 	double	scale_x;
 	double	scale_y;
+	double	scale_z;
 }				t_size;
 
 typedef struct s_data
