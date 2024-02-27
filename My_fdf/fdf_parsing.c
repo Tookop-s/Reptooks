@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/23 14:05:54 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:53:40 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "include/fdf.h"
 
 int	ft_get_size(int	fd, t_size *size)
 {
@@ -31,7 +31,7 @@ int	ft_get_size(int	fd, t_size *size)
 	return (1);
 }
 
-void	*ft_fill_array(int **array3d, int fd, int rows, int cols)
+static void	*ft_fill_coor(t_coor *coor, int fd, int rows, int cols)
 {
 	char	*line;
 	char	**tabsplit;
@@ -46,22 +46,24 @@ void	*ft_fill_array(int **array3d, int fd, int rows, int cols)
 		tabsplit = ft_split(line, ' ');
 		while (j < cols)
 		{
-			array3d[i][j] = ft_atoi(tabsplit[j]);
+			coor[j + i * cols].dz = ft_atoi(tabsplit[j]);
+			coor[j + i * cols].dx = j;
+			coor[j + i * cols].dy = i;
 			j++;
 		}
 		i++;
 		free(line);
 		ft_free_split(tabsplit);
 	}
-	return (array3d);
+	return (coor);
 }
 
-void	*ft_parsing(char **argv, t_size *size, int **array3d)
+void	*ft_parsing(char **argv, t_data *data)
 {
 	int		fd;
 
 	fd = open(argv[1], O_RDONLY);
-	array3d = ft_fill_array(array3d, fd, (*size).rows, (*size).cols);
+	data->coor = ft_fill_coor(data->coor, fd, data->size->rows, data->size->cols);
 	close(fd);
-	return (array3d);
+	return (data);
 }

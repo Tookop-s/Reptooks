@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:02:10 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 15:43:33 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 17:06:19 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,26 +82,29 @@ void *ft_resize(t_size *size, t_coor *coor)
 	return (coor);
 }
 
-void	*ft_convert_to_isometric(int **array3d, t_size *size, t_coor *coor)
+void	*ft_convert_to_isometric(t_size *size, t_coor *coor)
 {
+	int		y;
+	int		x;
 	int		i;
-	int		j;
+	
 	double	arcsin;
 	double	beta;
 
-	i = 0;
-	arcsin = asin(tan(M_PI / 6)) + size->a;
-	beta = M_PI / 4 + size->b;
-	while (i < (*size).rows)
+	y = 0;
+	arcsin = asin(tan(M_PI / 6));
+	beta = M_PI / 4;
+	while (y < (*size).rows)
 	{
-		j = 0;
-		while (j < (*size).cols)
+		x = 0;
+		while (x < (*size).cols)
 		{
-			coor[j + i * (*size).cols].dx = cos(beta) * j + sin(beta) * sin(arcsin) * i + sin(beta) * cos(arcsin) * (array3d[i][j] * size->scale_z);
-			coor[j + i * (*size).cols].dy = cos(arcsin) * i - sin(arcsin) * (array3d[i][j] * size->scale_z);
-			j++;
+			i = x + y * size->cols;
+			coor[i].dx = cos(beta) * coor[i].dx + sin(beta) * sin(arcsin) * coor[i].dy + sin(beta) * cos(arcsin) * (coor[i].dz * size->scale_z);
+			coor[i].dy = cos(arcsin) * coor[i].dy - sin(arcsin) * (coor[i].dz * size->scale_z);
+			x++;
 		}
-		i++;
+		y++;
 	}
 	ft_resize(size, coor);
 	return (coor);
@@ -133,7 +136,7 @@ static void ft_draw_line(t_coor start, t_coor end, t_data_img *data_img, int col
 		err2 = 2 * err;
 		if (err2 > -diff.y)
 		{
-			err -= diff.y;θ
+			err -= diff.y;
 			start.x += in.x;
 		}
 		if (err2 < diff.x)
@@ -155,11 +158,11 @@ void	ft_print_map(t_data *data)
 		j = 0;
 		while (j < data->size->cols)
 		{
-			ft_mlx_pixel_put(data->data_img, data->coor[(j + i * data->size->cols)].x, data->coor[(j + i * data->size->cols)].y, RED_COLOR);
+			ft_mlx_pixel_put(data->data_img, data->coor[j + i * data->size->cols].x, data->coor[(j + i * data->size->cols)].y, RED_COLOR);
 			if (j < data->size->cols - 1)
-				ft_draw_line(data->coor[(j + i * data->size->cols)], data->coor[(j + i * data->size->cols) + 1], data->data_img, RED_COLOR);
+				ft_draw_line(data->coor[j + i * data->size->cols], data->coor[(j + i * data->size->cols) + 1], data->data_img, RED_COLOR);
 			if (i < data->size->rows - 1)
-				ft_draw_line(data->coor[(j + i * data->size->cols)], data->coor[(j + (i + 1) * data->size->cols)], data->data_img, RED_COLOR);
+				ft_draw_line(data->coor[j + i * data->size->cols], data->coor[(j + (i + 1) * data->size->cols)], data->data_img, RED_COLOR);
 			j++;
 		}
 		i++;
@@ -171,9 +174,10 @@ void	ft_print_map(t_data *data)
 void	*ft_project(t_data *data)
 {
 
-	ft_convert_to_isometric(data->array3d, data->size, data->coor);
+	ft_convert_to_isometric(data->size, data->coor);
 	ft_resize(data->size, data->coor);
 	ft_recenter(data->coor, data->size, WINDOW_WIDTH, WINDOW_HEIGTH);
+	ft_render(data);
 	mlx_loop_hook(data->mlx->mlx, ft_render, data);
 	mlx_key_hook(data->mlx->mlx_win, ft_handle_input, data);
 	mlx_hook(data->mlx->mlx_win, 17, (1L<<17), ft_handle_notify, data);
@@ -182,47 +186,7 @@ void	*ft_project(t_data *data)
 }
 
 
-ft_rotate_x(t_data *data)
-{
-	t_coor temp;
-	int	i;
-	int	j;
 
-	i = 0;
-	while (i < data->size->rows)
-	{
-		j = 0;
-		while (j < data->size->cols)
-		{
-			temp.dx = j;
-			temp.dy = i;
-			temp.dz = data->array3d[i][j];
-			data->coor[j + i *data->size->cols].dx = temp.dx;
-			data->coor[j + i *data->size->cols].dy = cos(data->size->x) * temp.dy - sin(data->size->x)
-			data->coor[j + i *data->size->cols].dz =
-			j++;
-		}
-		i++;
-	}
-	y = cos() * y - sin() * z;
-	z = sin() * y + cos() * z
-}
-
-ft_rotate_y(t_data *data)
-{
-	x = cos()*x+sin()*z;
-	y = y
-	z = -sin()*x+cos()*z
-}
-
-void	ft_rotate_z(t_data *data))
-{
-	
-	;
-	x = cos()*x-sin()*y;
-	y = sin()*x+cos()*y;
-	z = z
-}
 // rotate clock wise 
 // tempx = *x
 // *x = cos(angle) * tempX - sin(angle) * *z;

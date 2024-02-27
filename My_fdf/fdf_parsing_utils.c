@@ -6,45 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 14:07:42 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:54:19 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-void	*ft_new_array(t_size *size)
-{
-	int	**array;
-	int	i;
 
-	i = 0;
-	array = malloc(size->rows * sizeof(int *));
-	if (!array)
-		return (NULL);
-	while (i < size->rows)
-	{
-		array[i] = malloc(size->cols * sizeof(int));
-		if (!array[i])
-			return(free(array), NULL);
-		i++;
-	}
-	return (array);
-}
-
-void	ft_free_array(int **array, int rows)
-{
-	int	i;
-
-	i = 0;
-	if (!array)
-		return ;
-	while (i < rows)
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 void	ft_free_split(char **str)
 {
@@ -68,8 +36,9 @@ void	*ft_init_size()
 		return (NULL);
 	size->cols = 0;
 	size->rows = 0;
-	size->a = 0;
-	size->b = 0;
+	size->x = 0;
+	size->y = 0;
+	size->z = 0;
 	size->middle_x = 0;
 	size->middle_y = 0;
 	size->scale_x = 0;
@@ -105,9 +74,6 @@ void	ft_free_struct(t_data *data)
 {
 	if (data)
 	{
-		if (data->array3d && data->size->rows)
-			ft_free_array(data->array3d, data->size->rows);
-		data->array3d = NULL;
 		if (data->mlx->mlx && data->data_img->img)
 			mlx_destroy_image(data->mlx->mlx, data->data_img->img);
 		data->mlx->mlx_win = NULL;

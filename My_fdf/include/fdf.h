@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 15:37:29 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:55:50 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ typedef struct s_size
 {
 	int	rows;
 	int	cols;
-	double	a;
-	double	b;
+	double	x;
+	double	y;
+	double	z;
 	int		middle_x;
 	int		middle_y;
 	double	scale_x;
@@ -73,7 +74,6 @@ typedef struct s_size
 
 typedef struct s_data
 {
-	int			**array3d;
 	t_data_img	*data_img;
 	t_mlx		*mlx;
 	t_coor		*coor;
@@ -81,10 +81,8 @@ typedef struct s_data
 }				t_data;
 
 		/*Parsing*/
-void	*ft_parsing(char **argv, t_size *size, int **array3d);
+void	*ft_parsing(char **argv, t_data *data);
 		/*Utils*/
-void	*ft_new_array(t_size *size);
-void	ft_free_array(int **array, int rows);
 void	*ft_init_size();
 void	ft_free_split(char **str);
 int		ft_get_size(int	fd, t_size *size);
@@ -94,7 +92,11 @@ int		ft_countcols(char *str);
 void	*ft_project(t_data *data);
 int		ft_render(t_data *data);
 void	ft_print_map(t_data *data);
-void	*ft_convert_to_isometric(int **array3d, t_size *size, t_coor *coor);
+int		ft_rotate(t_data *data, int	keysym);
+int		ft_translate(t_data *data, int keysym);
+int		ft_zoom(t_data *data, int keysym);
+int		ft_scale(t_data *data, int keysym);
+void	*ft_convert_to_isometric(t_size *size, t_coor *coor);
 void	ft_recenter(t_coor *coor, t_size *size, int width, int height);
 void	ft_replace(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y);
 void 	*ft_resize(t_size *size, t_coor	*coor);

@@ -3,7 +3,9 @@ NAME = fdf
 LIBFT_DIR = libft
 MINILIBX_DIR = minilibx
 
-SRCS = fdf_main.c fdf_mlx.c fdf_mlx_utils.c fdf_parsing.c fdf_parsing_utils.c fdf_projection.c fdf_projection_utils.c
+SRCS = fdf_main.c fdf_mlx.c fdf_mlx_utils.c fdf_parsing.c fdf_parsing_utils.c \
+fdf_projection.c fdf_projection_utils.c fdf_rotate.c fdf_translate_zoom_scale.c \
+
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
