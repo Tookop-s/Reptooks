@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 14:07:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:39:15 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "mlx.h"
 # include "libft.h"
 # include <stdlib.h>
+# include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
 # include <X11/keysym.h>
@@ -101,8 +102,9 @@ int		ft_zoom(t_data *data, int keysym);
 int		ft_scale(t_data *data, int keysym);
 void	*ft_convert_to_isometric(t_size *size, t_coor *coor);
 void	ft_recenter(t_coor *coor, t_size *size, int width, int height);
-void	ft_replace(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y);
-void 	*ft_resize(t_size *size, t_coor	*coor);
+void	ft_reposition(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y);
+void 	*ft_resize_2d(t_size *size, t_coor	*coor);
+void 	*ft_resize_3d(t_size *size, t_coor	*coor);
 
 		/*Utils*/
 void	ft_free_struct(t_data *data);

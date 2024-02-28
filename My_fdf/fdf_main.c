@@ -6,29 +6,26 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:54:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 13:59:21 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:43:59 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-// void	ft_print_coor(t_coor *coor, t_size *size)
-// {
-// 	int i = 0;
-// 	int j = 0;
+void	ft_print_coor(t_coor *coor, t_size *size)
+{
+	int i = 0;
 
-// 	while (i < (*size).rows)
-// 	{
-// 		j = 0;
-// 		while (j < (*size).cols)
-// 		{
-// 			printf(" x = %d y = %d ", coor[j + i * (*size).cols].x, coor[j + i * (*size).cols].y);
-// 			j++;
-// 		}
-// 		printf("\n");
-// 		i++;
-// 	}
-// }
+	while (i < (*size).rows * (*size).cols)
+	{
+		
+		printf(" x = %d y = %d  | ", coor[i].x, coor[i].y);
+		printf("dx = %f dy =  %f", coor[i].dx, coor[i].dy);
+		printf("\n");
+		i++;
+	}
+	printf("\n");
+}
 
 void	*ft_init_data(char **argv)
 {

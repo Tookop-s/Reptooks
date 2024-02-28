@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:54:30 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 14:25:50 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:52:22 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_zoom(t_data *data, int keysym)
 		data->size->scale_f += 1;
 		ft_get_middle_coor(data->coor, data->size);
 		ft_convert_to_isometric( data->size, data->coor);
-		ft_replace(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
 		return (1);
 	}
 	if (keysym == XK_KP_Subtract)
@@ -52,7 +52,7 @@ int	ft_zoom(t_data *data, int keysym)
 		data->size->scale_f -= 1;
 		ft_get_middle_coor(data->coor, data->size);
 		ft_convert_to_isometric(data->size, data->coor);
-		ft_replace(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
 		return (1);
 	}
 	return (0);
@@ -65,7 +65,7 @@ int	ft_scale(t_data *data, int keysym)
 		data->size->scale_z += 0.1;
 		ft_get_middle_coor(data->coor, data->size);
 		ft_convert_to_isometric(data->size, data->coor);
-		ft_replace(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
 		return (1);
 	}
 	if (keysym == XK_Page_Down)
@@ -73,7 +73,7 @@ int	ft_scale(t_data *data, int keysym)
 		data->size->scale_z -= 0.1;
 		ft_get_middle_coor(data->coor, data->size);
 		ft_convert_to_isometric(data->size, data->coor);
-		ft_replace(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
 		return (1);
 	}
 	return (0);

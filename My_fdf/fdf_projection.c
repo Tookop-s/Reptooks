@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:02:10 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 14:06:18 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:24:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void ft_recenter(t_coor *coor, t_size *size, int width, int height)
 	}
 }
 
-void	ft_replace(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y)
+void	ft_reposition(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y)
 {
 	t_coor	delta;
 	int		i;
@@ -57,7 +57,35 @@ void	ft_replace(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y)
 	}	
 }
 
-void *ft_resize(t_size *size, t_coor *coor)
+void *ft_resize_3d(t_size *size, t_coor *coor)
+{
+	t_coor	maxcoor;
+	t_coor	mincoor;
+	t_coor deltacoor;
+	t_coor scale;
+	int		i;
+
+	i = 0;
+	maxcoor = ft_get_maxcoor(coor, size);
+	mincoor = ft_get_mincoor(coor, size);
+	deltacoor.ix = size->cols;
+	deltacoor.iy = size->rows;
+	deltacoor.iz = maxcoor.iz - mincoor.iz;
+	scale.ix = (WINDOW_WIDTH - 2 * WINDOW_MARGIN) / deltacoor.ix;
+	scale.iy = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / deltacoor.iy;
+	scale.iz = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / deltacoor.iz;
+	ft_minimum(&scale);
+	while ((i < ((*size).rows * (*size).cols) && scale.dx != 0))
+	{
+		coor[i].ix *= scale.ix;
+		coor[i].iy *= scale.iy;
+		coor[i].iz *= scale.iz;
+		i++;
+	}
+	return (coor);
+}
+
+void *ft_resize_2d(t_size *size, t_coor *coor)
 {
 	t_coor mincoor;
 	t_coor maxcoor;
@@ -73,7 +101,7 @@ void *ft_resize(t_size *size, t_coor *coor)
 	scale.dx = (WINDOW_WIDTH - 2 * WINDOW_MARGIN) / deltacoor.dx + size->scale_f;
 	scale.dy = (WINDOW_HEIGTH - 2 * WINDOW_MARGIN) / deltacoor.dy + size->scale_f;
 	ft_minimum(&scale);
-	while (i < ((*size).rows * (*size).cols))
+	while ((i < ((*size).rows * (*size).cols) && scale.dx != 0))
 	{
 		coor[i].x = round(coor[i].dx * scale.dx);
 		coor[i].y = round(coor[i].dy * scale.dy);
@@ -84,29 +112,24 @@ void *ft_resize(t_size *size, t_coor *coor)
 
 void	*ft_convert_to_isometric(t_size *size, t_coor *coor)
 {
-	int		y;
-	int		x;
-	int		i;
-	
-	double	arcsin;
-	double	beta;
+	int i;
+	double arcsin;
+	double beta;
 
-	y = 0;
 	arcsin = asin(tan(M_PI / 6));
 	beta = M_PI / 4;
-	while (y < (*size).rows)
+	i = 0;
+	ft_printf("before iso \n");
+	ft_print_coor(coor, size);
+	while (i < ((*size).rows * (*size).cols))
 	{
-		x = 0;
-		while (x < (*size).cols)
-		{
-			i = x + y * size->cols;
-			coor[i].dx = cos(beta) * x + sin(beta) * sin(arcsin) * y + sin(beta) * cos(arcsin) * (coor[i].iz * size->scale_z);
-			coor[i].dy = cos(arcsin) * y - sin(arcsin) * (coor[i].iz * size->scale_z);
-			x++;
-		}
-		y++;
+		coor[i].dx = cos(beta) * coor[i].dx + sin(beta) * sin(arcsin) * coor[i].dy + sin(beta) * cos(arcsin) * (coor[i].dz * size->scale_z);
+		coor[i].dy = cos(arcsin) * coor[i].dy - sin(arcsin) * (coor[i].dz * size->scale_z);
+		i++;
 	}
-	ft_resize(size, coor);
+	ft_printf("after iso \n");
+	ft_print_coor(coor, size);
+	ft_resize_2d(size, coor);
 	return (coor);
 }
 
@@ -173,20 +196,25 @@ void	ft_print_map(t_data *data)
 
 void	*ft_project(t_data *data)
 {
-
 	ft_convert_to_isometric(data->size, data->coor);
 	ft_recenter(data->coor, data->size, WINDOW_WIDTH, WINDOW_HEIGTH);
+	ft_render(data);
+	ft_rotate(data, XK_Right);
+	ft_render(data);
+	// ft_rotate(data, XK_Left);
 	// ft_render(data);
-	// ft_rotate(data, XK_Right);
+	// ft_rotate(data, XK_Up);
+	// ft_render(data);
+	// ft_rotate(data, XK_Down);
+	// ft_render(data);
 	// ft_zoom(data, XK_KP_Add);
 	// ft_scale(data, XK_Page_Up);
-	mlx_loop_hook(data->mlx->mlx, ft_render, data);
-	mlx_key_hook(data->mlx->mlx_win, ft_handle_input, data);
-	mlx_hook(data->mlx->mlx_win, 17, (1L<<17), ft_handle_notify, data);
-	mlx_loop(data->mlx->mlx);
+	// mlx_loop_hook(data->mlx->mlx, ft_render, data);
+	// mlx_key_hook(data->mlx->mlx_win, ft_handle_input, data);
+	// mlx_hook(data->mlx->mlx_win, 17, (1L<<17), ft_handle_notify, data);
+	// mlx_loop(data->mlx->mlx);
 	return (0);
 }
-
 
 
 // rotate clock wise 
