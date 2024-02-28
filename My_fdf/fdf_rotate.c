@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:54:30 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 17:03:21 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:16:22 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_rotate_x(t_data *data)
 		{
 			temp.dx = j;
 			temp.dy = i;
-			temp.dz = data->coor[j + i *data->size->cols].dz;
+			temp.dz = data->coor[j + i * data->size->cols].dz;
 			data->coor[j + i *data->size->cols].dx = temp.dx;
 			data->coor[j + i *data->size->cols].dy = cos(data->size->x) * temp.dy - sin(data->size->x) * temp.dz;
 			data->coor[j + i *data->size->cols].dz = sin(data->size->x) * temp.dy + cos(data->size->x) * temp.dz;
@@ -76,8 +76,8 @@ static void	ft_rotate_z(t_data *data)
 			temp.dy = i;
 			temp.dz = data->coor[j + i *data->size->cols].dz;
 			data->coor[j + i *data->size->cols].dx = cos(data->size->z) * temp.dx - sin(data->size->z) * temp.dy;
-			data->coor[j + i *data->size->cols].dy = temp.dy;
-			data->coor[j + i *data->size->cols].dz = sin(data->size->z)* temp.dx + cos(data->size->z) * temp.dy;
+			data->coor[j + i *data->size->cols].dy = sin(data->size->z) * temp.dx + cos(data->size->z) * temp.dy;
+			data->coor[j + i *data->size->cols].dz = temp.dz;
 			j++;
 		}
 		i++;
@@ -98,7 +98,7 @@ int	ft_rotate(t_data *data, int	keysym)
 {
 	double rx;
 
-	rx = 1;
+	rx = 0.1;
 	if (keysym == XK_Right)
 		data->size->x += rx;
 	else if (keysym == XK_Left)

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:21:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 16:37:48 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:09:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@ int	ft_handle_input(int keysym, t_data *data)
 	if (keysym == XK_Right || keysym == XK_Left || keysym == XK_Up \
 	|| keysym == XK_Down || keysym == XK_o || keysym == XK_p)
 		ft_rotate(data, keysym);
-	
 	if (keysym == XK_KP_Down || keysym == XK_KP_Up || keysym == XK_KP_Right \
 	|| keysym == XK_KP_Left)
 		ft_translate(data, keysym);
-	
 	if (keysym == XK_KP_Add || keysym == XK_KP_Subtract)
 		ft_zoom(data, keysym);
 	if (keysym == XK_Page_Up || keysym == XK_Page_Down)

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 16:55:50 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:07:38 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ typedef struct s_coor
 	double	dx;
 	double	dy;
 	double	dz;
+	double	ix;
+	double	iy;
+	double	iz;
+	
 }				t_coor;
 
 typedef struct s_size
@@ -67,8 +71,7 @@ typedef struct s_size
 	double	z;
 	int		middle_x;
 	int		middle_y;
-	double	scale_x;
-	double	scale_y;
+	double	scale_f;
 	double	scale_z;
 }				t_size;
 

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 15:37:43 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:26:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	ft_free_coor(t_coor *coor)
 void	ft_minimum(t_coor *comp)
 {
 	if (comp->dx > comp->dy)
-		comp->x = (int)comp->dy;
+		comp->dx = comp->dy;
 	else
-		comp->y = (int)comp->dx;
+		comp->dy = comp->dx;
 }
 t_coor	ft_get_mincoor(t_coor *coor, t_size *size)
 {

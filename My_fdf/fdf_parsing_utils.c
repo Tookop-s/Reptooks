@@ -6,13 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/27 16:54:19 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:59:12 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
-
-
 
 void	ft_free_split(char **str)
 {
@@ -41,8 +39,7 @@ void	*ft_init_size()
 	size->z = 0;
 	size->middle_x = 0;
 	size->middle_y = 0;
-	size->scale_x = 0;
-	size->scale_y = 0;
+	size->scale_f = 0;
 	size->scale_z = 1;
 	return (size);
 }
