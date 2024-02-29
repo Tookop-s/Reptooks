@@ -6,32 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 17:16:10 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 16:49:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-int	ft_get_size(int	fd, t_size *size)
-{
-	char	*str;
-
-	str = get_next_line(fd);
-	if (!str)
-		return (0);
-	size->cols = ft_countcols(str);
-	while (str)
-	{
-		if (ft_countcols(str) != size->cols && str != NULL)
-			return (0);
-		free (str);
-		size->rows++;
-		str = get_next_line(fd);
-	}
-	return (1);
-}
-
-static void	*ft_fill_array(t_coor *coor, int fd, int rows, int cols)
+void	*ft_fill_array(t_coor *coor, int fd, int rows, int cols)
 {
 	char	*line;
 	char	**tabsplit;

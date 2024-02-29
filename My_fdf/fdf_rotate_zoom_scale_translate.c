@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_translate_zoom_scale.c                         :+:      :+:    :+:   */
+/*   fdf_rotate_zoom_scale_translate.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:54:30 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 15:52:22 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:23:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
+
+int	ft_rotate(t_data *data, int	keysym)
+{
+	double rx;
+
+	rx = 0.1;
+	if (keysym == XK_Right)
+		data->size->y += rx;
+	else if (keysym == XK_Left)
+		data->size->y -= rx;
+	else if (keysym == XK_Up)
+		data->size->x += rx;
+	else if (keysym == XK_Down)
+		data->size->x -= rx;
+	else if (keysym == XK_o)
+		data->size->z += rx;
+	else if (keysym == XK_p)
+		data->size->z -= rx;
+	else
+		return(0);
+	ft_rotate_render(data);
+	return (1);
+}
 
 int	ft_translate(t_data *data, int keysym)
 {
@@ -22,16 +45,16 @@ int	ft_translate(t_data *data, int keysym)
 	x = 0;
 	y = 0;
 	if (keysym == XK_KP_Down)
-		y = 5;
+		y = 10;
 	if (keysym == XK_KP_Up)
-		y = -5;
+		y = -10;
 	if (keysym == XK_KP_Right)
-		x = 5;
+		x = 10;
 	if (keysym == XK_KP_Left)
-		x = -5;
+		x = -10;
 	while (++i < (data->size->rows * data->size->cols))
 		data->coor[i].x += x;
-	i = 0;
+	i = -1;
 	while (++i < (data->size->rows * data->size->cols))
 		data->coor[i].y += y;
 	return(1);
@@ -41,18 +64,15 @@ int	ft_zoom(t_data *data, int keysym)
 {	
 	if (keysym == XK_KP_Add )
 	{
-		data->size->scale_f += 1;
-		ft_get_middle_coor(data->coor, data->size);
-		ft_convert_to_isometric( data->size, data->coor);
-		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		data->size->scale_f += 0.1;
+		ft_rotate_render(data);
 		return (1);
 	}
 	if (keysym == XK_KP_Subtract)
 	{
-		data->size->scale_f -= 1;
-		ft_get_middle_coor(data->coor, data->size);
-		ft_convert_to_isometric(data->size, data->coor);
-		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		if ((data->size->scale_f - 0.1) > -0.9)
+			data->size->scale_f -= 0.1;
+		ft_rotate_render(data);
 		return (1);
 	}
 	return (0);
@@ -63,18 +83,18 @@ int	ft_scale(t_data *data, int keysym)
 	if (keysym == XK_Page_Up)
 	{
 		data->size->scale_z += 0.1;
-		ft_get_middle_coor(data->coor, data->size);
-		ft_convert_to_isometric(data->size, data->coor);
-		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		printf("%f \n", data->size->scale_z);
+		ft_rotate_render(data);
 		return (1);
 	}
 	if (keysym == XK_Page_Down)
 	{
 		data->size->scale_z -= 0.1;
-		ft_get_middle_coor(data->coor, data->size);
-		ft_convert_to_isometric(data->size, data->coor);
-		ft_reposition(data->coor, data->size, data->size->middle_x, data->size->middle_y);
+		ft_rotate_render(data);
+		printf("%f \n", data->size->scale_z);
 		return (1);
 	}
 	return (0);
 }
+
+

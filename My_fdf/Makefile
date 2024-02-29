@@ -3,9 +3,9 @@ NAME = fdf
 LIBFT_DIR = libft
 MINILIBX_DIR = minilibx
 
-SRCS = fdf_main.c fdf_mlx.c fdf_mlx_utils.c fdf_parsing.c fdf_parsing_utils.c \
-fdf_projection.c fdf_projection_utils.c fdf_rotate.c fdf_translate_zoom_scale.c \
-
+SRCS = fdf_color.c fdf_data_processing_utils.c fdf_data_processing.c fdf_free_struct.c \
+fdf_init_struct.c fdf_interactions.c fdf_main.c fdf_mlx.c fdf_parsing.c fdf_rendering.c \
+fdf_rotate_utils.c fdf_rotate_zoom_scale_translate.c
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

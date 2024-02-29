@@ -1,69 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_projection_utils.c                             :+:      :+:    :+:   */
+/*   fdf_data_processing_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/14 14:35:07 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 16:56:31 by anferre          ###   ########.fr       */
+/*   Created: 2024/02/29 16:51:36 by anferre           #+#    #+#             */
+/*   Updated: 2024/02/29 16:52:36 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-void	*ft_init_coor(t_size *size)
-{
-	t_coor	*coor;
-	int	i;
-
-	i = 0;
-	coor = malloc(((*size).rows * (*size).cols) * sizeof(t_coor));
-	if (!coor)
-		return (NULL);
-	while (i < (*size).rows * (*size).cols )
-	{
-		coor[i].x = 0;
-		coor[i].y = 0;
-		coor[i].dz = 0;
-		coor[i].dx = 0;
-		coor[i].dy = 0;
-		i++;
-	}
-	return (coor);
-}
-
-
-void	ft_free_coor(t_coor *coor)
-{
-	if (!coor)
-		return ;
-	free(coor);
-}
-
-
-void	ft_minimum(t_coor *comp)
-{
-	if (comp->dx > comp->dy)
-		comp->dx = comp->dy;
-	else
-		comp->dy = comp->dx;
-	if (comp->ix > comp->iy && comp->iz > comp->iy)
-	{
-		comp->ix = comp->iy;
-		comp->iz = comp->iy;
-	}
-	else if (comp->iy > comp->ix && comp->iz > comp->ix)
-	{
-		comp->iy = comp->ix;
-		comp->iz = comp->ix;
-	}
-	else
-	{
-		comp->iy = comp->iz;
-		comp->ix = comp->iz;
-	}
-}
 t_coor	ft_get_mincoor(t_coor *coor, t_size *size)
 {
 	int		i;
@@ -118,4 +66,38 @@ t_coor	ft_get_maxcoor(t_coor *coor, t_size *size)
 		i++;
 	}
 	return (maxcoor);
+}
+
+void	ft_get_middle_coor(t_coor *coor, t_size *size)
+{
+	t_coor	mincoor;
+	t_coor	maxcoor;
+
+	mincoor = ft_get_mincoor(coor, size);
+	maxcoor = ft_get_maxcoor(coor, size);
+	size->middle_x = (maxcoor.x + mincoor.x) / 2;
+	size->middle_y = (maxcoor.y + mincoor.y) / 2;
+}
+
+void	ft_minimum(t_coor *comp)
+{
+	if (comp->dx > comp->dy)
+		comp->dx = comp->dy;
+	else
+		comp->dy = comp->dx;
+	if (comp->ix > comp->iy && comp->iz > comp->iy)
+	{
+		comp->ix = comp->iy;
+		comp->iz = comp->iy;
+	}
+	else if (comp->iy > comp->ix && comp->iz > comp->ix)
+	{
+		comp->iy = comp->ix;
+		comp->iz = comp->ix;
+	}
+	else
+	{
+		comp->iy = comp->iz;
+		comp->ix = comp->iz;
+	}
 }

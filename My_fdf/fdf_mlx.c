@@ -6,48 +6,52 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:21:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/28 14:09:31 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:06:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-int	ft_render(t_data *data)
+void	*ft_project(t_data *data)
 {
-	if (data->mlx->mlx_win)
-	{
-		ft_render_background(data->data_img, BLACK_COLOR);
-		ft_print_map(data);
-	}
+	ft_convert_to_isometric(data->size, data->coor);
+	ft_recenter(data->coor, data->size, WIN_WIDTH, WIN_HEIGTH);
+	mlx_loop_hook(data->mlx->mlx, ft_render, data);
+	mlx_key_hook(data->mlx->mlx_win, ft_handle_input, data);
+	mlx_hook(data->mlx->mlx_win, 17, (1L<<17), ft_handle_notify, data);
+	mlx_loop(data->mlx->mlx);
 	return (0);
 }
 
-int	ft_handle_notify(t_data	*data)
+t_mlx	*ft_initialize_window(char *title)
 {
-	mlx_destroy_window(data->mlx->mlx, data->mlx->mlx_win);
-	data->mlx->mlx_win = NULL;
-	ft_free_struct(data);
-	exit(0);
+	t_mlx *mlx;
+	
+	mlx = malloc(sizeof(t_mlx));
+	if (!mlx)
+		return (NULL);
+	(*mlx).mlx = mlx_init();
+	(*mlx).mlx_win = mlx_new_window((*mlx).mlx, WIN_WIDTH, WIN_HEIGTH, title);
+	return (mlx);
 }
 
-int	ft_handle_input(int keysym, t_data *data)
+void	*ft_initialize_image(t_data_img *data_img, t_mlx *mlx)
 {
-	if (keysym == XK_Escape)
-	{
-		mlx_destroy_window(data->mlx->mlx, data->mlx->mlx_win);
-		data->mlx->mlx_win = NULL;
-		ft_free_struct(data);
-		exit(0);
-	}
-	if (keysym == XK_Right || keysym == XK_Left || keysym == XK_Up \
-	|| keysym == XK_Down || keysym == XK_o || keysym == XK_p)
-		ft_rotate(data, keysym);
-	if (keysym == XK_KP_Down || keysym == XK_KP_Up || keysym == XK_KP_Right \
-	|| keysym == XK_KP_Left)
-		ft_translate(data, keysym);
-	if (keysym == XK_KP_Add || keysym == XK_KP_Subtract)
-		ft_zoom(data, keysym);
-	if (keysym == XK_Page_Up || keysym == XK_Page_Down)
-		ft_scale(data, keysym);
-	return (0);
+	data_img = malloc(sizeof(t_data_img));
+	if (!data_img)
+		return (NULL);
+	data_img->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGTH);
+	data_img->addr = mlx_get_data_addr(data_img->img, &data_img->bpp, &data_img->ll, &data_img->endian);
+	return (data_img);
 }
+
+void	ft_mlx_pixel_put(t_data_img *data, int x, int y, int color)
+{
+	char	*pixel;
+
+	if (x > WIN_WIDTH || y > WIN_HEIGTH || x < 0 || y < 0)
+		return ;
+	pixel = data->addr + (y * data->ll + x * (data->bpp / 8));
+	*(int *)pixel = color;
+}
+
