@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 16:49:02 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:38:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 int		ft_get_size(int	fd, t_size *size);
 int		ft_countcols(char *str);
 void	*ft_init_data(char **argv);
-void	*ft_init_size();
+void	*ft_init_size(void);
 void	*ft_init_coor(t_size *size);
 
 void	ft_free_split(char **str);

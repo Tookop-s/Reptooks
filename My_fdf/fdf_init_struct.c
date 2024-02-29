@@ -6,13 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:44:56 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 16:47:36 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:38:44 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-int	ft_get_size(int	fd, t_size *size)
+int	ft_get_size(int fd, t_size *size)
 {
 	char	*str;
 
@@ -42,7 +42,7 @@ int	ft_countcols(char *str)
 	sum = 0;
 	while (str[i])
 	{
-		if ((str[i] == ' ') | (str[i] == '\t')| (str[i] == '\n'))
+		if ((str[i] == ' ') | (str[i] == '\t') | (str[i] == '\n'))
 			check = 1;
 		else if (check == 1)
 		{
@@ -56,8 +56,8 @@ int	ft_countcols(char *str)
 
 void	*ft_init_data(char **argv)
 {
-	int fd;
-	t_data *data;
+	int		fd;
+	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -75,7 +75,7 @@ void	*ft_init_data(char **argv)
 	return (data);
 }
 
-void	*ft_init_size()
+void	*ft_init_size(void)
 {
 	t_size	*size;
 
@@ -97,13 +97,13 @@ void	*ft_init_size()
 void	*ft_init_coor(t_size *size)
 {
 	t_coor	*coor;
-	int	i;
+	int		i;
 
 	i = 0;
 	coor = malloc(((*size).rows * (*size).cols) * sizeof(t_coor));
 	if (!coor)
 		return (NULL);
-	while (i < (*size).rows * (*size).cols )
+	while (i < (*size).rows * (*size).cols)
 	{
 		coor[i].x = 0;
 		coor[i].y = 0;

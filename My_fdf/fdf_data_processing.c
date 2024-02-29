@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:49:58 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 16:50:55 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:35:42 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_recenter(t_coor *coor, t_size *size, int width, int height)
 
 	i = 0;
 	ft_get_middle_coor(coor, size);
-	delta.x = width  / 2 - size->middle_x;
+	delta.x = width / 2 - size->middle_x;
 	delta.y = height / 2 - size->middle_y;
 	while (i < ((*size).rows * (*size).cols))
 	{
@@ -36,7 +36,7 @@ void	ft_reposition(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y)
 
 	i = 0;
 	ft_get_middle_coor(coor, size);
-	delta.x = prevmid_x  - size->middle_x;
+	delta.x = prevmid_x - size->middle_x;
 	delta.y = prevmid_y - size->middle_y;
 	while (i < ((*size).rows * (*size).cols))
 	{
@@ -50,8 +50,8 @@ void	*ft_resize_3d(t_size *size, t_coor *coor)
 {
 	t_coor	maxcoor;
 	t_coor	mincoor;
-	t_coor deltacoor;
-	t_coor scale;
+	t_coor	deltacoor;
+	t_coor	scale;
 	int		i;
 
 	i = 0;
@@ -76,10 +76,10 @@ void	*ft_resize_3d(t_size *size, t_coor *coor)
 
 void	*ft_resize_2d(t_size *size, t_coor *coor)
 {
-	t_coor mincoor;
-	t_coor maxcoor;
-	t_coor deltacoor;
-	t_coor scale;
+	t_coor	mincoor;
+	t_coor	maxcoor;
+	t_coor	deltacoor;
+	t_coor	scale;
 	int		i;
 
 	i = 0;
@@ -101,18 +101,19 @@ void	*ft_resize_2d(t_size *size, t_coor *coor)
 
 void	*ft_convert_to_isometric(t_size *size, t_coor *coor)
 {
-	int i;
-	double arcsin;
-	double beta;
+	int		i;
+	double	arcsin;
+	double	beta;
 
 	arcsin = asin(tan(M_PI / 6));
 	beta = M_PI / 4;
 	i = 0;
 	while (i < ((*size).rows * (*size).cols))
 	{
-	
-		coor[i].dx = cos(beta) * coor[i].dx + sin(beta) * sin(arcsin) * coor[i].dy + sin(beta) * cos(arcsin) * (coor[i].dz * size->scale_z);
-		coor[i].dy = cos(arcsin) * coor[i].dy - sin(arcsin) * (coor[i].dz * size->scale_z);
+		coor[i].dx = cos(beta) * coor[i].dx + sin(beta) * sin(arcsin) * \
+		coor[i].dy + sin(beta) * cos(arcsin) * (coor[i].dz * size->scale_z);
+		coor[i].dy = cos(arcsin) * coor[i].dy - sin(arcsin) * (coor[i].dz * \
+		size->scale_z);
 		i++;
 	}
 	ft_resize_2d(size, coor);

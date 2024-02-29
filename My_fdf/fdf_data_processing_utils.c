@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:36 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 16:52:36 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:36:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ t_coor	ft_get_mincoor(t_coor *coor, t_size *size)
 	mincoor.y = coor[0].y;
 	while (i < ((*size).rows * (*size).cols))
 	{
-		if (mincoor.dx > coor[i].dx) 
+		if (mincoor.dx > coor[i].dx)
 			mincoor.dx = coor[i].dx;
 		if (mincoor.dy > coor[i].dy)
 			mincoor.dy = coor[i].dy;
-		if (mincoor.iz > coor[i].iz) 
+		if (mincoor.iz > coor[i].iz)
 			mincoor.iz = coor[i].iz;
-		if (mincoor.x > coor[i].x) 
+		if (mincoor.x > coor[i].x)
 			mincoor.x = coor[i].x;
 		if (mincoor.y > coor[i].y)
 			mincoor.y = coor[i].y;
@@ -57,9 +57,9 @@ t_coor	ft_get_maxcoor(t_coor *coor, t_size *size)
 			maxcoor.dx = coor[i].dx;
 		if (maxcoor.dy < coor[i].dy)
 			maxcoor.dy = coor[i].dy;
-		if (maxcoor.iz < coor[i].iz) 
+		if (maxcoor.iz < coor[i].iz)
 			maxcoor.iz = coor[i].iz;
-		if (maxcoor.x < coor[i].x) 
+		if (maxcoor.x < coor[i].x)
 			maxcoor.x = coor[i].x;
 		if (maxcoor.y < coor[i].y)
 			maxcoor.y = coor[i].y;

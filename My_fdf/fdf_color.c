@@ -6,13 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:31:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 16:09:02 by anferre          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:33:17 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-void	ft_max_min_z(t_data *data, int *max , int *min)
+void	ft_max_min_z(t_data *data, int *max, int *min)
 {
 	int		i;
 
@@ -49,11 +49,11 @@ int	ft_lcolor(t_data *data, int i, int ni)
 	int	max;
 	int	min;
 	int	color;
-	
+
 	ft_max_min_z(data, &max, &min);
 	if (round(data->coor[i].iz) == round(data->coor[ni].iz) \
-	 && round(data->coor[i].iz) == max)
-	 	color = WHITE_COLOR;
+	&& round(data->coor[i].iz) == max)
+		color = WHITE_COLOR;
 	else
 		color = BLUE_COLOR;
 	return (color);
