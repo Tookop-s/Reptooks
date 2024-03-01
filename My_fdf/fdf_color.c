@@ -6,18 +6,19 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:31:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 17:33:17 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 15:07:11 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-void	ft_max_min_z(t_data *data, int *max, int *min)
+static void	ft_max_min_z(t_data *data, int *max, int *min)
 {
 	int		i;
 
 	i = 0;
 	*max = data->coor[i].iz;
+	*min = data->coor[i].iz;
 	while (i < data->size->cols * data->size->rows)
 	{
 		if (*max < data->coor[i].iz)
@@ -34,6 +35,7 @@ int	ft_color(t_data *data, int i)
 	int	max;
 	int	min;
 
+	color = BLACK_COLOR;
 	ft_max_min_z(data, &max, &min);
 	if (data->coor[i].iz == 0)
 		color = BLUE_COLOR;

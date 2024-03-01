@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:51:36 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 17:36:25 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 15:14:37 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,17 @@ void	ft_minimum(t_coor *comp)
 		comp->iy = comp->iz;
 		comp->ix = comp->iz;
 	}
+}
+
+void	ft_init_coor(t_coor *coor)
+{
+	coor->x = 0;
+	coor->y = 0;
+	coor->dz = 0;
+	coor->dx = 0;
+	coor->dy = 0;
+	coor->iz = 0;
+	coor->ix = 0;
+	coor->iy = 0;
+	coor->clr = 0;
 }

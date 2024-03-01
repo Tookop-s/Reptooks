@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:44:56 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 17:38:44 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 16:33:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_get_size(int fd, t_size *size)
 	size->cols = ft_countcols(str);
 	while (str)
 	{
-		if (ft_countcols(str) != size->cols && str != NULL)
-			return (0);
+		if (ft_countcols(str) != size->cols)
+			return (free (str), get_next_line(-1), 0);
 		free (str);
 		size->rows++;
 		str = get_next_line(fd);
@@ -65,13 +65,21 @@ void	*ft_init_data(char **argv)
 	data->size = ft_init_size();
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || data->size == NULL)
-		return (NULL);
+		return (free(data->size), free(data), NULL);
 	if (!ft_get_size(fd, data->size))
-		return (NULL);
+		return (free(data->size), free(data), NULL);
 	close(fd);
-	data->coor = ft_init_coor(data->size);
+	data->coor = ft_init_coor_tab(data->size);
+	if (!data->coor)
+		return (free(data->size), free(data), NULL);
 	data->mlx = ft_initialize_window(argv[0]);
+	if (!data->mlx)
+		return (free(data->size), free(data->coor), free(data), NULL);
 	data->data_img = ft_initialize_image(data->data_img, data->mlx);
+	if (!data->mlx)
+		return (mlx_destroy_window(data->mlx->mlx, data->mlx->mlx_win), \
+		mlx_destroy_display(data->mlx->mlx),free(data->size), free(data->coor)\
+		, free(data), NULL);
 	return (data);
 }
 
@@ -94,7 +102,7 @@ void	*ft_init_size(void)
 	return (size);
 }
 
-void	*ft_init_coor(t_size *size)
+void	*ft_init_coor_tab(t_size *size)
 {
 	t_coor	*coor;
 	int		i;

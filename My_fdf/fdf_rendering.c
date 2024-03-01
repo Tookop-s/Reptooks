@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:39:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 16:54:03 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 16:12:18 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,13 @@ void	ft_print_map(t_data *data)
 		while (++j < data->size->cols)
 		{
 			ft_mlx_pixel_put(data->data_img, data->coor[j + i * cols].x,\
-			 data->coor[(j + i * cols)].y, ft_color(data, j + i * cols));
+			 data->coor[(j + i * cols)].y, WHITE_COLOR);
 			if (i < data->size->rows - 1)
 				ft_draw(data->coor[j + i * cols], data->coor[(j + (i + 1) *\
-				cols)], data->data_img, ft_lcolor(data, j + i * cols, \
-				(j + (i + 1) * cols)));
+				cols)], data->data_img, WHITE_COLOR);
 			if (j < cols - 1)
 				ft_draw(data->coor[j + i * cols], data->coor[(j + i * cols) \
-				+ 1], data->data_img, ft_lcolor(data, j + i * cols, \
-				(j + i * cols+ 1)));
+				+ 1], data->data_img, WHITE_COLOR);
 		}
 	}
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->mlx_win, \

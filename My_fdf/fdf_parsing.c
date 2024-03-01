@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:14:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 16:49:31 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 15:43:07 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	*ft_parsing(char **argv, t_data *data)
 
 	i = 0;
 	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		return(NULL);
 	data->coor = ft_fill_array(data->coor ,fd , data->size->rows, data->size->cols);
 	close(fd);
 	ft_resize_3d(data->size, data->coor);

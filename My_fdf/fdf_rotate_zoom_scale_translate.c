@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:54:30 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 17:23:00 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 16:40:55 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_rotate(t_data *data, int	keysym)
 {
 	double rx;
 
-	rx = 0.1;
+	rx = 0.05;
 	if (keysym == XK_Right)
 		data->size->y += rx;
 	else if (keysym == XK_Left)
@@ -64,14 +64,13 @@ int	ft_zoom(t_data *data, int keysym)
 {	
 	if (keysym == XK_KP_Add )
 	{
-		data->size->scale_f += 0.1;
+		data->size->scale_f += 1;
 		ft_rotate_render(data);
 		return (1);
 	}
 	if (keysym == XK_KP_Subtract)
 	{
-		if ((data->size->scale_f - 0.1) > -0.9)
-			data->size->scale_f -= 0.1;
+		data->size->scale_f -= 1;
 		ft_rotate_render(data);
 		return (1);
 	}
@@ -83,15 +82,14 @@ int	ft_scale(t_data *data, int keysym)
 	if (keysym == XK_Page_Up)
 	{
 		data->size->scale_z += 0.1;
-		printf("%f \n", data->size->scale_z);
 		ft_rotate_render(data);
 		return (1);
 	}
 	if (keysym == XK_Page_Down)
 	{
-		data->size->scale_z -= 0.1;
+		if (data->size->scale_z - 0.1 > 0.1)
+			data->size->scale_z -= 0.1;
 		ft_rotate_render(data);
-		printf("%f \n", data->size->scale_z);
 		return (1);
 	}
 	return (0);

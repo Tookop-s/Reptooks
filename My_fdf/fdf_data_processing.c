@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:49:58 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 17:35:42 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 15:16:29 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	*ft_resize_3d(t_size *size, t_coor *coor)
 	deltacoor.ix = size->cols;
 	deltacoor.iy = size->rows;
 	deltacoor.iz = maxcoor.iz - mincoor.iz;
+	ft_init_coor(&scale);
 	scale.ix = (WIN_WIDTH - 2 * WIN_MARGIN) / deltacoor.ix;
 	scale.iy = (WIN_HEIGTH - 2 * WIN_MARGIN) / deltacoor.iy;
 	scale.iz = (WIN_HEIGTH - 2 * WIN_MARGIN) / deltacoor.iz;
@@ -87,6 +88,7 @@ void	*ft_resize_2d(t_size *size, t_coor *coor)
 	maxcoor = ft_get_maxcoor(coor, size);
 	deltacoor.dx = maxcoor.dx - mincoor.dx;
 	deltacoor.dy = maxcoor.dy - mincoor.dy;
+	ft_init_coor(&scale);
 	scale.dx = (WIN_WIDTH - 2 * WIN_MARGIN) / deltacoor.dx + size->scale_f;
 	scale.dy = (WIN_HEIGTH - 2 * WIN_MARGIN) / deltacoor.dy + size->scale_f;
 	ft_minimum(&scale);

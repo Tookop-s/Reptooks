@@ -6,22 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:21:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/02/29 17:06:53 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/01 13:53:38 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
-
-void	*ft_project(t_data *data)
-{
-	ft_convert_to_isometric(data->size, data->coor);
-	ft_recenter(data->coor, data->size, WIN_WIDTH, WIN_HEIGTH);
-	mlx_loop_hook(data->mlx->mlx, ft_render, data);
-	mlx_key_hook(data->mlx->mlx_win, ft_handle_input, data);
-	mlx_hook(data->mlx->mlx_win, 17, (1L<<17), ft_handle_notify, data);
-	mlx_loop(data->mlx->mlx);
-	return (0);
-}
 
 t_mlx	*ft_initialize_window(char *title)
 {
