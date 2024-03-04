@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:21:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/01 13:53:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:41:45 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_mlx	*ft_initialize_window(char *title)
 {
-	t_mlx *mlx;
-	
+	t_mlx	*mlx;
+
 	mlx = malloc(sizeof(t_mlx));
 	if (!mlx)
 		return (NULL);
@@ -30,7 +30,8 @@ void	*ft_initialize_image(t_data_img *data_img, t_mlx *mlx)
 	if (!data_img)
 		return (NULL);
 	data_img->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGTH);
-	data_img->addr = mlx_get_data_addr(data_img->img, &data_img->bpp, &data_img->ll, &data_img->endian);
+	data_img->addr = mlx_get_data_addr(data_img->img, &data_img->bpp, \
+	&data_img->ll, &data_img->endian);
 	return (data_img);
 }
 
@@ -43,4 +44,3 @@ void	ft_mlx_pixel_put(t_data_img *data, int x, int y, int color)
 	pixel = data->addr + (y * data->ll + x * (data->bpp / 8));
 	*(int *)pixel = color;
 }
-

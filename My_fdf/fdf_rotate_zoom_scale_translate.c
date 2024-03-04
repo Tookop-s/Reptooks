@@ -6,15 +6,15 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:54:30 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/01 16:40:55 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/04 18:02:04 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/fdf.h"
 
-int	ft_rotate(t_data *data, int	keysym)
+int	ft_rotate(t_data *data, int keysym)
 {
-	double rx;
+	double	rx;
 
 	rx = 0.05;
 	if (keysym == XK_Right)
@@ -30,16 +30,19 @@ int	ft_rotate(t_data *data, int	keysym)
 	else if (keysym == XK_p)
 		data->size->z -= rx;
 	else
-		return(0);
+		return (0);
+	data->size->x = fmod(data->size->x, 2 * M_PI);
+	data->size->y = fmod(data->size->y, 2 * M_PI);
+	data->size->z = fmod(data->size->z, 2 * M_PI);
 	ft_rotate_render(data);
 	return (1);
 }
 
 int	ft_translate(t_data *data, int keysym)
 {
-	int i;
-	int y;
-	int x;
+	int	i;
+	int	y;
+	int	x;
 
 	i = -1;
 	x = 0;
@@ -57,12 +60,12 @@ int	ft_translate(t_data *data, int keysym)
 	i = -1;
 	while (++i < (data->size->rows * data->size->cols))
 		data->coor[i].y += y;
-	return(1);
+	return (1);
 }
 
 int	ft_zoom(t_data *data, int keysym)
 {	
-	if (keysym == XK_KP_Add )
+	if (keysym == XK_KP_Add)
 	{
 		data->size->scale_f += 1;
 		ft_rotate_render(data);
@@ -94,5 +97,3 @@ int	ft_scale(t_data *data, int keysym)
 	}
 	return (0);
 }
-
-

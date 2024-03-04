@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:56:03 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/01 14:37:46 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:39:55 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_handle_notify(t_data	*data)
 	exit(0);
 }
 
-int	ft_check_keysym(int keysym)
+static int	ft_check_keysym(int keysym)
 {
 	if (keysym == XK_Right || keysym == XK_Left || keysym == XK_Up \
 		|| keysym == XK_Down || keysym == XK_o || keysym == XK_p \
@@ -65,7 +65,7 @@ void	*ft_project(t_data *data)
 	ft_recenter(data->coor, data->size, WIN_WIDTH, WIN_HEIGTH);
 	mlx_loop_hook(data->mlx->mlx, ft_render, data);
 	mlx_key_hook(data->mlx->mlx_win, ft_handle_input, data);
-	mlx_hook(data->mlx->mlx_win, 17, (1L<<17), ft_handle_notify, data);
+	mlx_hook(data->mlx->mlx_win, 17, (1L << 17), ft_handle_notify, data);
 	mlx_loop(data->mlx->mlx);
 	return (0);
 }

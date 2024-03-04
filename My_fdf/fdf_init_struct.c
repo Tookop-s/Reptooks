@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:44:56 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/01 16:33:00 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:39:37 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	*ft_init_data(char **argv)
 	data->data_img = ft_initialize_image(data->data_img, data->mlx);
 	if (!data->mlx)
 		return (mlx_destroy_window(data->mlx->mlx, data->mlx->mlx_win), \
-		mlx_destroy_display(data->mlx->mlx),free(data->size), free(data->coor)\
+		mlx_destroy_display(data->mlx->mlx), free(data->size), free(data->coor) \
 		, free(data), NULL);
 	return (data);
 }

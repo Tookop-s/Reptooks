@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/01 15:14:47 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:57:43 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,15 @@
 # define WHITE_COLOR 0xFFFFFF
 # define BLACK_COLOR 0x000000
 
+# define GREEN1_COLOR 0x157015
+# define GREEN2_COLOR 0x2AB02A
+# define GREEN3_COLOR 0x55DC55
+# define GREEN4_COLOR 0x8EE68E
+# define GREEN5_COLOR 0xC5F2C5
 
 # define WIN_HEIGTH 1080
 # define WIN_WIDTH 1920
 # define WIN_MARGIN 100
-
 
 typedef struct s_data_img
 {
@@ -65,8 +69,8 @@ typedef struct s_coor
 
 typedef struct s_size
 {
-	int	rows;
-	int	cols;
+	int		rows;
+	int		cols;
 	double	x;
 	double	y;
 	double	z;
@@ -83,7 +87,6 @@ typedef struct s_data
 	t_coor		*coor;
 	t_size		*size;
 }				t_data;
-
 
 		/*Parsing*/
 void	*ft_fill_array(t_coor *coor, int fd, int rows, int cols);
@@ -104,23 +107,26 @@ void	ft_minimum(t_coor *comp);
 void	ft_init_coor(t_coor *coor);
 
 		/*Color*/
-int		ft_color(t_data *data, int i);
-int		ft_lcolor(t_data *data, int i, int ni);
+void	ft_print_color(t_data *data, t_coor iz, t_coor nz, t_coor mm);
+void	ft_print_points(t_data *data, int min, int max);
+int		ft_grad(int color, t_coor start, t_coor end, t_coor curr);
 
 		/*rendering*/
 int		ft_render(t_data *data);
 void	ft_render_background(t_data_img *data, int color);
-void	ft_print_map(t_data *data);
-void 	ft_draw(t_coor start, t_coor end, t_data_img *data_img, int color);
+void	ft_print_map(t_data *data, int cols);
+void	ft_draw(t_coor start, t_coor end, t_data_img *data_img, int color);
+void	ft_draw_v(t_coor *diff, t_coor *in, t_coor start, t_coor end);
+void	ft_max_min_z(t_data *data, int *max, int *min);
 
 		/*mlx*/
 void	*ft_project(t_data *data);
 t_mlx	*ft_initialize_window(char *title);
 void	*ft_initialize_image(t_data_img *data_img, t_mlx *mlx);
-void	ft_mlx_pixel_put(t_data_img *data, int x, int y, int color);
+void	ft_mpp(t_data_img *data, int x, int y, int color);
 
 		/*struct*/
-int		ft_get_size(int	fd, t_size *size);
+int		ft_get_size(int fd, t_size *size);
 int		ft_countcols(char *str);
 void	*ft_init_data(char **argv);
 void	*ft_init_size(void);
@@ -132,10 +138,9 @@ void	ft_free_coor(t_coor *coor);
 
 		/*interactions*/
 int		ft_handle_notify(t_data	*data);
-int		ft_check_keysym(int keysym);
 int		ft_handle_input(int keysym, t_data *data);
 
-int		ft_rotate(t_data *data, int	keysym);
+int		ft_rotate(t_data *data, int keysym);
 int		ft_translate(t_data *data, int keysym);
 int		ft_zoom(t_data *data, int keysym);
 int		ft_scale(t_data *data, int keysym);
