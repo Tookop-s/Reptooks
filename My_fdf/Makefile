@@ -14,7 +14,7 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
 
-GCC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -g3 -Iinclude -fPIE
 
 all: $(NAME)
@@ -26,12 +26,12 @@ $(MINILIBX_DIR)/libmlx.a: FORCE
 	$(MAKE) -C $(MINILIBX_DIR)
 
 $(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a $(MINILIBX_DIR)/libmlx.a 
-	$(GCC) $(CFLAGS) -o $@  $^ -lXext -lX11 -lm
+	$(CC) $(CFLAGS) -o $@  $^ -lXext -lX11 -lm
 
 
 $(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
-	$(GCC) $(CFLAGS) -MMD -c $< -o $@
+	$(CC) $(CFLAGS) -MMD -c $< -o $@
 
 FORCE:
 

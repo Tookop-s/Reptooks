@@ -6,12 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:49:58 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/05 16:31:45 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/05 17:07:20 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+/*replace at the center*/
 void	ft_recenter(t_coor *coor, t_size *size, int width, int height)
 {
 	t_coor	delta;
@@ -29,6 +30,7 @@ void	ft_recenter(t_coor *coor, t_size *size, int width, int height)
 	}
 }
 
+/*reposition based on previous coordinates*/
 void	ft_reposition(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y)
 {
 	t_coor	delta;
@@ -46,6 +48,7 @@ void	ft_reposition(t_coor *coor, t_size *size, int prevmid_x, int prevmid_y)
 	}	
 }
 
+/*apply a scaling factor to 3d coordinates*/
 void	*ft_resize_3d(t_size *size, t_coor *coor)
 {
 	t_coor	maxcoor;
@@ -75,6 +78,7 @@ void	*ft_resize_3d(t_size *size, t_coor *coor)
 	return (coor);
 }
 
+/*apply a scaling factor to 2d coordinates*/
 void	*ft_resize_2d(t_size *size, t_coor *coor)
 {
 	t_coor	mincoor;
@@ -101,6 +105,7 @@ void	*ft_resize_2d(t_size *size, t_coor *coor)
 	return (coor);
 }
 
+/*isometric projection*/
 void	*ft_convert_to_isometric(t_size *size, t_coor *coor)
 {
 	int		i;

@@ -6,14 +6,14 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/05 16:34:17 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/05 17:26:16 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-// # include "mlx.h"
+# include "mlx.h"
 # include "libft.h"
 # include <stdlib.h>
 # include <stdio.h>

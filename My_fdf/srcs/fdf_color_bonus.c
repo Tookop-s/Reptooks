@@ -6,12 +6,14 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:27:13 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/05 16:31:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/05 17:07:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+/*get the position among the line between start x & y and end x & y,
+then transform it to a ratio, and apply it to max and min z */
 t_coor	ft_grad_data(t_coor start, t_coor end, t_coor curr, t_data *data)
 {
 	t_coor	t;
@@ -32,6 +34,7 @@ t_coor	ft_grad_data(t_coor start, t_coor end, t_coor curr, t_data *data)
 	return (t);
 }
 
+/*define the color depending on the ratio / position */
 int	ft_grad(t_coor curr, t_coor start, t_coor end, t_data *data)
 {
 	t_coor	t;
@@ -53,6 +56,7 @@ int	ft_grad(t_coor curr, t_coor start, t_coor end, t_data *data)
 	return (GREEN_COLOR);
 }
 
+/*first sort of color*/
 void	ft_print_color(t_data *data, t_coor start, t_coor end)
 {
 	if (start.iz == end.iz && start.iz == data->size->min_z)

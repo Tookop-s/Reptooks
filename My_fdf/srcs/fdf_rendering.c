@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:39:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/05 16:32:15 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/05 17:06:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	ft_render_background(t_data_img *data, int color)
 	}
 }
 
-/*t_coor mm x = min y = max*/
 void	ft_print_map(t_data *data, int cols)
 {
 	int		x;
@@ -68,6 +67,12 @@ void	ft_print_map(t_data *data, int cols)
 	data->data_img->img, 0, 0);
 }
 
+/*efficently draw pixel based on int 
+If err2 is greater than -diff.y, it means the error is greater along the x-axis,
+ so the error is reduced by diff.y, and the x-coordinate is incremented.
+If err2 is less than diff.x, it means the error is greater along the y-axis, so
+ the error is increased by diff.x, and the y-coordinate is incremented.
+*/
 static void	ft_bresenham(t_coor diff, t_coor start, t_coor end, t_data *data)
 {
 	int		err;

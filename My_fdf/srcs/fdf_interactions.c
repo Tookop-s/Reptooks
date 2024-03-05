@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:56:03 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/05 16:31:55 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/05 17:02:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	ft_check_keysym(int keysym)
 	return (0);
 }
 
+/*reposition just like the beginning*/
 void	ft_first_pos(t_data *data)
 {
 	int	i;
