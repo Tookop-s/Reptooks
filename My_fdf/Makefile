@@ -3,9 +3,10 @@ NAME = fdf
 LIBFT_DIR = libft
 MINILIBX_DIR = minilibx
 
+SRCS_DIR = srcs
 SRCS = fdf_data_processing_utils.c fdf_data_processing.c fdf_free_struct.c \
 fdf_init_struct.c fdf_interactions.c fdf_main.c fdf_mlx.c fdf_parsing.c fdf_rendering.c \
-fdf_rendering_utils.c fdf_rotate_utils.c fdf_rotate_zoom_scale_translate.c
+fdf_rendering_utils.c fdf_rotate_utils_bonus.c fdf_rotate_zoom_scale_translate_bonus.c fdf_color_bonus.c
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -28,7 +29,7 @@ $(NAME): $(OBJS)  $(LIBFT_DIR)/libft.a $(MINILIBX_DIR)/libmlx.a
 	$(GCC) $(CFLAGS) -o $@  $^ -lXext -lX11 -lm
 
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
 	$(GCC) $(CFLAGS) -MMD -c $< -o $@
 

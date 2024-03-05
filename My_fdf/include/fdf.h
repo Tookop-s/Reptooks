@@ -6,14 +6,14 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/04 17:57:43 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/05 16:34:17 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "mlx.h"
+// # include "mlx.h"
 # include "libft.h"
 # include <stdlib.h>
 # include <stdio.h>
@@ -23,7 +23,7 @@
 # include <errno.h>
 
 # define RED_COLOR 0xFF0000
-# define GREEN_COLOR 0x00FF00
+# define GREEN_COLOR 0xEFFBEF
 # define BLUE_COLOR 0x0000FF
 # define WHITE_COLOR 0xFFFFFF
 # define BLACK_COLOR 0x000000
@@ -78,6 +78,8 @@ typedef struct s_size
 	int		middle_y;
 	double	scale_f;
 	double	scale_z;
+	int		max_z;
+	int		min_z;
 }				t_size;
 
 typedef struct s_data
@@ -107,16 +109,18 @@ void	ft_minimum(t_coor *comp);
 void	ft_init_coor(t_coor *coor);
 
 		/*Color*/
-void	ft_print_color(t_data *data, t_coor iz, t_coor nz, t_coor mm);
+void	ft_print_color(t_data *data, t_coor iz, t_coor nz);
 void	ft_print_points(t_data *data, int min, int max);
-int		ft_grad(int color, t_coor start, t_coor end, t_coor curr);
+int		ft_grad(t_coor curr, t_coor start, t_coor end, t_data *data);
+t_coor	ft_grad_data(t_coor start, t_coor end, t_coor curr, t_data *data);
+int		ft_check_color(int color);
 
 		/*rendering*/
 int		ft_render(t_data *data);
 void	ft_render_background(t_data_img *data, int color);
 void	ft_print_map(t_data *data, int cols);
-void	ft_draw(t_coor start, t_coor end, t_data_img *data_img, int color);
-void	ft_draw_v(t_coor *diff, t_coor *in, t_coor start, t_coor end);
+void	ft_draw(t_coor start, t_coor end, t_data *data);
+void	ft_draw_v(t_coor *in, t_coor start, t_coor end);
 void	ft_max_min_z(t_data *data, int *max, int *min);
 
 		/*mlx*/
@@ -124,6 +128,7 @@ void	*ft_project(t_data *data);
 t_mlx	*ft_initialize_window(char *title);
 void	*ft_initialize_image(t_data_img *data_img, t_mlx *mlx);
 void	ft_mpp(t_data_img *data, int x, int y, int color);
+void	ft_kill(t_data *data);
 
 		/*struct*/
 int		ft_get_size(int fd, t_size *size);
