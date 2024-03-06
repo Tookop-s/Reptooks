@@ -20,6 +20,8 @@ t_mlx	*ft_initialize_window(char *title)
 	if (!mlx)
 		return (NULL);
 	(*mlx).mlx = mlx_init();
+	if (!mlx->mlx)
+		return (NULL);
 	(*mlx).mlx_win = mlx_new_window((*mlx).mlx, WIN_WIDTH, WIN_HEIGTH, title);
 	return (mlx);
 }
