@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"array": "c",
+			"bitset": "c",
+			"string_view": "c",
+			"initializer_list": "c",
+			"ranges": "c",
+			"span": "c",
+			"regex": "c",
+			"utility": "c",
+			"fdf.h": "c",
+			"mlx.h": "c",
+			"mlx_int.h": "c",
+			"libft.h": "c",
+			"stdlib.h": "c",
+			"keysym.h": "c",
+			"errno.h": "c",
+			"features.h": "c",
+			"keysymdef.h": "c",
+			"cmath": "c",
+			"random": "c",
+			"chrono": "c",
+			"limits": "c",
+			"algorithm": "c",
+			"semaphore": "c"
+		}
+	}
+}
