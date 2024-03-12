@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/11 13:03:04 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/12 15:06:11 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	*ft_newcmd()
 	newcmd->fd = -1;
 	newcmd->nb_cmd = 0;
 	newcmd->next = NULL;
+	newcmd->H_D = false;
 	return (newcmd);
 }
 
