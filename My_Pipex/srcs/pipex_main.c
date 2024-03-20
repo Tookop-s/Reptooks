@@ -6,11 +6,46 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/12 18:14:13 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/20 11:23:04 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
+
+int	ft_pipex_childs(int pipe_fd[2][2], char** env, t_cmd *cmd, int i)
+{
+	if (i > 0)
+	{
+		close(pipe_fd[i % 2][1]);
+		dup2(pipe_fd[i % 2][0], STDIN_FILENO);
+		close(pipe_fd[i % 2][0]);
+	}
+	if (i < cmd->nb_cmd - 1)
+	{
+		close(pipe_fd[(i + 1) % 2][0]);
+		dup2(pipe_fd[(i + 1) % 2][1], STDOUT_FILENO);
+		close(pipe_fd[(i + 1) % 2][1]);
+	}
+	execve(cmd->path[i], &cmd->args[i][1], env);
+	return (perror("execve"), -1);
+}
+
+int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i, char **argv, pid_t *child)
+{
+	int		status;
+
+	waitpid(child[i], &status, 0);
+	if (i == cmd->nb_cmd)
+	{
+		close(pipe_fd[i % 2][1]);
+		close(pipe_fd[(i + 1) % 2][0]);
+		close(pipe_fd[(i + 1) % 2][1]);
+		if (ft_write_output(pipe_fd[i % 2][0], argv, cmd) == -1)
+			return (close(pipe_fd[i % 2][0]), -1);
+		close(pipe_fd[i % 2][0]);
+	}
+	return (status);
+}
 
 int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 {
@@ -18,7 +53,6 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 	pid_t	child[cmd->nb_cmd];
 	int		i;
 	int		infile_fd;
-	int		status;
 
 	i = 0;
 	if (pipe(pipe_fd[i]) == -1)
@@ -37,37 +71,11 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 	}
 	while (i < cmd->nb_cmd)
 	{
-		if ((child[i] = fork()) == 0)
-		{
-			if (i > 0)
-			{
-				close(pipe_fd[i % 2][1]);
-				dup2(pipe_fd[i % 2][0], STDIN_FILENO);
-			}
-			if (i < cmd->nb_cmd - 1)
-			{
-				close(pipe_fd[(i + 1) % 2][0]);
-				dup2(pipe_fd[(i + 1) % 2][1], STDOUT_FILENO);
-			}
-			execve(cmd->path[i], &cmd->args[i][1], env);
-			return (perror("execve"), -1);
-		}
+		child[i] = fork();
+		if (child[i] == 0)
+			ft_pipex_childs(pipe_fd, env, cmd, i);
 		if (child[i] > 0)
-		{
-			while (i < cmd->nb_cmd)
-			{
-				waitpid(child[i], &status, 0);
-			}
-			if (i == cmd->nb_cmd)
-			{
-				close(pipe_fd[i % 2][1]);
-				close(pipe_fd[(i + 1) % 2][0]);
-				close(pipe_fd[(i + 1) % 2][1]);
-				if (ft_write_output(pipe_fd[i % 2][0], argv, cmd) == -1)
-					return (close(pipe_fd[i % 2][0]), -1);
-				close(pipe_fd[i % 2][0]);
-			}
-		}
+			ft_pipex_parent(pipe_fd, cmd, i, argv, child);
 		i++;
 	}
 	return (0);
@@ -79,7 +87,7 @@ int	ft_get_input(int pipe_fd)
 	char	buff[BUFF_SIZE];
 	
 	while ((b_read = read(STDIN_FILENO, buff, BUFF_SIZE)) > 0)
-    	if (write(pipe_fd, buff, b_read) != b_read)
+		if (write(pipe_fd, buff, b_read) != b_read)
 			return (perror("write"), -1);
 	return (0);
 }
@@ -110,10 +118,7 @@ int	ft_check(char **argv, t_cmd *cmd)
 	i = 0;
 	error = false;
 	if (ft_strcmp(argv[1], "here_doc") == 0)
-	{
 		cmd->H_D = true;
-		i = 3;
-	}
 	else if (access(argv[1], R_OK) == -1)
 	{
 		perror(argv[1]);
@@ -128,6 +133,8 @@ int	ft_check(char **argv, t_cmd *cmd)
 	}
 	if (error == true)
 		return (-1);
+	if (cmd->H_D == true)
+		i -= 1;
 	return (i);
 }
 
@@ -211,7 +218,8 @@ int main(int argc, char **argv, char **env)
 	cmd = ft_newcmd();
 	if (!cmd || !env)
 		return (free(cmd), -1);
-	if (ft_check(argv, cmd) < 0)
+	cmd->nb_cmd = ft_check(argv, cmd) - 2;
+	if (cmd->nb_cmd <= 0)
 		return (free(cmd),-1);
 	if (ft_build_args(argv, cmd, env) < 0)
 		return (free(cmd), -1);
