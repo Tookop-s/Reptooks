@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/20 11:23:04 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/20 18:43:14 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,32 @@
 
 int	ft_pipex_childs(int pipe_fd[2][2], char** env, t_cmd *cmd, int i)
 {
+	close(pipe_fd[i % 2][1]);
+	close(pipe_fd[(i + 1) % 2][0]);
 	if (i > 0)
-	{
-		close(pipe_fd[i % 2][1]);
 		dup2(pipe_fd[i % 2][0], STDIN_FILENO);
-		close(pipe_fd[i % 2][0]);
-	}
+	close(pipe_fd[i % 2][0]);
 	if (i < cmd->nb_cmd - 1)
-	{
-		close(pipe_fd[(i + 1) % 2][0]);
 		dup2(pipe_fd[(i + 1) % 2][1], STDOUT_FILENO);
-		close(pipe_fd[(i + 1) % 2][1]);
-	}
+	close(pipe_fd[(i + 1) % 2][1]);
 	execve(cmd->path[i], &cmd->args[i][1], env);
 	return (perror("execve"), -1);
 }
 
 int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i, char **argv, pid_t *child)
 {
-	int		status;
-
-	waitpid(child[i], &status, 0);
-	if (i == cmd->nb_cmd)
+	if (i == cmd->nb_cmd - 1)
 	{
-		close(pipe_fd[i % 2][1]);
 		close(pipe_fd[(i + 1) % 2][0]);
+		if (ft_write_output(pipe_fd[i % 2][1], argv, cmd) == -1)
+			return (close(pipe_fd[(i + 1) % 2][1]), -1);
 		close(pipe_fd[(i + 1) % 2][1]);
-		if (ft_write_output(pipe_fd[i % 2][0], argv, cmd) == -1)
-			return (close(pipe_fd[i % 2][0]), -1);
-		close(pipe_fd[i % 2][0]);
 	}
-	return (status);
+	close(pipe_fd[i % 2][1]);
+	close(pipe_fd[i % 2][0]);
+	if (pipe(pipe_fd[i % 2]) == -1)
+		return (perror("pipe_1 error"), -1);
+	return (0);
 }
 
 int	ft_pipex(char** env, t_cmd *cmd, char **argv)
@@ -53,30 +48,40 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 	pid_t	child[cmd->nb_cmd];
 	int		i;
 	int		infile_fd;
+	int		status;
 
 	i = 0;
 	if (pipe(pipe_fd[i]) == -1)
-		return (perror("pipe error"), -1);
+		return (perror("pipe_1 error"), -1);
 	if (pipe(pipe_fd[i + 1]) == -1)
-		return (perror("pipe error"), -1);
+		return (perror("pipe_2 error"), -1);
 	if (cmd->H_D == true)
 		ft_get_input(pipe_fd[0][1]);
 	else
 	{
 		infile_fd = open(argv[1], O_RDONLY);
 		if (infile_fd == -1)
-			return (perror("open"), -1);
+			return (perror("open infile"), -1);
 		dup2(infile_fd, STDIN_FILENO);
 		close(infile_fd);
 	}
 	while (i < cmd->nb_cmd)
 	{
 		child[i] = fork();
+		if (child[i] < 0)
+			return (perror("fork"), -1);
 		if (child[i] == 0)
-			ft_pipex_childs(pipe_fd, env, cmd, i);
+			if (ft_pipex_childs(pipe_fd, env, cmd, i) == -1)
+				return(-1);
 		if (child[i] > 0)
-			ft_pipex_parent(pipe_fd, cmd, i, argv, child);
+			if (ft_pipex_parent(pipe_fd, cmd, i, argv, child) != 0)
+				return (-1);
 		i++;
+	}
+	while (i != 0)
+	{
+		waitpid(child[i], &status, 0);
+		i--;
 	}
 	return (0);
 }
@@ -89,6 +94,8 @@ int	ft_get_input(int pipe_fd)
 	while ((b_read = read(STDIN_FILENO, buff, BUFF_SIZE)) > 0)
 		if (write(pipe_fd, buff, b_read) != b_read)
 			return (perror("write"), -1);
+	dup2(pipe_fd, STDIN_FILENO);
+	close(pipe_fd);
 	return (0);
 }
 
@@ -208,7 +215,7 @@ int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 }
 
 int main(int argc, char **argv, char **env)
-{
+{STDIN_FILENO
 	t_cmd	*cmd;
 	
 	if (argc)
