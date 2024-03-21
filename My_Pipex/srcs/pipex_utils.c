@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/12 15:06:11 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:09:11 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*ft_newcmd()
 	newcmd->cmd_index = 2;
 	newcmd->fd = -1;
 	newcmd->nb_cmd = 0;
-	newcmd->next = NULL;
 	newcmd->H_D = false;
 	return (newcmd);
 }
@@ -37,33 +36,25 @@ void	ft_error(char *str1, char *str2, char *str3)
 		write(2, str3, ft_strlen(str3));
 }
 
-void	ft_free_args(char ***args)
+void	ft_free_args(char ***args, t_cmd *cmd)
 {
 	int i;
-	int	j;
 	
 	i = 0;
-	j = 0;
-	while (args[i])	
+	while (i < cmd->nb_cmd)	
 	{
-		j = 0;
-		while (args[i][j])
-		{
-			free(args[i][j]);
-			j++;
-		}
-		free(args[i]);
+		ft_free_split(args[i]);
 		i++;
 	}
 	free(args);
 }
 
-void	ft_free_path(char **str)
+void	ft_free_path(char **str, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (i < cmd->nb_cmd)
 	{
 		free(str[i]);
 		i++;
@@ -71,18 +62,12 @@ void	ft_free_path(char **str)
 	free(str);
 }
 
-void	ft_unlink(int fd)
-{
-	if (fd >= 3)
-		unlink("infile.txt");
-}
-
 void	ft_free_split(char **str)
 {
 	int	j;
 
 	j = 0;
-	while (str[j])
+	while (str[j] != NULL)
 	{
 		free(str[j]);
 		j++;
