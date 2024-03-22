@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 16:01:51 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:12:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 	}
 	i = 0;
 	while (i < cmd->nb_cmd)
-	{
+	{./pipex Tools_pipex/test1.txt "grep a1" "wc -w" Tools_pipex/test2.txt
 		waitpid(child[i], &status, 0);
 		i++;
 	}
@@ -96,7 +96,7 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 	close(pipe_fd[(i + 1) % 2][0]);
 	return (0);
 }
-
+./pipex Tools_pipex/test1.txt "grep a1" "wc -w" Tools_pipex/test2.txt
 int	ft_get_input(int pipe_fd)
 {
 	int		b_read;
@@ -116,7 +116,7 @@ int	ft_write_output(int pipe_fd, char **argv, t_cmd *cmd)
 	char	buff[BUFF_SIZE];
 	int		outfile_fd;
 	int		i;
-	
+	./pipex Tools_pipex/test1.txt "grep a1" "wc -w" Tools_pipex/test2.txt
 	if (cmd->H_D == true)
 		i = cmd->nb_cmd + 3; 
 	else
@@ -130,7 +130,7 @@ int	ft_write_output(int pipe_fd, char **argv, t_cmd *cmd)
 	return (0);
 }
 
-int	ft_check(char **argv, t_cmd *cmd)
+int	ft_check_files(char **argv, t_cmd *cmd)
 {
 	int		i;
 	t_bool	error;
@@ -240,7 +240,7 @@ int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 }
 
 int main(int argc, char **argv, char **env)
-{STDIN_FILENO
+{
 	t_cmd	*cmd;
 	
 	if (argc)
