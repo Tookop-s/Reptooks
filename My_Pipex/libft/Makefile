@@ -19,11 +19,11 @@ CFLAGS = -Wall -Wextra -Werror -g -I./include/ -fPIE
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $@ $^
+	@$(AR) $@ $^
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC)  $(CFLAGS) -MMD -c -o $@ $< 
+	@$(CC)  $(CFLAGS) -MMD -c -o $@ $< 
 
 clean:
 	rm -rf $(OBJ_DIR)
