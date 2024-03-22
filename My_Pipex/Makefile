@@ -3,7 +3,7 @@ NAME = pipex
 LIBFT_DIR = libft
 
 SRCS_DIR = srcs
-SRCS = pipex_main.c pipex_utils.c
+SRCS = pipex_main.c pipex_utils_1.c pipex_utils_2.c pipex_exec_utils.c pipex_exec.c
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
