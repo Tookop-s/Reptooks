@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 15:03:26 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:43:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*ft_newcmd()
 	if (!newcmd)
 		return (NULL);
 	newcmd->nb_cmd = 0;
+	newcmd->next = NULL;
 	newcmd->H_D = false;
 	return (newcmd);
 }
@@ -54,12 +55,33 @@ void	ft_error(char *str1, char *str2, char *str3)
 		write(2, str3, ft_strlen(str3));
 }
 
-void	ft_free_p(char **str, int nb)
+void	ft_free_args(char ***args)
+{
+	int i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (args[i])	
+	{
+		j = 0;
+		while (args[i][j])
+		{
+			free(args[i][j]);
+			j++;
+		}
+		free(args[i]);
+		i++;
+	}
+	free(args);
+}
+
+void	ft_free_path(char **str)
 {
 	int	i;
 
 	i = 0;
-	while (i < nb && str[i])
+	while (str[i])
 	{
 		free(str[i]);
 		i++;
@@ -67,12 +89,24 @@ void	ft_free_p(char **str, int nb)
 	free(str);
 }
 
+void	ft_unlink(int fd)
+{
+	if (fd >= 3)
+		unlink("infile.txt");
+}
+
+void	ft_unlink(int fd)
+{
+	if (fd >= 3)
+		unlink("infile.txt");
+}
+
 void	ft_free_s(char **str)
 {
 	int	j;
 
 	j = 0;
-	while (str[j] != NULL)
+	while (str[j])
 	{
 		free(str[j]);
 		j++;

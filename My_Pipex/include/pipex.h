@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 14:29:09 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:42:05 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ typedef struct s_cmd
 	t_bool			H_D;
 	char			***args;
 	char			**path;
+	struct s_cmd	*next;
 }					t_cmd;
 
 void	ft_error(char *str1, char *str2, char *str3);
-void	ft_free_a(char ***args, int nb);
-void	ft_free_all(t_cmd *cmd, int nb);
+void	ft_free_args(char ***args);
 void	ft_unlink(int fd);
-void	ft_free_p(char **str, int nb);
-void	ft_free_s(char **str);
+void	ft_free_path(char **str);
+void	ft_free_split(char **str);
 void	*ft_newcmd();
 int		ft_get_input(int pipe_fd);
 int		ft_write_output(int pipe_fd, char **argv, t_cmd *cmd);

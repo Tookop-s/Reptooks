@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 15:11:37 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:45:28 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,103 +14,31 @@
 
 int	ft_pipex_childs(int p_fd[2][2], char** env, t_cmd *cmd, int i)
 {
-	close(p_fd[i % 2][1]);
-	if (dup2(p_fd[i % 2][0], STDIN_FILENO) == -1)
-	{
-		ft_c_fd(p_fd[(i + 1) % 2], NULL, cmd->std_fd);
-		return(close(p_fd[i % 2][0]), -1);
-	}
-	close(p_fd[i % 2][0]);
-	if (dup2(p_fd[(i + 1) % 2][1], STDOUT_FILENO) == -1)
-	{
-		ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
-		return (-1);
-	}
-	close(p_fd[(i + 1) % 2][0]);
-	close(p_fd[(i + 1) % 2][1]);
-	close(cmd->std_fd[0]);
-	close(cmd->std_fd[1]);
-	execve(cmd->path[i], cmd->args[i], env);
+	close(pipe_fd[i % 2][1]);
+	close(pipe_fd[(i + 1) % 2][0]);
+	if (i > 0)
+		dup2(pipe_fd[i % 2][0], STDIN_FILENO);
+	close(pipe_fd[i % 2][0]);
+	if (i < cmd->nb_cmd - 1)
+		dup2(pipe_fd[(i + 1) % 2][1], STDOUT_FILENO);
+	close(pipe_fd[(i + 1) % 2][1]);
+	execve(cmd->path[i], &cmd->args[i][1], env);
 	return (perror("execve"), -1);
 }
 
-int	ft_pipex_parent(int p_fd[2][2], t_cmd *cmd, int i)
+int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i, char **argv, pid_t *child)
 {
-	if (dup2(cmd->std_fd[0], STDIN_FILENO) == -1)
-		return(ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd), -1);
-	if (dup2(cmd->std_fd[1], STDOUT_FILENO) == -1)
-		return(ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd), -1);
-	close(p_fd[i % 2][1]);
-	close(p_fd[i % 2][0]);
-	if (i < cmd->nb_cmd - 1)
-		if (pipe(p_fd[i % 2]) == -1)
-		{
-			ft_c_fd(p_fd[(i + 1) % 2], NULL, cmd->std_fd);
-			return (perror("pipe"), -1);
-		}
-	return (0);
-}
-
-int	ft_redirect_input(char **argv, int p_fd[2][2], t_cmd *cmd)
-{
-	int	fd;
-	
-	if ((fd = open(argv[1], O_RDONLY)) == -1)
-			return (ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd), perror("open infile"), -1);
-	if (dup2(fd, p_fd[0][1]) == -1)
-		return (ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd), perror("dup cmd->fd"), -1);
-	close(fd);
-	return (0);
-}
-
-int	ft_create_pipes(t_cmd *cmd, char **argv, int p_fd[2][2])
-{
-	if (pipe(p_fd[0]) == -1)
-		return (perror("pipe_1"), -1);
-	if (pipe(p_fd[1]) == -1)
-		return (ft_c_fd(p_fd[0], NULL, NULL), perror("pipe_2"), -1);
-	if ((cmd->std_fd[0] = dup(STDIN_FILENO)) == -1)
-		return (ft_c_fd(p_fd[0], p_fd[1], NULL), perror("dup STDIN"), -1);
-	if ((cmd->std_fd[1] = dup(STDOUT_FILENO)) == -1)
+	if (i == cmd->nb_cmd - 1)
 	{
-		close(cmd->std_fd[0]);
-		return (ft_c_fd(p_fd[0], p_fd[1], NULL), perror("dup_STDOUT"), -1);
+		close(pipe_fd[(i + 1) % 2][0]);
+		if (ft_write_output(pipe_fd[i % 2][1], argv, cmd) == -1)
+			return (close(pipe_fd[(i + 1) % 2][1]), -1);
+		close(pipe_fd[(i + 1) % 2][1]);
 	}
-	if (cmd->H_D == true)
-		if ((ft_get_input(p_fd[0][1])) == -1)
-		{
-			ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
-			return (perror("dup_STDOUT"), -1);
-		}
-	if (cmd->H_D == false)
-		if((ft_redirect_input(argv, p_fd, cmd)) == -1)
-		{
-			ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
-			return (perror("dup_STDOUT"), -1);
-		}
-	return (0);
-}
-
-int	ft_wait_write(t_cmd *cmd, int p_fd[2][2], char **argv, pid_t *child)
-{
-	int		status;
-	int 	i;
-	
-	i = 0;
-	while (i < cmd->nb_cmd)
-	{
-		waitpid(child[i], &status, 0);
-		i++;
-	}
-	i--;
-	close(cmd->std_fd[0]);
-	close(cmd->std_fd[1]);
-	close(p_fd[i % 2][1]);
-	close(p_fd[i % 2][0]);
-	close(p_fd[(i + 1) % 2][1]);
-	if (ft_write_output(p_fd[(i + 1) % 2][0], argv, cmd) == -1)
-		return (close(p_fd[(i + 1) % 2][0]), -1);
-	close(p_fd[(i + 1) % 2][0]);
+	close(pipe_fd[i % 2][1]);
+	close(pipe_fd[i % 2][0]);
+	if (pipe(pipe_fd[i % 2]) == -1)
+		return (perror("pipe_1 error"), -1);
 	return (0);
 }
 
@@ -121,8 +49,20 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 	int		i;
 
 	i = 0;
-	if (ft_create_pipes(cmd, argv, p_fd) < 0)
-		return (-1);
+	if (pipe(pipe_fd[i]) == -1)
+		return (perror("pipe_1 error"), -1);
+	if (pipe(pipe_fd[i + 1]) == -1)
+		return (perror("pipe_2 error"), -1);
+	if (cmd->H_D == true)
+		ft_get_input(pipe_fd[0][1]);
+	else
+	{
+		infile_fd = open(argv[1], O_RDONLY);
+		if (infile_fd == -1)
+			return (perror("open infile"), -1);
+		dup2(infile_fd, STDIN_FILENO);
+		close(infile_fd);
+	}
 	while (i < cmd->nb_cmd)
 	{
 		child[i] = fork();
@@ -134,12 +74,15 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 				return(close(cmd->std_fd[0]), close(cmd->std_fd[1]), -1);
 		}
 		if (child[i] > 0)
-			if (ft_pipex_parent(p_fd, cmd, i) != 0)
+			if (ft_pipex_parent(pipe_fd, cmd, i, argv, child) != 0)
 				return (-1);
 		i++;
 	}
-	if ((ft_wait_write(cmd, p_fd, argv, child)) == -1)
-		return (-1);
+	while (i != 0)
+	{
+		waitpid(child[i], &status, 0);
+		i--;
+	}
 	return (0);
 }
 
@@ -151,6 +94,8 @@ int	ft_get_input(int pipe_fd)
 	while ((b_read = read(STDIN_FILENO, buff, BUFF_SIZE)) > 0)
 		if (write(pipe_fd, buff, b_read) != b_read)
 			return (perror("write"), -1);
+	dup2(pipe_fd, STDIN_FILENO);
+	close(pipe_fd);
 	return (0);
 }
 
@@ -165,20 +110,10 @@ int	ft_write_output(int pipe_fd, char **argv, t_cmd *cmd)
 		i = cmd->nb_cmd + 3; 
 	else
 		i = cmd->nb_cmd + 2; 
-	if (cmd->H_D == false)
-	{
-		if ((outfile_fd = open(argv[i], O_WRONLY | O_CREAT | O_TRUNC, 0600)) < 0)
-			return (perror("Open_Outfile"), -1);
-	}
-	else 
-	{
-		if ((outfile_fd = open(argv[i], O_WRONLY | O_CREAT | O_APPEND, 0600)) < 0)
-			return (perror("Open_Outfile"), -1);
-	}
+	outfile_fd = open(argv[i], O_WRONLY);
 	while ((b_read = read(pipe_fd, buff, BUFF_SIZE)) > 0)
     	if (write(outfile_fd, buff, b_read) != b_read)
-			return (close(outfile_fd), perror("write"), -1);
-	close(outfile_fd);
+			return (perror("write"), -1);
 	return (0);
 }
 
@@ -222,8 +157,7 @@ char 	*ft_find_in_env(char *env, char *cmd)
 	{
 		path = ft_strjoin(temp[i], cmd);
 		if (access(path, X_OK) == 0)
-			return (ft_free_s(temp), path);
-		free (path);
+			return (ft_free_split(temp), path);
 		i++;
 	}
 	ft_free_s(temp);
@@ -263,17 +197,17 @@ int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 		return (free(cmd), -1);
 	cmd->args = malloc(sizeof(char**) * cmd->nb_cmd);
 	if (!cmd->args)
-		return (ft_free_p(cmd->path, j), free(cmd), -1);
-	if (cmd->H_D == true)
+		return (ft_unlink(cmd->fd),ft_free_path(cmd->path), -1);
+	if (cmd->fd > 0)
 		i = 3;
 	while (argv[i + 1] != NULL)
 	{
 		cmd->args[j] = ft_split(argv[i], ' ');
 		if (!cmd->args)
-			return (ft_free_all(cmd, j), -1);
+			return (ft_unlink(cmd->fd), ft_free_args(cmd->args), ft_free_path(cmd->path), -1);
 		cmd->path[j] = ft_check_env(env, cmd->args[j][0]);
 		if (!cmd->path[j])
-			return (ft_free_all(cmd, j), -1);
+			return (ft_unlink(cmd->fd), ft_free_args(cmd->args), ft_free_path(cmd->path), -1);
 		i++;
 		j++;
 	}
@@ -281,7 +215,7 @@ int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 }
 
 int main(int argc, char **argv, char **env)
-{
+{STDIN_FILENO
 	t_cmd	*cmd;
 	
 	if (argc < 5 || !env)
@@ -293,10 +227,8 @@ int main(int argc, char **argv, char **env)
 	if (cmd->nb_cmd <= 0)
 		return (free(cmd),-1);
 	if (ft_build_args(argv, cmd, env) < 0)
-		return (-1);
-	if (ft_pipex(env, cmd, argv) < 0)
-		return (ft_free_all(cmd, cmd->nb_cmd), -1);
-	ft_free_all(cmd, cmd->nb_cmd);
+		return (free(cmd), -1);
+	ft_pipex(env, cmd, argv);
 	return (0);
 }
 
