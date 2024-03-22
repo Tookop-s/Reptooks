@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 15:53:58 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:55:03 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ft_pipex_childs(int p_fd[2][2], char** env, t_cmd *cmd, int i)
 {
-	close(pipe_fd[i % 2][1]);
-	close(pipe_fd[(i + 1) % 2][0]);
-	dup2(pipe_fd[i % 2][0], STDIN_FILENO);
-	close(pipe_fd[i % 2][0]);
-	dup2(pipe_fd[(i + 1) % 2][1], STDOUT_FILENO);
-	close(pipe_fd[(i + 1) % 2][1]);
-	execve(cmd->path[i], &cmd->args[i][1], env);
+	close(p_fd[i % 2][1]);
+	close(p_fd[(i + 1) % 2][0]);
+	dup2(p_fd[i % 2][0], STDIN_FILENO);
+	close(p_fd[i % 2][0]);
+	dup2(p_fd[(i + 1) % 2][1], STDOUT_FILENO);
+	close(p_fd[(i + 1) % 2][1]);
+	execve(cmd->path[i], cmd->args[i], env);
 	return (perror("execve"), -1);
 }
 
@@ -38,6 +38,7 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 	int		pipe_fd[2][2];
 	pid_t	child[cmd->nb_cmd];
 	int		i;
+	int		fd;
 
 	i = 0;
 	if (pipe(pipe_fd[i]) == -1)
@@ -48,11 +49,11 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 		ft_get_input(pipe_fd[0][1]);
 	else
 	{
-		infile_fd = open(argv[1], O_RDONLY);
-		if (infile_fd == -1)
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
 			return (perror("open infile"), -1);
-		dup2(infile_fd, STDIN_FILENO);
-		close(infile_fd);
+		dup2(fd, pipe);
+		close(fd);
 	}
 	while (i < cmd->nb_cmd)
 	{
