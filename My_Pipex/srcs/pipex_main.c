@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 15:50:19 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:51:14 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	ft_pipex_childs(int p_fd[2][2], char** env, t_cmd *cmd, int i)
 {
-	close(pipe_fd[i % 2][1]);
-	close(pipe_fd[(i + 1) % 2][0]);
+	close(p_fd[i % 2][1]);
+	close(p_fd[(i + 1) % 2][0]);
 	if (i > 0)
-		dup2(pipe_fd[i % 2][0], STDIN_FILENO);
-	close(pipe_fd[i % 2][0]);
+		dup2(p_fd[i % 2][0], STDIN_FILENO);
+	close(p_fd[i % 2][0]);
 	if (i < cmd->nb_cmd - 1)
-		dup2(pipe_fd[(i + 1) % 2][1], STDOUT_FILENO);
-	close(pipe_fd[(i + 1) % 2][1]);
-	execve(cmd->path[i], &cmd->args[i][1], env);
+		dup2(p_fd[(i + 1) % 2][1], STDOUT_FILENO);
+	close(p_fd[(i + 1) % 2][1]);
+	execve(cmd->path[i], cmd->args[i], env);
 	return (perror("execve"), -1);
 }
 
