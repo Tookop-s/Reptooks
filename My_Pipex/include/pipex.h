@@ -6,7 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:40:09 by anferre           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/22 15:42:05 by anferre          ###   ########.fr       */
+=======
+/*   Updated: 2024/03/12 17:02:01 by anferre          ###   ########.fr       */
+>>>>>>> parent of b445d40 (working ! need to fix check return and clean)
 /*                                                                            */
 /* ************************************************************************** */
 

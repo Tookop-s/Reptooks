@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 15:55:03 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:58:26 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,15 @@ int	ft_pipex_childs(int p_fd[2][2], char** env, t_cmd *cmd, int i)
 	return (perror("execve"), -1);
 }
 
-int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i)
+int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i, char **argv, pid_t *child)
 {
+	if (i == cmd->nb_cmd - 1)
+	{
+		close(pipe_fd[(i + 1) % 2][0]);
+		if (ft_write_output(pipe_fd[i % 2][1], argv, cmd) == -1)
+			return (close(pipe_fd[(i + 1) % 2][1]), -1);
+		close(pipe_fd[(i + 1) % 2][1]);
+	}
 	close(pipe_fd[i % 2][1]);
 	close(pipe_fd[i % 2][0]);
 	if (pipe(pipe_fd[i % 2]) == -1)
@@ -52,8 +59,8 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 			return (perror("open infile"), -1);
-		dup2(fd, pipe);
-		close(fd);
+		dup2(infile_fd, STDIN_FILENO);
+		close(infile_fd);
 	}
 	while (i < cmd->nb_cmd)
 	{
@@ -64,22 +71,15 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 			if (ft_pipex_childs(pipe_fd, env, cmd, i) == -1)
 				return(-1);
 		if (child[i] > 0)
-			if (ft_pipex_parent(pipe_fd, cmd, i) != 0)
+			if (ft_pipex_parent(pipe_fd, cmd, i, argv, child) != 0)
 				return (-1);
 		i++;
 	}
 	while (i != 0)
 	{
 		waitpid(child[i], &status, 0);
-		i++;
+		i--;
 	}
-	i--;
-	close(pipe_fd[i % 2][1]);
-	close(pipe_fd[i % 2][0]);
-	close(pipe_fd[(i + 1) % 2][1]);
-	if (ft_write_output(pipe_fd[(i + 1) % 2][0], argv, cmd) == -1)
-		return (close(pipe_fd[(i + 1) % 2][0]), -1);
-	close(pipe_fd[(i + 1) % 2][0]);
 	return (0);
 }
 

@@ -6,7 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/22 15:43:52 by anferre          ###   ########.fr       */
+=======
+/*   Updated: 2024/03/12 15:06:11 by anferre          ###   ########.fr       */
+>>>>>>> parent of b445d40 (working ! need to fix check return and clean)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +99,7 @@ void	ft_unlink(int fd)
 		unlink("infile.txt");
 }
 
+<<<<<<< HEAD
 void	ft_unlink(int fd)
 {
 	if (fd >= 3)
@@ -102,6 +107,9 @@ void	ft_unlink(int fd)
 }
 
 void	ft_free_s(char **str)
+=======
+void	ft_free_split(char **str)
+>>>>>>> parent of b445d40 (working ! need to fix check return and clean)
 {
 	int	j;
 
