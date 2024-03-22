@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 15:48:16 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:50:19 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,8 @@ int	ft_pipex_childs(int p_fd[2][2], char** env, t_cmd *cmd, int i)
 	return (perror("execve"), -1);
 }
 
-int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i, char **argv, pid_t *child)
+int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i)
 {
-	if (i == cmd->nb_cmd - 1)
-	{
-		close(pipe_fd[(i + 1) % 2][0]);
-		if (ft_write_output(pipe_fd[i % 2][1], argv, cmd) == -1)
-			return (close(pipe_fd[(i + 1) % 2][1]), -1);
-		close(pipe_fd[(i + 1) % 2][1]);
-	}
 	close(pipe_fd[i % 2][1]);
 	close(pipe_fd[i % 2][0]);
 	if (pipe(pipe_fd[i % 2]) == -1)
@@ -44,7 +37,7 @@ int	ft_pipex_parent(int pipe_fd[2][2], t_cmd *cmd, int i, char **argv, pid_t *ch
 
 int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 {
-	int		p_fd[2][2];
+	int		pipe_fd[2][2];
 	pid_t	child[cmd->nb_cmd];
 	int		i;
 
@@ -69,20 +62,25 @@ int	ft_pipex(char** env, t_cmd *cmd, char **argv)
 		if (child[i] < 0)
 			return (perror("fork"), ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd), -1);
 		if (child[i] == 0)
-		{
-			if (ft_pipex_childs(p_fd, env, cmd, i) == -1)
-				return(close(cmd->std_fd[0]), close(cmd->std_fd[1]), -1);
-		}
+			if (ft_pipex_childs(pipe_fd, env, cmd, i) == -1)
+				return(-1);
 		if (child[i] > 0)
-			if (ft_pipex_parent(pipe_fd, cmd, i, argv, child) != 0)
+			if (ft_pipex_parent(pipe_fd, cmd, i) != 0)
 				return (-1);
 		i++;
 	}
 	while (i != 0)
 	{
 		waitpid(child[i], &status, 0);
-		i--;
+		i++;
 	}
+	i--;
+	close(pipe_fd[i % 2][1]);
+	close(pipe_fd[i % 2][0]);
+	close(pipe_fd[(i + 1) % 2][1]);
+	if (ft_write_output(pipe_fd[(i + 1) % 2][0], argv, cmd) == -1)
+		return (close(pipe_fd[(i + 1) % 2][0]), -1);
+	close(pipe_fd[(i + 1) % 2][0]);
 	return (0);
 }
 
@@ -117,7 +115,7 @@ int	ft_write_output(int pipe_fd, char **argv, t_cmd *cmd)
 	return (0);
 }
 
-int	ft_check_files(char **argv, t_cmd *cmd)
+int	ft_check(char **argv, t_cmd *cmd)
 {
 	int		i;
 	t_bool	error;
@@ -221,9 +219,9 @@ int main(int argc, char **argv, char **env)
 	if (argc < 5 || !env)
 		return(perror("Args"), -1);
 	cmd = ft_newcmd();
-	if (!cmd)
-		return (perror("cmd"), -1);
-	cmd->nb_cmd = ft_check_files(argv, cmd) - 2;
+	if (!cmd || !env)
+		return (free(cmd), -1);
+	cmd->nb_cmd = ft_check(argv, cmd) - 2;
 	if (cmd->nb_cmd <= 0)
 		return (free(cmd),-1);
 	if (ft_build_args(argv, cmd, env) < 0)
@@ -231,8 +229,24 @@ int main(int argc, char **argv, char **env)
 	ft_pipex(env, cmd, argv);
 	return (0);
 }
+/*
+steps : 
 
-/*tests that doesn't work :  
-./pipex Tools_pipex/test1.txt "grep a1" "wc -w" Tools_pipex/test2.txt
+check / build = ok 
+for in/outfile (permissions, creation) --> file_check
+and here_doc
 
-*/
+build = ok
+build the args array char *args[] --> build_args
+look for the cmds path in the enpv --> get_path
+
+build multiprocess =
+create pipes (nb_cmd-1)
+create 1 child for each cmd
+execute the cmds 
+1st child read from infile or infile.txt (here_doc) need to try to read from stdin instead of storing the stdin in a file.
+last child write to outfile or if no outfile stdout
+be carefull baout open and clos in each child but also to close all in the parent (need to see for infil and outfile if they need a double close)
+
+wait and write = 
+wait for all before writting to the outfile */
