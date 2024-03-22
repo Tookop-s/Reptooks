@@ -7,10 +7,14 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2024/03/22 15:43:52 by anferre          ###   ########.fr       */
 =======
 /*   Updated: 2024/03/12 15:06:11 by anferre          ###   ########.fr       */
 >>>>>>> parent of b445d40 (working ! need to fix check return and clean)
+=======
+/*   Updated: 2024/03/21 13:09:11 by anferre          ###   ########.fr       */
+>>>>>>> parent of 0d45b30 (it doesn't work anymore =\)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +27,12 @@ void	*ft_newcmd()
 	newcmd = malloc(sizeof(t_cmd));
 	if (!newcmd)
 		return (NULL);
+	newcmd->cmd_index = 2;
+	newcmd->fd = -1;
 	newcmd->nb_cmd = 0;
 	newcmd->next = NULL;
 	newcmd->H_D = false;
 	return (newcmd);
-}
-
-void	ft_free_all(t_cmd *cmd, int nb)
-{
-	ft_free_a(cmd->args, nb);
-	ft_free_p(cmd->path, nb);
-	free(cmd);
-}
-
-void	ft_free_a(char ***args, int nb)
-{
-	int i;
-	
-	i = 0;
-	while (i < nb && args[i])	
-	{
-		ft_free_s(args[i]);
-		i++;
-	}
-	free(args);
 }
 
 void	ft_error(char *str1, char *str2, char *str3)
@@ -59,6 +45,7 @@ void	ft_error(char *str1, char *str2, char *str3)
 		write(2, str3, ft_strlen(str3));
 }
 
+<<<<<<< HEAD
 void	ft_free_args(char ***args)
 {
 	int i;
@@ -75,17 +62,35 @@ void	ft_free_args(char ***args)
 			j++;
 		}
 		free(args[i]);
+=======
+void	ft_free_args(char ***args, t_cmd *cmd)
+{
+	int i;
+	
+	i = 0;
+	while (i < cmd->nb_cmd)	
+	{
+		ft_free_split(args[i]);
+>>>>>>> parent of 0d45b30 (it doesn't work anymore =\)
 		i++;
 	}
 	free(args);
 }
 
+<<<<<<< HEAD
 void	ft_free_path(char **str)
+=======
+void	ft_free_path(char **str, t_cmd *cmd)
+>>>>>>> parent of 0d45b30 (it doesn't work anymore =\)
 {
 	int	i;
 
 	i = 0;
+<<<<<<< HEAD
 	while (str[i])
+=======
+	while (i < cmd->nb_cmd)
+>>>>>>> parent of 0d45b30 (it doesn't work anymore =\)
 	{
 		free(str[i]);
 		i++;
@@ -93,6 +98,7 @@ void	ft_free_path(char **str)
 	free(str);
 }
 
+<<<<<<< HEAD
 void	ft_unlink(int fd)
 {
 	if (fd >= 3)
@@ -110,6 +116,9 @@ void	ft_free_s(char **str)
 =======
 void	ft_free_split(char **str)
 >>>>>>> parent of b445d40 (working ! need to fix check return and clean)
+=======
+void	ft_free_split(char **str)
+>>>>>>> parent of 0d45b30 (it doesn't work anymore =\)
 {
 	int	j;
 
@@ -120,23 +129,4 @@ void	ft_free_split(char **str)
 		j++;
 	}
 	free (str);
-}
-
-void	ft_c_fd(int *pipe_fd1, int *pipe_fd2, int *std_fd)
-{
-	if (std_fd)
-	{
-		close(std_fd[0]);
-		close(std_fd[1]);
-	}
-	if (pipe_fd1)
-	{
-		close(pipe_fd1[1]);
-		close(pipe_fd1[0]);
-	}
-	if (pipe_fd2)
-	{
-		close(pipe_fd2[1]);
-		close(pipe_fd2[0]);
-	}
 }
