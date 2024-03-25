@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/25 17:38:49 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:52:07 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ static char	*ft_check_env(char **env, char *cmd)
 		{
 			path = ft_find_in_env(env[i], cmd);
 			if (path)
-				return (path);
+				return (free(cmd), path);
 		}
 		i++;
 	}
-	return (ft_error("command not found : ", &cmd[1], "\n"), NULL);
+	return (ft_error("command not found : ", &cmd[1], "\n"), free(cmd), NULL);
 }
 
 static int	ft_build_args(char **argv, t_cmd *cmd, char **env)

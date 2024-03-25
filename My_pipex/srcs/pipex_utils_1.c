@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/25 14:21:30 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:56:09 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_free_a(char ***args, int nb)
 	int	i;
 
 	i = 0;
-	while (i < nb && args[i])
+	while (i < nb)
 	{
 		ft_free_s(args[i]);
 		i++;
@@ -49,7 +49,7 @@ void	ft_free_p(char **str, int nb)
 	int	i;
 
 	i = 0;
-	while (i < nb && str[i])
+	while (i < nb )
 	{
 		free(str[i]);
 		i++;

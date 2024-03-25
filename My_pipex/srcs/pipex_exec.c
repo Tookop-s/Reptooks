@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:49:19 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/25 17:30:28 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:54:07 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,20 +125,20 @@ int	ft_pipex(char **env, t_cmd *cmd, char **argv)
 	if (!child)
 		return (-1);
 	if (ft_create_pipes(cmd, argv, p_fd) < 0)
-		return (-1);
+		return (free(child), -1);
 	while (++i < cmd->nb_cmd)
 	{
 		child[i] = fork();
 		if (child[i] < 0)
-			return (perror("fork"), ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd), -1);
+			return (perror("fork"), free(child), ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd), -1);
 		if (child[i] == 0)
 			if (ft_pipex_childs(p_fd, env, cmd, i) == -1)
-				return (close(cmd->std_fd[0]), close(cmd->std_fd[1]), -1);
+				return (free(child), close(cmd->std_fd[0]), close(cmd->std_fd[1]), -1);
 		if (child[i] > 0)
 			if (ft_pipex_parent(p_fd, cmd, i) != 0)
-				return (-1);
+				return (free(child), -1);
 	}
 	if ((ft_wait_write(cmd, p_fd, argv, child)) == -1)
-		return (-1);
-	return (0);
+		return (free(child), -1);
+	return (free(child), 0);
 }
