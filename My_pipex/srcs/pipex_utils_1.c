@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 17:54:06 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 14:21:30 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pipex.h>
+#include <../include/pipex.h>
 
 void	*ft_newcmd(void)
 {

@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 17:59:02 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 17:38:49 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pipex.h>
+#include <../include/pipex.h>
 
 static int	ft_check_files(char **argv, t_cmd *cmd)
 {
@@ -22,19 +22,14 @@ static int	ft_check_files(char **argv, t_cmd *cmd)
 	if (ft_strcmp(argv[1], "here_doc") == 0)
 		cmd->h_d = true;
 	else if (access(argv[1], R_OK) == -1)
-	{
 		perror(argv[1]);
-		error = true;
-	}
 	while (argv[i + 1])
 		i++;
-	if (access(argv[i], W_OK) == -1)
+	if (access(argv[i], F_OK) != -1)
 	{
-		perror(argv[i]);
-		error = true;
+		if (access(argv[i], W_OK) == -1)
+			perror(argv[i]);
 	}
-	if (error == true)
-		return (-1);
 	if (cmd->h_d == true)
 		i -= 1;
 	return (i);
@@ -78,7 +73,7 @@ static char	*ft_check_env(char **env, char *cmd)
 		}
 		i++;
 	}
-	return (ft_error("command not found : ", cmd, "\n"), NULL);
+	return (ft_error("command not found : ", &cmd[1], "\n"), NULL);
 }
 
 static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
@@ -102,8 +97,6 @@ static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 		if (!cmd->args)
 			return (ft_free_all(cmd, j), -1);
 		cmd->path[j] = ft_check_env(env, cmd->args[j][0]);
-		if (!cmd->path[j])
-			return (ft_free_all(cmd, j), -1);
 		i++;
 		j++;
 	}
@@ -115,7 +108,7 @@ int	main(int argc, char **argv, char **env)
 	t_cmd	*cmd;
 
 	if (argc < 5 || !env)
-		return (perror("Args"), -1);
+		return (-1);
 	cmd = ft_newcmd();
 	if (!cmd)
 		return (perror("cmd"), -1);
@@ -125,7 +118,7 @@ int	main(int argc, char **argv, char **env)
 	if (ft_build_args(argv, cmd, env) < 0)
 		return (-1);
 	if (ft_pipex(env, cmd, argv) < 0)
-		return (ft_free_all(cmd, cmd->nb_cmd), -1);
+		return (ft_free_all(cmd, cmd->nb_cmd), 127);
 	ft_free_all(cmd, cmd->nb_cmd);
 	return (0);
 }

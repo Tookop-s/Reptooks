@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:49:19 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 18:01:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 17:30:28 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pipex.h>
+#include <../include/pipex.h>
 
 static int	ft_pipex_childs(int p_fd[2][2], char **env, t_cmd *cmd, int i)
 {
@@ -34,7 +34,9 @@ static int	ft_pipex_childs(int p_fd[2][2], char **env, t_cmd *cmd, int i)
 	close(cmd->std_fd[0]);
 	close(cmd->std_fd[1]);
 	execve(cmd->path[i], cmd->args[i], env);
-	return (perror("execve"), -1);
+	if (i < cmd->nb_cmd - 1)
+		perror("execve");
+	exit(errno);
 }
 
 static int	ft_pipex_parent(int p_fd[2][2], t_cmd *cmd, int i)
@@ -67,7 +69,9 @@ static int	ft_write_output(int pipe_fd, char **argv, t_cmd *cmd)
 		i = cmd->nb_cmd + 3;
 	else
 		i = cmd->nb_cmd + 2;
-	if (cmd->h_d == false)
+	if (access(argv[i], F_OK) != -1)
+		outfile_fd = open(argv[i], O_WRONLY | O_CREAT | O_EXCL, 0600);
+	else if (cmd->h_d == false)
 		outfile_fd = open(argv[i], O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	else
 		outfile_fd = open(argv[i], O_WRONLY | O_CREAT | O_APPEND, 0600);
@@ -80,8 +84,7 @@ static int	ft_write_output(int pipe_fd, char **argv, t_cmd *cmd)
 			return (close(outfile_fd), perror("write"), -1);
 		b_read = read(pipe_fd, buff, BUFF_SIZE);
 	}
-	close(outfile_fd);
-	return (0);
+	return (close(outfile_fd), 0);
 }
 
 static int	ft_wait_write(t_cmd *cmd, int p_fd[2][2], char **argv, pid_t *child)
@@ -90,20 +93,24 @@ static int	ft_wait_write(t_cmd *cmd, int p_fd[2][2], char **argv, pid_t *child)
 	int		i;
 
 	i = 0;
+	status = 0;
 	while (i < cmd->nb_cmd)
 	{
-		waitpid(child[i], &status, 0);
+		if ((waitpid(child[i], &status, 0) < 0))
+			return (perror("waitpid"), -1);
 		i++;
 	}
 	i--;
-	close(cmd->std_fd[0]);
-	close(cmd->std_fd[1]);
-	close(p_fd[i % 2][1]);
-	close(p_fd[i % 2][0]);
+	ft_c_fd(p_fd[i % 2], NULL, cmd->std_fd);
 	close(p_fd[(i + 1) % 2][1]);
 	if (ft_write_output(p_fd[(i + 1) % 2][0], argv, cmd) == -1)
 		return (close(p_fd[(i + 1) % 2][0]), -1);
 	close(p_fd[(i + 1) % 2][0]);
+	if (cmd->path[i] == NULL)
+	{
+		ft_free_all(cmd, cmd->nb_cmd);
+		exit(127);
+	}
 	return (0);
 }
 

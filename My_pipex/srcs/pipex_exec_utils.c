@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:50:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 17:51:30 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:01:17 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pipex.h>
+#include <../include/pipex.h>
 
 int	ft_get_input(int pipe_fd)
 {
@@ -27,22 +27,19 @@ int	ft_get_input(int pipe_fd)
 	return (0);
 }
 
-int	ft_redirect_input(char **argv, int p_fd[2][2], t_cmd *cmd)
+int	ft_redirect_input(char **argv, int p_fd[2][2])
 {
 	int	fd;
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
+		close(p_fd[1][1]);
+	else if (dup2(fd, STDIN_FILENO) == -1)
 	{
-		ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
-		return (perror("open infile"), -1);
+		close(p_fd[1][1]);
 	}
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
-		return (perror("dup cmd->fd"), -1);
-	}
-	close(fd);
+	if (fd > 0)
+		close(fd);
 	return (0);
 }
 
@@ -51,18 +48,12 @@ int	ft_input(t_cmd *cmd, int p_fd[2][2], char **argv)
 	if (cmd->h_d == true)
 	{
 		if ((ft_get_input(p_fd[0][1])) == -1)
-		{
-			ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
-			return (perror("dup_STDOUT"), -1);
-		}
+			close(p_fd[1][1]);
 	}
 	if (cmd->h_d == false)
 	{
-		if ((ft_redirect_input(argv, p_fd, cmd)) == -1)
-		{
-			ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
-			return (perror("dup_STDOUT"), -1);
-		}
+		if ((ft_redirect_input(argv, p_fd)) == -1)
+			close(p_fd[1][1]);
 	}
 	return (0);
 }

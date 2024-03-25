@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:35:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/22 18:01:44 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:01:38 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_cmd
 		/*EXEC*/
 int		ft_pipex(char **env, t_cmd *cmd, char **argv);
 int		ft_get_input(int pipe_fd);
-int		ft_redirect_input(char **argv, int p_fd[2][2], t_cmd *cmd);
+int		ft_redirect_input(char **argv, int p_fd[2][2]);
 int		ft_input(t_cmd *cmd, int p_fd[2][2], char **argv);
 int		ft_create_pipes(t_cmd *cmd, char **argv, int p_fd[2][2]);
 
