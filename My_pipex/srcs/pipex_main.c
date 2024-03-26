@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/26 14:14:41 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/26 16:21:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_check_files(char **argv, t_cmd *cmd)
 	else if (access(argv[i], F_OK) == -1)
 		cmd->outfile_fd = open(argv[i], O_WRONLY | O_CREAT | O_EXCL, 0600);
 	if (cmd->outfile_fd < 0)
-		return (ft_free_all(cmd, cmd->nb_cmd), exit(1), -1);
+		return (free(cmd), exit(1), -1);
 	if (cmd->h_d == true)
 		i -= 1;
 	return (i);
@@ -121,6 +121,9 @@ int	main(int argc, char **argv, char **env)
 	cmd->nb_cmd = ft_check_files(argv, cmd) - 2;
 	if (cmd->nb_cmd <= 0)
 		return (free(cmd), -1);
+	cmd->child = malloc(sizeof(pid_t) * cmd->nb_cmd);
+	if (!cmd->child)
+		return (-1);
 	if (ft_build_args(argv, cmd, env) < 0)
 		return (-1);
 	if (ft_pipex(env, cmd, argv) < 0)

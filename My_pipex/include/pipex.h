@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:35:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/26 14:04:19 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/26 16:30:04 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_cmd
 	int				nb_cmd;
 	int				std_fd[2];
 	int				outfile_fd;
+	pid_t			*child;
 	t_bool			h_d;
 	char			***args;
 	char			**path;
@@ -46,7 +47,7 @@ int		ft_get_input(int pipe_fd);
 int		ft_redirect_input(char **argv, int p_fd[2][2]);
 int		ft_input(t_cmd *cmd, int p_fd[2][2], char **argv);
 int		ft_create_pipes(t_cmd *cmd, char **argv, int p_fd[2][2]);
-int		ft_signal(int status, t_cmd *cmd, pid_t *child);
+int		ft_exit(int status, t_cmd *cmd);
 
 		/*UTILS*/
 void	*ft_newcmd(void);
