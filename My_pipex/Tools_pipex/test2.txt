@@ -1,0 +1,11 @@
+total 48$
+drwxr-xr-x 8 anferre 2023_paris   127 Mar 26 10:36 .$
+drwxr-xr-x 7 anferre 2023_paris   132 Mar 25 13:07 ..$
+drwxr-xr-x 2 anferre 2023_paris    36 Mar 22 17:16 include$
+drwxr-xr-x 4 anferre 2023_paris  4096 Mar 26 10:26 libft$
+-rw-r--r-- 1 anferre 2023_paris   755 Mar 25 15:56 Makefile$
+drwxr-xr-x 2 anferre 2023_paris  4096 Mar 26 10:36 objs$
+-rwxr-xr-x 1 anferre 2023_paris 33624 Mar 26 10:36 pipex$
+drwxr-xr-x 5 anferre 2023_paris   163 Mar 26 10:26 pipex_testeur$
+drwxr-xr-x 2 anferre 2023_paris   118 Mar 25 15:56 srcs$
+drwxr-xr-x 2 anferre 2023_paris    63 Mar 26 10:33 Tools_pipex$
