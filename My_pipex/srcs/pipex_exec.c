@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:49:19 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/26 16:29:49 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/27 15:25:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_pipex_childs(int p_fd[2][2], char **env, t_cmd *cmd, int i)
 	{
 		if (dup2(p_fd[i % 2][0], STDIN_FILENO) == -1)
 		{
-			ft_c_fd(p_fd[(i + 1) % 2], NULL, cmd->std_fd);
+			ft_c_fd(p_fd[(i + 1) % 2], p_fd[i % 2], cmd->std_fd);
 			return (close(p_fd[i % 2][0]), -1);
 		}
 	}
@@ -29,10 +29,9 @@ static int	ft_pipex_childs(int p_fd[2][2], char **env, t_cmd *cmd, int i)
 		ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
 		return (-1);
 	}
-	close(p_fd[(i + 1) % 2][0]);
-	close(p_fd[(i + 1) % 2][1]);
-	close(cmd->std_fd[0]);
-	close(cmd->std_fd[1]);
+	if (cmd->h_d == true)
+		close(cmd->h_d_fd);
+	ft_c_fd(p_fd[(i + 1) % 2], NULL, cmd->std_fd);
 	if (cmd->path[i] == NULL)
 		return (ft_free_all(cmd, cmd->nb_cmd), exit (127), -1);
 	execve(cmd->path[i], cmd->args[i], env);
@@ -89,6 +88,7 @@ static int	ft_wait_write(t_cmd *cmd, int p_fd[2][2], pid_t *child)
 			return (perror("waitpid"), -1);
 		if (status != 0 && i == cmd->nb_cmd - 1)
 			ft_exit(status, cmd);
+		status = 0;
 		i++;
 	}
 	i--;

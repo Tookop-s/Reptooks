@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/26 16:22:13 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:31:42 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ft_free_all(t_cmd *cmd, int nb)
 	ft_free_a(cmd->args, nb);
 	ft_free_p(cmd->path, nb);
 	free(cmd->child);
+	if (cmd->h_d == true)
+		unlink("here_doc.txt");
 	free(cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:53:33 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/25 14:21:34 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:27:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	ft_error(char *str1, char *str2, char *str3)
 {
 	if (str1)
 		write(2, str1, ft_strlen(str1));
-	if (str2)
-		write(2, str2, ft_strlen(str2));
+	if (str2 && &str2[1])
+		write(2, &str2[1], ft_strlen(&str2[1]));
 	if (str3)
 		write(2, str3, ft_strlen(str3));
 }

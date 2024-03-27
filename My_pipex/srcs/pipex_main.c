@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/26 16:21:52 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:28:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*ft_check_env(char **env, char *cmd)
 	i = 0;
 	path = NULL;
 	cmd = ft_strjoin("/", cmd);
-	while (env[i])
+	while (env[i] && cmd)
 	{
 		if (ft_strncmp(env[i], "PATH", 4) == 0)
 		{
@@ -79,7 +79,7 @@ static char	*ft_check_env(char **env, char *cmd)
 		}
 		i++;
 	}
-	return (ft_error("command not found : ", &cmd[1], "\n"), free(cmd), NULL);
+	return (ft_error("command not found : ", cmd, "\n"), free(cmd), NULL);
 }
 
 static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
@@ -114,7 +114,7 @@ int	main(int argc, char **argv, char **env)
 	t_cmd	*cmd;
 
 	if (argc < 5 || !env)
-		return (-1);
+		return (1);
 	cmd = ft_newcmd();
 	if (!cmd)
 		return (perror("cmd"), -1);
