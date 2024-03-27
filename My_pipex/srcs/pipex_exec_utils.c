@@ -6,13 +6,15 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:50:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/27 15:51:39 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/27 18:49:03 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../include/pipex.h>
 
 //get the input from stdin and then redirect the here_doc to stdin
+//maybe use strnstr to locate the EOF and get rid of it in the string
+//but i think the diff from the tester comes from the input HERE_DOC=$'Hello\nHello\nHello\nEOF\n'
 int	ft_get_input(char **argv, t_cmd *cmd)
 {
 	int		b_read;
@@ -24,14 +26,20 @@ int	ft_get_input(char **argv, t_cmd *cmd)
 	b_read = read(STDIN_FILENO, buff, BUFF_SIZE);
 	if (b_read < 0)
 		return (perror("read STDIN"), -1);
-	while (b_read > 0)
+	while (b_read > 0 && ft_strncmp(argv[2], buff, ft_strlen(argv[2])) != 0)
 	{
 		if (write(cmd->h_d_fd, buff, b_read) != b_read)
 			return (perror("write"), -1);
 		b_read = read(STDIN_FILENO, buff, BUFF_SIZE);
+		if (b_read < 0)
+			return (perror("read STDIN"), -1);
 		if (ft_strncmp(argv[2], buff, ft_strlen(argv[2])) == 0)
 			break;
 	}
+	close(cmd->h_d_fd);
+	cmd->h_d_fd = open("here_doc.txt",  O_CREAT | O_RDONLY, 0600);
+	if (cmd->h_d_fd == -1)
+		return (-1);
 	if (dup2(cmd->h_d_fd, STDIN_FILENO) == -1)
 		return (perror("dup2 h_d"), close(cmd->h_d_fd), -1);
 	close(cmd->h_d_fd);
@@ -51,7 +59,7 @@ int	ft_redirect_input(char **argv)
 			return (-1);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
-		return (-1);
+		return (perror("dup2 fd"), close(fd), -1);
 	close(fd);
 	return (0);
 }
