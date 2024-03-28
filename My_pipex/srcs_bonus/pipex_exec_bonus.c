@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_exec.c                                       :+:      :+:    :+:   */
+/*   pipex_exec_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:49:19 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 14:18:15 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:59:16 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex.h>
+#include <../include/pipex_bonus.h>
 
 static int	ft_pipex_childs(int p_fd[2][2], char **env, t_cmd *cmd, int i)
 {
@@ -29,6 +29,8 @@ static int	ft_pipex_childs(int p_fd[2][2], char **env, t_cmd *cmd, int i)
 		ft_c_fd(p_fd[0], p_fd[1], cmd->std_fd);
 		return (-1);
 	}
+	if (cmd->h_d == true)
+		close(cmd->h_d_fd);
 	ft_c_fd(p_fd[(i + 1) % 2], NULL, cmd->std_fd);
 	if (cmd->path[i] == NULL)
 		return (ft_free_all(cmd, cmd->nb_cmd), exit (127), -1);

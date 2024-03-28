@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_main.c                                       :+:      :+:    :+:   */
+/*   pipex_main_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 17:27:55 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:59:32 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex.h>
+#include <../include/pipex_bonus.h>
 
 static int	ft_check_files(char **argv, t_cmd *cmd)
 {
 	int		i;
 
 	i = 0;
-	if (access(argv[1], R_OK) == -1)
+	if (ft_strcmp(argv[1], "here_doc") == 0)
+		cmd->h_d = true;
+	else if (access(argv[1], R_OK) == -1)
 		perror(argv[1]);
 	while (argv[i + 1])
 		i++;
@@ -25,12 +27,17 @@ static int	ft_check_files(char **argv, t_cmd *cmd)
 	{
 		if (access(argv[i], W_OK) == -1)
 			perror(argv[i]);
-		cmd->out_fd = open(argv[i], O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		if (cmd->h_d == false)
+			cmd->out_fd = open(argv[i], O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		else
+			cmd->out_fd = open(argv[i], O_WRONLY | O_CREAT | O_APPEND, 0600);
 	}
 	else if (access(argv[i], F_OK) == -1)
 		cmd->out_fd = open(argv[i], O_WRONLY | O_CREAT | O_EXCL, 0600);
 	if (cmd->out_fd < 0)
 		return (free(cmd), exit(1), -1);
+	if (cmd->h_d == true)
+		i -= 1;
 	return (i);
 }
 
@@ -90,6 +97,8 @@ static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 	cmd->args = malloc(sizeof(char **) * cmd->nb_cmd);
 	if (!cmd->args)
 		return (ft_free_p(cmd->path, j), free(cmd), -1);
+	if (cmd->h_d == true)
+		i = 3;
 	while (argv[i + 1] != NULL)
 	{
 		cmd->args[j] = ft_split(argv[i], ' ');
@@ -106,7 +115,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_cmd	*cmd;
 
-	if (argc != 5 || !env)
+	if (argc < 5 || !env)
 		return (1);
 	cmd = ft_newcmd();
 	if (!cmd)

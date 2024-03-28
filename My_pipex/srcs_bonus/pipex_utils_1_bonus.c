@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils_1.c                                    :+:      :+:    :+:   */
+/*   pipex_utils_1_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 14:14:31 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:59:35 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex.h>
+#include <../include/pipex_bonus.h>
 
 void	*ft_newcmd(void)
 {
@@ -20,6 +20,7 @@ void	*ft_newcmd(void)
 	if (!newcmd)
 		return (NULL);
 	newcmd->nb_cmd = 0;
+	newcmd->h_d = false;
 	newcmd->out_fd = 0;
 	return (newcmd);
 }
@@ -29,6 +30,8 @@ void	ft_free_all(t_cmd *cmd, int nb)
 	ft_free_a(cmd->args, nb);
 	ft_free_p(cmd->path, nb);
 	free(cmd->child);
+	if (cmd->h_d == true)
+		unlink("here_doc.txt");
 	free(cmd);
 }
 
