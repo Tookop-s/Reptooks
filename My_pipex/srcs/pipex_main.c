@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/27 16:28:24 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/28 13:37:44 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static char	*ft_find_in_env(char *env, char *cmd)
 
 	i = 0;
 	temp = ft_split(env, ':');
+	if (!temp)
+		return(NULL);
 	while (temp[i])
 	{
 		path = ft_strjoin(temp[i], cmd);
@@ -100,7 +102,7 @@ static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 	while (argv[i + 1] != NULL)
 	{
 		cmd->args[j] = ft_split(argv[i], ' ');
-		if (!cmd->args)
+		if (!cmd->args[j])
 			return (ft_free_all(cmd, j), -1);
 		cmd->path[j] = ft_check_env(env, cmd->args[j][0]);
 		i++;
