@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:50:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 17:53:59 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:35:18 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex.h>
+#include <pipex.h>
 
 //redirect the infile to stdin
 int	ft_redirect_input(char *str, int fd)

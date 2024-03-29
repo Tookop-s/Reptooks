@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 14:59:32 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:35:58 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex_bonus.h>
+#include <pipex_bonus.h>
 
 static int	ft_check_files(char **argv, t_cmd *cmd)
 {

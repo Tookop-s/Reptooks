@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:50:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 14:59:26 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:35:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex_bonus.h>
+#include <pipex_bonus.h>
 
 //get the input from stdin and then redirect the here_doc to stdin
 int	ft_get_input(char **argv, t_cmd *cmd)

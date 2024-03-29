@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:53:33 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 15:36:29 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:36:15 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex_bonus.h>
+#include <pipex_bonus.h>
 
 void	ft_c_fd(int *pipe_fd1, int *pipe_fd2, int *std_fd)
 {

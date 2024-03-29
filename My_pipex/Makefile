@@ -16,7 +16,7 @@ OBJS_BONUS = $(addprefix $(OBJ_DIR)/, $(SRCS_BONUS:.c=.o))
 DEPS = $(OBJS:.o=.d) $(OBJS_BONUS:.o=.d)
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3 -Iinclude -fPIE
+CFLAGS = -Wall -Werror -Wextra -g3 -Iincludes -fPIE
 
 OBJS_USED = $(OBJS)
 SRCS_USED = $(SRCS_DIR)
@@ -30,26 +30,25 @@ endif
 all: $(NAME)
 
 $(LIBFT_DIR)/libft.a: FORCE
-	@$(MAKE) -C $(LIBFT_DIR) 
+	$(MAKE) -C $(LIBFT_DIR) 
 
 $(NAME): $(OBJS_USED) $(LIBFT_DIR)/libft.a
 	$(CC) $(CFLAGS) -o $@  $^
 
 $(OBJ_DIR)/%.o: $(SRCS_USED)/%.c
-	@mkdir -p $(@D)
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -MMD -c $< -o $@
-
 
 FORCE:
 
 clean:
 	echo "Cleaning"
-	@$(MAKE) clean -sC $(LIBFT_DIR)
+	$(MAKE) clean -sC $(LIBFT_DIR)
 	rm -rf $(OBJ_DIR) $(OBJ_DIR_BONUS)
 
 fclean: clean
 	echo "Full Cleaning"
-	@$(MAKE) fclean -sC $(LIBFT_DIR)
+	$(MAKE) fclean -sC $(LIBFT_DIR)
 	rm -f $(NAME)
 
 re: fclean all

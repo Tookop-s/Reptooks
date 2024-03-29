@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 14:21:01 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/28 15:36:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:36:02 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../include/pipex_bonus.h>
+#include <pipex_bonus.h>
 
 int	ft_exit(int status, t_cmd *cmd)
 {

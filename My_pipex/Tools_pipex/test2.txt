@@ -1,0 +1,8 @@
+include
+libft
+Makefile
+objs
+pipex
+srcs
+srcs_bonus
+Tools_pipex
