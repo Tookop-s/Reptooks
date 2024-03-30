@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:50:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/29 13:51:01 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/30 17:55:09 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,28 @@ int	ft_get_input(char **argv, t_cmd *cmd)
 {
 	int		b_read;
 	char	buff[BUFF_SIZE];
+	char	*str;
 
+	str = ft_strjoin(argv[2], "\n");
+	cmd->h_d = true;
 	cmd->h_d_fd = open("here_doc.txt", O_CREAT | O_RDWR, 0600);
 	if (cmd->h_d_fd == -1)
 		return (-1);
 	b_read = read(STDIN_FILENO, buff, BUFF_SIZE);
 	if (b_read < 0)
 		return (perror("read STDIN"), -1);
-	while (b_read > 0 && ft_strncmp(argv[2], buff, ft_strlen(argv[2])) != 0)
+	while (b_read > 0 && ft_strncmp(str, buff, ft_strlen(str)) != 0)
 	{
 		if (write(cmd->h_d_fd, buff, b_read) != b_read)
 			return (perror("write"), -1);
 		b_read = read(STDIN_FILENO, buff, BUFF_SIZE);
 		if (b_read < 0)
 			return (perror("read STDIN"), -1);
-		if (ft_strncmp(argv[2], buff, ft_strlen(argv[2])) == 0)
+		if (ft_strncmp(str, buff, ft_strlen(str)) == 0)
 			break ;
 	}
 	close(cmd->h_d_fd);
-	if (ft_redirect_input("here_doc.txt", cmd->h_d_fd) < 0)
-		return (perror("redirect here_doc"), -1);
+	free(str);
 	return (0);
 }
 
@@ -56,27 +58,26 @@ int	ft_redirect_input(char *str, int fd)
 	return (0);
 }
 
-//if here_doc get the input if not redirect the infile
-int	ft_input(t_cmd *cmd, int p_fd[2][2], char **argv)
+int	ft_input(t_cmd *cmd, char **argv)
 {
 	int	fd;
 
 	fd = 0;
 	if (cmd->h_d == true)
 	{
-		if ((ft_get_input(argv, cmd)) == -1)
-			ft_c_fd(p_fd[0], p_fd[1], NULL);
+		if ((ft_redirect_input("here_doc.txt", fd)) == -1)
+			return (-1);
 	}
 	else
 	{
 		if ((ft_redirect_input(argv[1], fd)) == -1)
-			ft_c_fd(p_fd[0], p_fd[1], NULL);
+			return (-1);
 	}
 	return (0);
 }
 
 //create the pipes used by the childs 
-int	ft_create_pipes(t_cmd *cmd, char **argv, int p_fd[2][2])
+int	ft_create_pipes(t_cmd *cmd, int p_fd[2][2])
 {
 	if (pipe(p_fd[0]) == -1)
 		return (perror("pipe_1"), -1);
@@ -91,24 +92,5 @@ int	ft_create_pipes(t_cmd *cmd, char **argv, int p_fd[2][2])
 		close(cmd->std_fd[0]);
 		return (ft_c_fd(p_fd[0], p_fd[1], NULL), perror("dup_STDOUT"), -1);
 	}
-	if (ft_input(cmd, p_fd, argv) == -1)
-		return (close(cmd->std_fd[0]), close(cmd->std_fd[1]), -1);
 	return (0);
-}
-
-int	ft_wait(t_cmd *cmd, int *status, pid_t *child, int p_fd[2][2])
-{
-	int	i;
-
-	i = 0;
-	while (i < cmd->nb_cmd)
-	{
-		if ((waitpid(child[i], status, 0) < 0))
-			return (perror("waitpid"), -1);
-		if (*status != 0 && i == cmd->nb_cmd - 1)
-			ft_exit(*status, cmd, p_fd);
-		*status = 0;
-		i++;
-	}
-	return (i - 1);
 }

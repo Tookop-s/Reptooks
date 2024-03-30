@@ -40,14 +40,13 @@ $(OBJ_DIR)/%.o: $(SRCS_USED)/%.c
 	$(CC) $(CFLAGS) -MMD -c $< -o $@
 
 FORCE:
+# check if we can chek the dependence file from the libft 
 
 clean:
-	echo "Cleaning"
 	$(MAKE) clean -sC $(LIBFT_DIR)
 	rm -rf $(OBJ_DIR) $(OBJ_DIR_BONUS)
 
 fclean: clean
-	echo "Full Cleaning"
 	$(MAKE) fclean -sC $(LIBFT_DIR)
 	rm -f $(NAME)
 

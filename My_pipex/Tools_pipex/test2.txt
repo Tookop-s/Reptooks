@@ -1,0 +1,7 @@
+HELLO$$
+EOF\n$$
+EOF$$
+$$
+$$
+HELLO$$
+EOF\n$$
