@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:45:27 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/29 13:35:34 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:05:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_free_all(t_cmd *cmd, int nb)
 {
 	ft_free_a(cmd->args, nb);
 	ft_free_p(cmd->path, nb);
+	close(cmd->out_fd);
 	free(cmd->child);
 	free(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:50:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/29 13:35:18 by anferre          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:54:14 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_create_pipes(t_cmd *cmd, char **argv, int p_fd[2][2])
 	return (0);
 }
 
-int	ft_wait(t_cmd *cmd, int *status, pid_t *child)
+int	ft_wait(t_cmd *cmd, int *status, pid_t *child, int p_fd[2][2])
 {
 	int	i;
 
@@ -76,7 +76,7 @@ int	ft_wait(t_cmd *cmd, int *status, pid_t *child)
 		if ((waitpid(child[i], status, 0) < 0))
 			return (perror("waitpid"), -1);
 		if (*status != 0 && i == cmd->nb_cmd - 1)
-			ft_exit(*status, cmd);
+			ft_exit(*status, cmd, p_fd);
 		*status = 0;
 		i++;
 	}
