@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/30 17:27:28 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/01 15:19:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_check_files(char **argv, t_cmd *cmd)
 			cmd->out_fd = open(argv[i], O_WRONLY | O_CREAT | O_APPEND, 0600);
 	}
 	else
-		cmd->out_fd = open(argv[i], O_WRONLY | O_CREAT | O_EXCL, 0600);
+		cmd->out_fd = open(argv[i], O_WRONLY | O_CREAT, 0600);
 	if (cmd->out_fd < 0)
 		return (free(cmd), exit(1), -1);
 	if (cmd->h_d == true)
