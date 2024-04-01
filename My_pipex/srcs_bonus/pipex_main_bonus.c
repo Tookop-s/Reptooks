@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/01 15:19:53 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/01 16:45:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 		cmd->args[j] = ft_split(argv[i], ' ');
 		if (!cmd->args[j])
 			return (ft_free_all(cmd, j), -1);
-		cmd->path[j] = ft_check_env(env, cmd->args[j][0]);
+		if (access(cmd->args[j][0], X_OK) == 0)
+			cmd->path[j] = ft_strdup(cmd->args[j][0]);
+		else 
+			cmd->path[j] = ft_check_env(env, cmd->args[j][0]);
 		i++;
 		j++;
 	}
