@@ -28,7 +28,8 @@
 			"chrono": "c",
 			"limits": "c",
 			"algorithm": "c",
-			"semaphore": "c"
+			"semaphore": "c",
+			"pipex_bonus.h": "c"
 		}
 	}
 }

@@ -6,11 +6,26 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:50:37 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/30 17:55:09 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/03 12:55:12 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex_bonus.h>
+
+int	ft_h_d_file(t_cmd *cmd)
+{
+	int	fd;
+
+	cmd->here_doc_file = ft_strdup(".here_doc");
+	while (access(cmd->here_doc_file, F_OK) == 0)
+	{
+		cmd->here_doc_file = ft_strjoin(cmd->here_doc_file, ".new");
+	}
+	fd = open(cmd->here_doc_file, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (fd == -1)
+		return (perror("open here_doc_file"), -1);
+	return (fd);
+}
 
 //get the input from stdin and then redirect the here_doc to stdin
 int	ft_get_input(char **argv, t_cmd *cmd)
@@ -21,7 +36,7 @@ int	ft_get_input(char **argv, t_cmd *cmd)
 
 	str = ft_strjoin(argv[2], "\n");
 	cmd->h_d = true;
-	cmd->h_d_fd = open("here_doc.txt", O_CREAT | O_RDWR, 0600);
+	cmd->h_d_fd = ft_h_d_file(cmd);
 	if (cmd->h_d_fd == -1)
 		return (-1);
 	b_read = read(STDIN_FILENO, buff, BUFF_SIZE);
@@ -65,7 +80,7 @@ int	ft_input(t_cmd *cmd, char **argv)
 	fd = 0;
 	if (cmd->h_d == true)
 	{
-		if ((ft_redirect_input("here_doc.txt", fd)) == -1)
+		if ((ft_redirect_input(cmd->here_doc_file, fd)) == -1)
 			return (-1);
 	}
 	else

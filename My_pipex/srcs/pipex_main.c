@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:19:02 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/01 16:45:49 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/03 13:15:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,22 @@ static char	*ft_check_env(char **env, char *cmd)
 	return (ft_error("command not found : ", cmd, "\n"), free(cmd), NULL);
 }
 
+char	**ft_trim_quotes(char **str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i][0] == '"' || str[i][0] == '\'')
+			str[i] = ft_substr(str[i], 1, ft_strlen(str[i]) - 2);
+		i++;
+	}
+	return (str);
+}
+
 static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 {
 	int	i;
@@ -92,7 +108,7 @@ static int	ft_build_args(char **argv, t_cmd *cmd, char **env)
 		return (ft_free_p(cmd->path, j), free(cmd), -1);
 	while (argv[i + 1] != NULL)
 	{
-		cmd->args[j] = ft_split(argv[i], ' ');
+		cmd->args[j] = ft_split(argv[i], ' '); //need to handle the args building differently sometimes they have space in the arguments.
 		if (!cmd->args[j])
 			return (ft_free_all(cmd, j), -1);
 		if (access(cmd->args[j][0], X_OK) == 0)
@@ -127,8 +143,3 @@ int	main(int argc, char **argv, char **env)
 	ft_free_all(cmd, cmd->nb_cmd);
 	return (0);
 }
-
-/*tests that doesn't work :  
-./pipex Tools_pipex/test1.txt "grep a1" "wc -w" Tools_pipex/test2.txt
-
-*/

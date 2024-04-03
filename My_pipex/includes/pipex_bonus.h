@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:35:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/03/30 12:50:35 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/03 12:38:08 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_cmd
 	t_bool			h_d;
 	char			***args;
 	char			**path;
+	char			*here_doc_file;
 }					t_cmd;
 
 		/*EXEC*/
