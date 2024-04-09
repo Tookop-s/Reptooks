@@ -29,7 +29,8 @@
 			"limits": "c",
 			"algorithm": "c",
 			"semaphore": "c",
-			"pipex_bonus.h": "c"
+			"pipex_bonus.h": "c",
+			"philosopher.h": "c"
 		}
 	}
 }
