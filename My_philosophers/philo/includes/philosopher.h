@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:52 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/09 16:18:44 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:17:02 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ typedef struct philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int 			nb_philo;
 	volatile int	stop;
 	pthread_t		*thread;
 	pthread_t 		*death_check;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*last_meal_mutex;
+	pthread_mutex_t	*print_mutex;
 	long long		last_meal;
 	long long		start_time;
 }				t_philo;

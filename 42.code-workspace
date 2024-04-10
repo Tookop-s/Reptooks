@@ -30,7 +30,10 @@
 			"algorithm": "c",
 			"semaphore": "c",
 			"pipex_bonus.h": "c",
-			"philosopher.h": "c"
+			"philosopher.h": "c",
+			"istream": "c",
+			"stop_token": "c",
+			"thread": "c"
 		}
 	}
 }
