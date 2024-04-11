@@ -6,13 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:46:50 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/11 16:04:47 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:51:19 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <philosopher.h>
 
-void	*ft_init_philosophers(char **argv, pthread_mutex_t *fork_mutex, pthread_mutex_t *meal_mutex)
+void	*ft_init_philosophers(char **argv, pthread_mutex_t *fork_mutex, pthread_mutex_t *meal_mutex, pthread_mutex_t *nb_eat_mutex)
 {
 	t_philo	*philosophers;
 	int		i;
@@ -51,6 +51,7 @@ void	*ft_init_philosophers(char **argv, pthread_mutex_t *fork_mutex, pthread_mut
 		philosophers[i].last_meal_mutex = &meal_mutex[i];
 		philosophers[i].print_mutex = print_mutex;
 		philosophers[i].stop_mutex = stop_mutex;
+		philosophers[i].nb_eat_mutex = &nb_eat_mutex[i];
 		philosophers[i].thread = malloc(sizeof(pthread_t));
 		if (!philosophers[i].thread)
 			return (free(philosophers), NULL);
@@ -86,6 +87,7 @@ void	*ft_init(char **argv, int argc)
 	t_philo			*philo;
 	pthread_mutex_t *fork_mutex;
 	pthread_mutex_t *meal_mutex;
+	pthread_mutex_t *nb_eat_mutex;
 	int 			nb_philo;
 
 	nb_philo = ft_atoi(argv[1]);
@@ -99,7 +101,10 @@ void	*ft_init(char **argv, int argc)
 	meal_mutex = ft_init_mutex(nb_philo);
 	if (!meal_mutex)
 		return (NULL);
-	philo = ft_init_philosophers(argv, fork_mutex, meal_mutex);
+	nb_eat_mutex = ft_init_mutex(nb_philo);
+	if (!nb_eat_mutex)
+		return (NULL);
+	philo = ft_init_philosophers(argv, fork_mutex, meal_mutex, nb_eat_mutex);
 	if (!philo)
 		return (NULL);
 	return (philo);

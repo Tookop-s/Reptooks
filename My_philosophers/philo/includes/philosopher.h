@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:52 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/11 16:04:26 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:51:35 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct philo
 	pthread_mutex_t	*last_meal_mutex;
 	pthread_mutex_t	*print_mutex;
 	pthread_mutex_t	*stop_mutex;
+	pthread_mutex_t	*nb_eat_mutex;
 	long long		last_meal;
 	long long		start_time;
 }				t_philo;
@@ -53,7 +54,7 @@ long	ft_atoi(const char *str);
 size_t	ft_strlen(const char *s);
 void	ft_get_time(long long *ms_time);
 void	ft_print(long long ms_time, t_philo *philo, char *str);
-void	*ft_init_philosophers(char **argv, pthread_mutex_t *fork_mutex, pthread_mutex_t *meal_mutex);
+void	*ft_init_philosophers(char **argv, pthread_mutex_t *fork_mutex, pthread_mutex_t *meal_mutex, pthread_mutex_t *nb_eat_mutex);
  
 void	*ft_init(char **argv, int argc);
 void	*ft_init_mutex(int nb_philosophers);

@@ -6,14 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/11 16:05:32 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:35:55 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <philosopher.h>
-
-
-
 
 //sleep and think
 void	ft_philosopher_sleep_think(t_philo *philo, long long ms_time)
@@ -46,7 +43,9 @@ void	ft_philosopher_eat(t_philo *philo, long long ms_time)
 	ft_get_time(&ms_time);
 	philo->last_meal = ms_time;
 	pthread_mutex_unlock(philo->last_meal_mutex);
+	pthread_mutex_lock(philo->nb_eat_mutex);
 	philo->nb_eat++;
+	pthread_mutex_unlock(philo->nb_eat_mutex);
 	usleep(philo->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -65,9 +64,9 @@ void	*ft_philosopher(void *arg)
 	pthread_mutex_lock(philo->stop_mutex);
 	while (!*philo->stop)
 	{
-		pthread_mutex_unlock(philo->stop_mutex);
 		if (philo->nb_philo == 1)
 		{
+			pthread_mutex_unlock(philo->stop_mutex);
 			pthread_mutex_lock(philo->right_fork);
 			ft_print(ms_time, philo, "has taken a fork");
 			pthread_mutex_unlock(philo->right_fork);
@@ -75,11 +74,14 @@ void	*ft_philosopher(void *arg)
 		}
 		else if (*philo->stop == false)
 		{
+			pthread_mutex_unlock(philo->stop_mutex);
 			ft_philosopher_eat(philo, ms_time);
 			if (philo->stop || (philo->nb_meal && philo->nb_eat >= philo->nb_meal))
 				return (0);
 			ft_philosopher_sleep_think(philo, ms_time);
 		}
+		else
+			pthread_mutex_unlock(philo->stop_mutex);
 		pthread_mutex_lock(philo->stop_mutex);
 	}
 	pthread_mutex_unlock(philo->stop_mutex);
@@ -110,18 +112,23 @@ void	*ft_death_check(void *arg)
 		ft_get_time(&ms_time);
 		if ((ms_time - last_meal > philo->time_to_die) && !*philo->stop)
 		{
+			usleep(10);
+			printf(" philo %d ms_time %lld last_meal %lld\n",philo->id, ms_time, last_meal);
 			pthread_mutex_lock(philo->print_mutex);
 			if (!*philo->stop)
 				printf("%lld %d died \n", ms_time, philo->id);
 			pthread_mutex_unlock(philo->print_mutex);
 			while(++i < philo->nb_philo)
-					*philo[i].stop = true;
+				*philo->stop = true;
 			pthread_mutex_unlock(philo->stop_mutex);
 			return (void *)(-1);
 		}
 		pthread_mutex_unlock(philo->stop_mutex);
+		pthread_mutex_lock(philo->nb_eat_mutex);
 		if (philo->nb_meal && philo->nb_eat >= philo->nb_meal)
 			return (0);
+		pthread_mutex_unlock(philo->nb_eat_mutex);
+		pthread_mutex_lock(philo->stop_mutex);
 	}
 	pthread_mutex_unlock(philo->stop_mutex);
 	return (void *)(-1);
@@ -129,14 +136,15 @@ void	*ft_death_check(void *arg)
 
 int main(int argc, char **argv)
 {
-	t_philo			*philo;
-	int 			i;
-	int 			j;
-	void 			*status;
-	int 			nb_philo;
+	t_philo		*philo;
+	int 		i;
+	void		*status;
+	int 		nb_philo;
+	int			ret;
 
 	nb_philo = ft_atoi(argv[1]);
 	i = -1;
+	ret = 0;
 	philo = ft_init(argv, argc);
 	while (++i < nb_philo)
 		ft_get_time(&philo[i].start_time);
@@ -148,27 +156,21 @@ int main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	j = 0;
 	while (i < nb_philo)
 	{
 		pthread_join(*philo[i].death_check, &status);
-		if ((long long)status == -1)
-		{
-			while (j < nb_philo)
-			{
-				pthread_detach(*philo[j].death_check);
-				j++;
-			}
-		}
+		if (status == (void *)(-1))
+			ret = 1;
 		i++;
 	}
 	i = 0;
 	while (i < nb_philo)
 	{
-		pthread_join(*philo[i].thread, &status);
+		pthread_join(*philo[i].thread, NULL);
 		i++;
 	}
 	ft_clean(philo, NULL);
+	return (ret);
 }
 /* -fsanitize=thread -g 
  valgrind --tool=helgrind ./programme.

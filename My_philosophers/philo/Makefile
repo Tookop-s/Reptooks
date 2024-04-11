@@ -13,7 +13,7 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d) 
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3 -Iincludes -fPIE -pthread
+CFLAGS = -Wall -Werror -Wextra -g3 -Iincludes -fPIE -pthread 
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:58:36 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/11 15:58:57 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:53:26 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,17 @@ void	ft_clean(t_philo *philo, char *str)
 	if (philo->right_fork && philo->nb_philo)
 	{
 		ft_destroy_mutex(philo->right_fork, philo->nb_philo);
-		free(philo->right_fork);
 		philo->right_fork = NULL;
 	}
 	if (philo->last_meal_mutex && philo->nb_philo)
 	{
 		ft_destroy_mutex(philo->last_meal_mutex, philo->nb_philo);
-		free(philo->last_meal_mutex);
 		philo->last_meal_mutex = NULL;
+	}
+	if (philo->nb_eat_mutex && philo->nb_philo)
+	{
+		ft_destroy_mutex(philo->nb_eat_mutex, philo->nb_philo);
+		philo->nb_eat_mutex = NULL;
 	}
 	if (philo->last_meal_mutex && philo->nb_philo)
 	{
@@ -49,6 +52,8 @@ void	ft_clean(t_philo *philo, char *str)
 		free(philo->print_mutex);
 		philo->print_mutex = NULL;
 	}
+	free(philo->print_mutex);
+	free(philo->stop_mutex);
 	i = 0;
 	if (philo)
 	{
