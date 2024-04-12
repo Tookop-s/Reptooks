@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:58:18 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/10 15:49:32 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/12 15:23:37 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,13 @@ void	ft_get_time(long long *ms_time)
 
 void	ft_print(long long ms_time, t_philo *philo, char *str)
 {
-	ft_get_time(&ms_time);
 	pthread_mutex_lock(philo->print_mutex);
-	printf("%lld %d %s\n", ms_time, philo->id, str);
+	ft_get_time(&ms_time);
+	if (*philo->stop)
+	{
+		pthread_mutex_unlock(philo->print_mutex);
+		return ;
+	}
+	printf("%lld %d %s\n", ms_time - philo->start_time, philo->id + 1, str);
 	pthread_mutex_unlock(philo->print_mutex);
 }
