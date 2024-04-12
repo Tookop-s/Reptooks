@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:46:50 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 19:20:01 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/12 19:33:39 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ pthread_mutex_t *meal_mutex, pthread_mutex_t *nb_eat_mutex)
 	}
 	return (philo);
 }
-
+//init single does not work need to fix it 
 static t_philo *ft_init_single(t_philo *philo, char **argv, pthread_mutex_t *print_mutex, pthread_mutex_t *stop_mutex)
 {
 	philo->nb_eat = 0;						  
