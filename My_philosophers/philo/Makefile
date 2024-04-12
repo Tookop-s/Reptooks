@@ -6,6 +6,7 @@ SRCS = philosopher_main.c \
 		philosopher_utils.c \
 		philosopher_init.c \
 		philosopher_clean.c \
+		philosopher_threads.c \
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

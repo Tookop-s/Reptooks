@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:52 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 15:25:51 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/12 19:14:45 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,24 @@ typedef struct philo
 	long long		start_time;
 }				t_philo;
 
-
+		/*utils*/
 long	ft_atoi(const char *str);
 size_t	ft_strlen(const char *s);
 void	ft_get_time(long long *ms_time);
 void	ft_print(long long ms_time, t_philo *philo, char *str);
-void	*ft_init_philosophers(char **argv, pthread_mutex_t *fork_mutex, pthread_mutex_t *meal_mutex, pthread_mutex_t *nb_eat_mutex);
- 
-void	*ft_init(char **argv, int argc);
-void	*ft_init_mutex(int nb_philosophers);
 
+		/*init*/
+void	*ft_init(char **argv, int argc);
+
+		/*threads*/
+void	*ft_philosopher(void *arg);
+
+		/*clean*/
 void	ft_clean(t_philo *philo, char *str);
-void	ft_destroy_mutex(pthread_mutex_t *mutex, int nb_philosophers);
+void	ft_destroy_mutex(pthread_mutex_t *mutex, pthread_mutex_t *mutex2, \
+int nb_philosophers);
+void	ft_free_to_i(t_philo *philo, int i);
+void	ft_delete_mutex(t_philo *philo);
+
 
 #endif

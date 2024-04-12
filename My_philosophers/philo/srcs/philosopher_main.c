@@ -6,91 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 18:09:32 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:26:42 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <philosopher.h>
-
-//sleep and think
-void	ft_philosopher_sleep_think(t_philo *philo, long long ms_time)
-{
-	ft_print(ms_time, philo, "is sleeping");
-	usleep(philo->time_to_sleep * 1000);
-	ft_print(ms_time, philo, "is thinking");
-	usleep(1000);
-}
-
-//wait for the forks and eat
-void	ft_philosopher_eat(t_philo *philo, long long ms_time)
-{
-	if ((philo->id % 2) == 0)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		ft_print(ms_time, philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-		ft_print(ms_time, philo, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		ft_print(ms_time, philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
-		ft_print(ms_time, philo, "has taken a fork");
-	}
-	pthread_mutex_lock(philo->last_meal_mutex);
-	ft_get_time(&philo->last_meal);
-	pthread_mutex_unlock(philo->last_meal_mutex);
-	ft_print(ms_time, philo, "is eating");
-	usleep(philo->time_to_eat * 1000);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_lock(philo->nb_eat_mutex);
-	philo->nb_eat++;
-	pthread_mutex_unlock(philo->nb_eat_mutex);
-}
-
-//threads that simulate the philosopher's actions
-void	*ft_philosopher(void *arg)
-{
-	t_philo *philo;
-	long long ms_time;
-	int start;
-
-	philo = (t_philo *)arg;
-	ms_time = 0;
-	start = 1;
-	pthread_mutex_lock(philo->stop_mutex);
-	while (!*philo->stop)
-	{
-		if (philo->nb_philo == 1)
-		{
-			pthread_mutex_unlock(philo->stop_mutex);
-			pthread_mutex_lock(philo->right_fork);
-			ft_print(ms_time, philo, "has taken a fork");
-			pthread_mutex_unlock(philo->right_fork);
-			usleep(philo->time_to_die * 1000);
-		}
-		else if (*philo->stop == false)
-		{
-			pthread_mutex_unlock(philo->stop_mutex);
-			ft_philosopher_eat(philo, ms_time);
-			pthread_mutex_lock(philo->stop_mutex);
-			if (*philo->stop || (philo->nb_meal && philo->nb_eat >= philo->nb_meal))
-			{
-				pthread_mutex_unlock(philo->stop_mutex);
-				return (0);
-			}
-			pthread_mutex_unlock(philo->stop_mutex);
-			ft_philosopher_sleep_think(philo, ms_time);
-		}
-		else
-			pthread_mutex_unlock(philo->stop_mutex);
-		pthread_mutex_lock(philo->stop_mutex);
-	}
-	pthread_mutex_unlock(philo->stop_mutex);
-	return (void *)(-1);
-}
+#include <philosopher.h>
 
 void	*ft_check_last_meal(t_philo *philo, long long ms_time)
 {
@@ -106,23 +26,24 @@ void	*ft_check_last_meal(t_philo *philo, long long ms_time)
 	{
 		pthread_mutex_lock(philo->print_mutex);
 		if (!*philo->stop)
-			printf("%lld %d died \n", ms_time - philo->start_time, philo->id + 1);
+			printf("%lld %d died\n", ms_time - philo->start_time, \
+			philo->id + 1);
 		pthread_mutex_unlock(philo->print_mutex);
 		*philo->stop = true;
 		pthread_mutex_unlock(philo->stop_mutex);
-		return (void *)(-1);
+		return ((void *)(-1));
 	}
 	pthread_mutex_unlock(philo->stop_mutex);
-	return (void *)(0);
+	return ((void *)(0));
 }
 
 /*threads that compares the time of the last meal with the current time 
 if above the limit stop = true and stops all the threads */
 void	*ft_death_check(void *arg)
 {
-	t_philo *philo;
-	long long ms_time;
-	int 	i;
+	t_philo		*philo;
+	long long	ms_time;
+	int			i;
 
 	i = -1;
 	ms_time = 0;
@@ -131,7 +52,7 @@ void	*ft_death_check(void *arg)
 	while (!*philo->stop)
 	{
 		if (ft_check_last_meal(philo, ms_time) == (void *)(-1))
-			return (void *)(-1);
+			return ((void *)(-1));
 		pthread_mutex_lock(philo->nb_eat_mutex);
 		if (philo->nb_meal && philo->nb_eat >= philo->nb_meal)
 		{
@@ -142,14 +63,14 @@ void	*ft_death_check(void *arg)
 		pthread_mutex_lock(philo->stop_mutex);
 	}
 	pthread_mutex_unlock(philo->stop_mutex);
-	return (void *)(-1);
+	return ((void *)(-1));
 }
 
 int	ft_join(t_philo *philo)
 {
 	int		i;
 	void	*status;
-	int			ret;
+	int		ret;
 
 	i = 0;
 	while (i < philo->nb_philo)
@@ -168,11 +89,11 @@ int	ft_join(t_philo *philo)
 	return (ret);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_philo		*philo;
-	int 		i;
-	int 		nb_philo;
+	int			i;
+	int			nb_philo;
 	int			ret;
 
 	nb_philo = ft_atoi(argv[1]);
@@ -195,5 +116,5 @@ int main(int argc, char **argv)
 /* -fsanitize=thread -g 
  valgrind --tool=helgrind ./programme.
  valgrind --tool=drd ./programme.
- valgrind et -fsanitize=thread ne s’entendent pas du tout et ne doivent pas s’utiliser ensemble !
+ valgrind et -fsanitize=thread out et ne doivent pas s’utiliser ensemble !
  -fsanitize=address et valgrind*/

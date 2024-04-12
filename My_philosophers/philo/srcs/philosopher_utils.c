@@ -6,11 +6,11 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:58:18 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 15:23:37 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/12 18:27:20 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <philosopher.h>
+#include <philosopher.h>
 
 long	ft_atoi(const char *str)
 {
@@ -51,12 +51,11 @@ size_t	ft_strlen(const char *s)
 
 void	ft_get_time(long long *ms_time)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	gettimeofday(&time, NULL);
 	*ms_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
-
 
 void	ft_print(long long ms_time, t_philo *philo, char *str)
 {
