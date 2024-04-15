@@ -6,16 +6,16 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:58:36 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 19:20:33 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/15 16:04:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <philosopher.h>
+#include <philosopher.h>
 
 void	ft_destroy_mutex(pthread_mutex_t *mutex, pthread_mutex_t *mutex2, \
 int nb_philosophers)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (mutex)
@@ -66,7 +66,7 @@ void	ft_delete_mutex(t_philo *philo)
 
 void	ft_clean(t_philo *philo, char *str)
 {
-	int i;
+	int	i;
 
 	if (str)
 		write(1, str, ft_strlen(str));
@@ -96,4 +96,6 @@ void	ft_free_to_i(t_philo *philo, int i)
 		philo[i].death_check = NULL;
 		i--;
 	}
+	philo->thread = NULL;
+	philo->death_check = NULL;
 }

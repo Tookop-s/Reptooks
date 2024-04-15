@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 18:26:42 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/15 15:59:32 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,14 @@ int	main(int argc, char **argv)
 	int			nb_philo;
 	int			ret;
 
+	if (argc < 5 || argc > 6)
+		return (write(1, "Error: wrong number of arguments\n", 33), 1);
 	nb_philo = ft_atoi(argv[1]);
 	i = -1;
 	ret = 0;
 	philo = ft_init(argv, argc);
+	if (!philo)
+		return (write(1, "Error initializing the struct \n", 32), 2);
 	while (++i < nb_philo)
 		ft_get_time(&philo[i].start_time);
 	i = 0;
@@ -117,4 +121,7 @@ int	main(int argc, char **argv)
  valgrind --tool=helgrind ./programme.
  valgrind --tool=drd ./programme.
  valgrind et -fsanitize=thread out et ne doivent pas s’utiliser ensemble !
- -fsanitize=address et valgrind*/
+ -fsanitize=address 
+ 
+ check if there is a mutex to prevent a philosopher from diying and starting
+  eating at the same time yes = the stop mutex*/

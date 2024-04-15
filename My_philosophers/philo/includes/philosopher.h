@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:52 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 19:14:45 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/15 15:44:42 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef enum e_bool
 	false = 0
 }			t_bool;
 
-//volatile removes some compiler optimizations that could cause the variable to be stored in a register
+/*volatile removes some compiler optimizations that could cause the variable 
+to be stored in a register*/
 typedef struct philo
 {
 	int				id;
@@ -35,10 +36,10 @@ typedef struct philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int 			nb_philo;
+	int				nb_philo;
 	volatile t_bool	*stop;
 	pthread_t		*thread;
-	pthread_t 		*death_check;
+	pthread_t		*death_check;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*last_meal_mutex;
@@ -67,6 +68,5 @@ void	ft_destroy_mutex(pthread_mutex_t *mutex, pthread_mutex_t *mutex2, \
 int nb_philosophers);
 void	ft_free_to_i(t_philo *philo, int i);
 void	ft_delete_mutex(t_philo *philo);
-
 
 #endif
