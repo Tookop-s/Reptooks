@@ -1,4 +1,4 @@
-NAME = philosophers
+NAME = philo
 
 SRCS_DIR = srcs
 

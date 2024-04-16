@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/15 15:59:32 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:49:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,20 @@ int	ft_join(t_philo *philo)
 	return (ret);
 }
 
+static int	ft_is_positive(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i] && i <= 5)
+	{
+		if (ft_atoi(argv[i]) < 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_philo		*philo;
@@ -96,8 +110,8 @@ int	main(int argc, char **argv)
 	int			nb_philo;
 	int			ret;
 
-	if (argc < 5 || argc > 6)
-		return (write(1, "Error: wrong number of arguments\n", 33), 1);
+	if (argc < 5 || argc > 6 || !ft_is_positive(argv))
+		return (write(1, "Error: wrong arguments\n", 24), 1);
 	nb_philo = ft_atoi(argv[1]);
 	i = -1;
 	ret = 0;
