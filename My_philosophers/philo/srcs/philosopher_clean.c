@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:58:36 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/15 16:04:53 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:55:48 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,7 @@ void	ft_free_to_i(t_philo *philo, int i)
 		if (philo[i].thread)
 			free(philo[i].thread);
 		philo[i].thread = NULL;
-		if (philo[i].death_check)
-			free(philo[i].death_check);
-		philo[i].death_check = NULL;
 		i--;
 	}
 	philo->thread = NULL;
-	philo->death_check = NULL;
 }

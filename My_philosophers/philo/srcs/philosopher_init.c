@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:46:50 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/16 13:38:56 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:53:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ pthread_mutex_t *meal_mutex, pthread_mutex_t *nb_eat_mutex)
 		philo[i].thread = malloc(sizeof(pthread_t));
 		if (!philo[i].thread)
 			return (ft_free_to_i(philo, i - 1), NULL);
-		philo[i].death_check = malloc(sizeof(pthread_t));
-		if (!philo[i].death_check)
-			return (philo[i].death_check = NULL, ft_free_to_i(philo, i), \
-			ft_clean(philo, NULL), NULL);
+
 	}
 	return (philo);
 }

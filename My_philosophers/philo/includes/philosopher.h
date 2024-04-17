@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:52 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/17 14:09:44 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:54:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct philo
 	int				nb_philo;
 	volatile t_bool	*stop;
 	pthread_t		*thread;
-	pthread_t		*death_check;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*last_meal_mutex;
