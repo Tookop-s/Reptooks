@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:17:32 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/15 15:26:26 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:35:35 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	ft_philosopher_eat(t_philo *philo, long long ms_time)
 	}
 	else
 	{
+		usleep(500);
 		pthread_mutex_lock(philo->right_fork);
 		ft_print(ms_time, philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
@@ -61,27 +62,24 @@ static void	ft_philosopher_eat(t_philo *philo, long long ms_time)
 
 static void	*ft_routine(t_philo *philo, long long ms_time)
 {
-	pthread_mutex_unlock(philo->stop_mutex);
+	t_bool	stop;
+
 	ft_philosopher_eat(philo, ms_time);
-	pthread_mutex_lock(philo->stop_mutex);
-	if (*philo->stop || (philo->nb_meal && philo->nb_eat >= philo->nb_meal))
-	{
-		pthread_mutex_unlock(philo->stop_mutex);
+	stop = ft_get_stop_val(philo);
+	if (stop || (philo->nb_meal && philo->nb_eat >= philo->nb_meal))
 		return ((void *)(-1));
-	}
-	pthread_mutex_unlock(philo->stop_mutex);
 	if (ft_philosopher_sleep_think(philo, ms_time) == (void *)(-1))
 		return ((void *)(-1));
 	return ((void *)(0));
 }
 
+//11 on purpose bc time to die + 10ms of detection
 static void	ft_one_philo(t_philo *philo, long long ms_time)
 {
-	pthread_mutex_unlock(philo->stop_mutex);
 	pthread_mutex_lock(philo->right_fork);
 	ft_print(ms_time, philo, "has taken a fork");
-	usleep((philo->time_to_die + 11) * 1000);
 	pthread_mutex_unlock(philo->right_fork);
+	usleep((philo->time_to_die + 11) * 1000);
 }
 
 //threads that simulate the philosopher's actions
@@ -89,23 +87,21 @@ void	*ft_philosopher(void *arg)
 {
 	t_philo		*philo;
 	long long	ms_time;
+	t_bool		stop;
 
 	philo = (t_philo *)arg;
 	ms_time = 0;
-	pthread_mutex_lock(philo->stop_mutex);
-	while (!*philo->stop)
+	stop = ft_get_stop_val(philo);
+	while (!stop)
 	{
 		if (philo->nb_philo == 1)
 			ft_one_philo(philo, ms_time);
-		else if (*philo->stop == false)
+		else if (stop == false)
 		{
 			if (ft_routine(philo, ms_time) == (void *)(-1))
 				return (0);
 		}
-		else
-			pthread_mutex_unlock(philo->stop_mutex);
-		pthread_mutex_lock(philo->stop_mutex);
+		stop = ft_get_stop_val(philo);
 	}
-	pthread_mutex_unlock(philo->stop_mutex);
 	return ((void *)(-1));
 }

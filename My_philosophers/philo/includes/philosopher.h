@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:52 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/15 15:44:42 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:09:44 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct philo
 		/*utils*/
 long	ft_atoi(const char *str);
 size_t	ft_strlen(const char *s);
+int		ft_check_args(char **argv);
 void	ft_get_time(long long *ms_time);
 void	ft_print(long long ms_time, t_philo *philo, char *str);
 
@@ -61,6 +62,7 @@ void	*ft_init(char **argv, int argc);
 
 		/*threads*/
 void	*ft_philosopher(void *arg);
+t_bool	ft_get_stop_val(t_philo *philo);
 
 		/*clean*/
 void	ft_clean(t_philo *philo, char *str);

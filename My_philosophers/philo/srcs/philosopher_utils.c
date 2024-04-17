@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:58:18 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/12 18:27:20 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:35:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,29 @@ void	ft_get_time(long long *ms_time)
 
 void	ft_print(long long ms_time, t_philo *philo, char *str)
 {
-	pthread_mutex_lock(philo->print_mutex);
+	t_bool	stop;
+
+	stop = ft_get_stop_val(philo);
 	ft_get_time(&ms_time);
-	if (*philo->stop)
-	{
-		pthread_mutex_unlock(philo->print_mutex);
+	if (stop == true)
 		return ;
-	}
+	pthread_mutex_lock(philo->print_mutex);
 	printf("%lld %d %s\n", ms_time - philo->start_time, philo->id + 1, str);
 	pthread_mutex_unlock(philo->print_mutex);
+}
+
+int	ft_check_args(char **argv)
+{
+	int	i;
+	int	arg;
+
+	i = 0;
+	while (argv[i] && i <= 5)
+	{
+		arg = ft_atoi(argv[i]);
+		if (arg < 0 || arg > 2147483647)
+			return (0);
+		i++;
+	}
+	return (1);
 }
