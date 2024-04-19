@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:58:18 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/17 14:35:24 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:30:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int	ft_check_args(char **argv)
 	int	i;
 	int	arg;
 
-	i = 0;
+	i = 1;
 	while (argv[i] && i <= 5)
 	{
 		arg = ft_atoi(argv[i]);
-		if (arg < 0 || arg > 2147483647)
+		if (arg <= 0 || arg > 2147483647)
 			return (0);
 		i++;
 	}

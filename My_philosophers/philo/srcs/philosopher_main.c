@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:20:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/04/17 17:56:57 by anferre          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:48:30 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	ft_death_check(t_philo *philo)
 			if (ft_check_last_meal(&philo[i], ms_time) == -1)
 				return (0);
 			pthread_mutex_lock(philo[i].nb_eat_mutex);
-			if (philo->nb_meal && philo->nb_eat >= philo->nb_meal)
+			if (philo->nb_meal && philo[i].nb_eat >= philo->nb_meal)
 			{
-				pthread_mutex_unlock(philo->nb_eat_mutex);
+				pthread_mutex_unlock(philo[i].nb_eat_mutex);
 				return (0);
 			}
 			pthread_mutex_unlock(philo[i].nb_eat_mutex);
