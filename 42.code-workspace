@@ -33,7 +33,26 @@
 			"philosopher.h": "c",
 			"istream": "c",
 			"stop_token": "c",
-			"thread": "c"
+			"thread": "c",
+			"compare": "c",
+			"functional": "c",
+			"ostream": "c",
+			"ratio": "c",
+			"tuple": "c",
+			"type_traits": "c",
+			"variant": "c",
+			"limits.h": "c",
+			"cerrno": "c",
+			"prompt.h": "c",
+			"*.tcc": "c",
+			"string": "c",
+			"streambuf": "c",
+			"vector": "c",
+			"iomanip": "c",
+			"sstream": "c",
+			"map": "c",
+			"cstring": "c",
+			"typeinfo": "c"
 		}
 	}
 }

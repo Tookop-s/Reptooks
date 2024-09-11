@@ -1,0 +1,12 @@
+total 56
+drwxr-xr-x 2 anferre 2023_paris    57 May 24 17:57 includes
+-rw-r--r-- 1 anferre 2023_paris     4 Jun 24 14:04 infile.txt
+drwxr-xr-x 4 anferre 2023_paris  4096 Jun 24 14:07 libft
+-rw-r--r-- 1 anferre 2023_paris  1332 May 24 18:20 Makefile
+drwxr-xr-x 2 anferre 2023_paris  4096 Jun 24 14:06 objs
+-rw------- 1 anferre 2023_paris    94 Jun 24 14:04 outfile
+-rw-r--r-- 1 anferre 2023_paris     0 Jun 24 14:07 outfile.txt
+-rwxr-xr-x 1 anferre 2023_paris 34760 Jun 24 14:07 pipex
+drwxr-xr-x 2 anferre 2023_paris   141 May 24 17:57 srcs
+drwxr-xr-x 2 anferre 2023_paris   177 May 24 17:57 srcs_bonus
+drwxr-xr-x 2 anferre 2023_paris    55 May 24 17:57 Tools_pipex
