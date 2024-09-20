@@ -1,1 +1,1 @@
-objs/Contact.o: Contact.cpp PhoneBook.class.hpp Contact.class.hpp
+objs/Contact.o: Contact.cpp Contact.class.hpp
