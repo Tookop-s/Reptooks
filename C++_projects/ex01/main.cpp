@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:25:13 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/20 15:00:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/20 15:38:34 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,3 @@ int main(){
 	return 0;	
 }
 
-// Contact contacts[8] = {
-//         {"Adam", "Smith", "Ady"},
-//         {"Brian", "Johnson", "Bri"},
-//         {"Chris", "Davis", "Crispy"},
-//         {"David", "Brown", "Dave"},
-//         {"Eve", "Williams", "Evie"},
-//         {"Frank", "Miller", "Franky"},
-//         {"George", "Garcia", "Geo"},
-//         {"Hank", "Moore", "Hanky"}
-//     };
