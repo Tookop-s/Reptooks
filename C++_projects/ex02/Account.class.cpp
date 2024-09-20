@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:41:13 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/20 16:53:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/20 16:59:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ int Account::_nbAccounts = 0;
 int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
+
+void Account::_displayTimestamp( void ) {
+	char buffer[20];
+	
+	std::time_t cur_time = std::time(0);
+	std::tm* local_time = std::localtime(&cur_time);
+	std::strftime(buffer, sizeof(buffer), "[%Y%m%d_%H%M%S]", local_time);
+	std::cout << buffer;
+}
 
 int Account::getNbAccounts( void ) {
 	return _nbAccounts;
@@ -37,14 +46,6 @@ void Account::displayStatus( void ) const {
 	std::cout << "refused" << std::endl;
 }
 
-void Account::_displayTimestamp( void ) {
-	char buffer[20];
-	
-	std::time_t cur_time = std::time(0);
-	std::tm* local_time = std::localtime(&cur_time);
-	std::strftime(buffer, sizeof(buffer), "[%Y%m%d_%H%M%S]", local_time);
-	std::cout << buffer;
-}
 
 int Account::getNbDeposits( void ) {
 	return _totalNbDeposits;
@@ -64,10 +65,11 @@ Account::Account ( void ) {
 }
 
 Account::Account ( int initial_deposit ){
-	Account _amount = initial_deposit;
+	_amount = initial_deposit;
 	Account::_totalAmount += initial_deposit;
 	Account::_nbDeposits++;
 	Account::_accountIndex = Account::_nbAccounts;
+	Account::_nbAccounts++;
 	_displayTimestamp();
 	std::cout << " index:" << _accountIndex << ";amount:" << _amount << ";created" << std::endl;
 }
@@ -88,7 +90,9 @@ bool Account::makeWithdrawal(int withdrawal)
 {
 	if (withdrawal > _amount) {
 		_displayTimestamp();
-		std::cout << " index:" << _accountIndex << ";p_amount:" << _amount << ";withdrawal:" << displayStatus();
+		std::cout << " index:" << _accountIndex << ";p_amount:" << _amount << ";withdrawal:";
+		displayStatus();
+		return false;
 	}
 	else
 	{
@@ -97,4 +101,5 @@ bool Account::makeWithdrawal(int withdrawal)
 		Account::_totalAmount -= withdrawal;
 		Account::_totalNbWithdrawals++;
 	}
+	return true;
 }
