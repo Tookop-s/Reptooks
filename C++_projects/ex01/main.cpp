@@ -6,46 +6,51 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:25:13 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/19 13:08:30 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/20 15:00:23 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.class.hpp"
 #include "Contact.class.hpp"
 #include <iostream>
-#include <cstring>
 #include <string.h>
 #include <limits>
+#include <cstdlib>
 
 
-char *capitalize(char *str){
-	for(int i = 0; str[i] != '\0'; i++)
-		str[i] = toupper(str[i]);
+std::string capitalize(std::string& str){
+	for(std::string::size_type i = 0; i < str.size(); ++i)
+		str[i] = std::toupper(static_cast<unsigned char>(str[i]));
 	return str;
 }
 
 int main(){
 	PhoneBook rep;
-	char command[11];
+	std::string command;
 	
-	std::cout << "Welcome to the phonebook enter a command" << std::endl;
-	for(;std::cin.getline(command, 11) && strcmp(capitalize(command), "EXIT") != 0;)
+	std::cout << "Welcome to the phonebook enter a command : " ;
+	
+	while(std::getline(std::cin, command) && !(capitalize(command) == "EXIT"))
 	{
-		if (std::cin.fail())
-		{
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		}
+		command = capitalize(command);
+		if (command == "ADD")
+			rep.add_contact();
+		else if (command == "SEARCH")
+			rep.search_contact();
 		else
-		{
-			if (strcmp(capitalize(command), "ADD") == 0)
-				rep.add_contact();
-			else if (strcmp(capitalize(command), "SEARCH") == 0)
-				std::cout << "search" << std::endl;
-			else
-				std::cout << "Invalid command" << std::endl;
-		}
-		std::cout << "Enter a command" << std::endl;
+			std::cout << "Invalid command" << std::endl;
+		std::cout << "Enter a command : ";
 	}
 	return 0;	
 }
+
+// Contact contacts[8] = {
+//         {"Adam", "Smith", "Ady"},
+//         {"Brian", "Johnson", "Bri"},
+//         {"Chris", "Davis", "Crispy"},
+//         {"David", "Brown", "Dave"},
+//         {"Eve", "Williams", "Evie"},
+//         {"Frank", "Miller", "Franky"},
+//         {"George", "Garcia", "Geo"},
+//         {"Hank", "Moore", "Hanky"}
+//     };
