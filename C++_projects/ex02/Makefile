@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/09/20 16:47:59 by anferre          ###   ########.fr        #
+#    Updated: 2024/09/23 12:00:55 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CFLAGS = -Wall -Wextra -Werror -g3 -std=c++98
 
 RM = rm -rf
 
-SRCS =  Account.class.cpp test.cpp
+SRCS =  Account.class.cpp tests.cpp
 
 OBJ_DIR = objs
 
