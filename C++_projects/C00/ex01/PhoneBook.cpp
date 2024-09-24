@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:11:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/20 15:36:12 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:54:53 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,17 @@ void	printContact(const Contact *contacts) {
 			exit(1);
 		std::stringstream ss(input);
 		if (!(ss >> index) || (index < 0 || index > 7))
-			std::cout << "Invalid index, try again" << std::endl;
+			std::cout << "Invalid index, try again : ";
+		else if (contacts[index].get_first_name().empty())
+			std::cout << "No contact at this index, try again : ";
 		else
 			break;
 	}
-	if (contacts[index].get_first_name().empty())
-	{
-		std::cout << "No contact at this index" << std::endl;
-		return;
-	}
-	else
-	{
 		std::cout << "First Name : " << contacts[index].get_first_name() << std::endl;
 		std::cout << "Last Name : " << contacts[index].get_last_name() << std::endl;
 		std::cout << "Nickname : " << contacts[index].get_nickname() << std::endl;
 		std::cout << "Phone Number : " << contacts[index].get_phone_number() << std::endl;
 		std::cout << "Darkest Secret : " << contacts[index].get_darkest_secret() << std::endl;
-	}
 }
 
 void PhoneBook::search_contact(void) {
