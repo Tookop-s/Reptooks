@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:29:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/24 12:44:34 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:41:56 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void Contact::set_nickname(Contact *contact) {
 	{
 		std::cout << "Invalid Nickname try again : ";
 		if (!std::getline(std::cin, nickname))
-		exit(1);
+			exit(1);
 	}
 	contact->_nickname = nickname;
 	return;
@@ -76,7 +76,7 @@ void Contact::set_first_name(Contact *contact) {
 	{
 		std::cout << "Invalid first_name try again : ";
 		if (!std::getline(std::cin, first_name))
-		exit(1);
+			exit(1);
 	}
 	contact->_first_name = first_name;
 	return;
@@ -91,7 +91,7 @@ void Contact::set_last_name(Contact *contact) {
 	{
 		std::cout << "Invalid last_name try again : ";
 		if (!std::getline(std::cin, last_name))
-		exit(1);
+			exit(1);
 	}
 	contact->_last_name = last_name;
 	return;
@@ -106,7 +106,7 @@ void Contact::set_phone_number(Contact *contact) {
 	{
 		std::cout << "Invalid phone_number try again : ";
 		if (!std::getline(std::cin, phone_number))
-		exit(1);
+			exit(1);
 	}
 	contact->_phone_number = phone_number;
 	return;
@@ -121,7 +121,7 @@ void Contact::set_darkest_secret(Contact *contact) {
 	{
 		std::cout << "Invalid darkest_secret try again : ";
 		if (!std::getline(std::cin, darkest_secret))
-		exit(1);
+			exit(1);
 	}
 	contact->_darkest_secret = darkest_secret;
 	return;
