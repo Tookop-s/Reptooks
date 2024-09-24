@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:29:04 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/20 15:30:17 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/24 12:44:34 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@ Contact::Contact (const Contact& other) {
 	this->_last_name = other._last_name;
 	this->_phone_number = other._phone_number;
 	this->_darkest_secret = other._darkest_secret;
-}
-
-Contact& Contact::operator=(const Contact& other){
-	if (this == &other)
-		return *this;
-	this->_nickname = other._nickname;
-	this->_first_name = other._first_name;
-	this->_last_name = other._last_name;
-	this->_phone_number = other._phone_number;
-	this->_darkest_secret = other._darkest_secret;
-	return *this;
 }
 
 Contact::~Contact (void) { 

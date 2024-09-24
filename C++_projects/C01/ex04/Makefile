@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/09/23 17:49:49 by anferre          ###   ########.fr        #
+#    Updated: 2024/09/24 14:06:42 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = Sed_is_for_losers
 
 CC = c++
 
-CFLAGS = -Wall -Wextra -Werror -g3 -std=c++98
+CFLAGS = -Wall -Wextra -Werror -g3 -std=c++98 -MMD
 
 RM = rm -rf
 
@@ -34,7 +34,7 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
-	$(CC)  $(CFLAGS) -MMD -c -o $@ $<
+	$(CC)  $(CFLAGS)  -c -o $@ $<
 
 
 clean:

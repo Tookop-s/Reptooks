@@ -6,17 +6,14 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:26:45 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/23 15:44:06 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:06:59 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
 void Zombie::announce( void ) {
-	if (this->_name == "Foo")
-		std::cout  << this->_name << ": BraiiiiiiinnnzzzZ..." << std::endl;
-	else
-		std::cout << "<" << this->_name << ">: BraiiiiiiinnnzzzZ..." << std::endl;
+	std::cout << this->_name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 }
 
 Zombie::Zombie( void ) {
@@ -29,9 +26,6 @@ Zombie::Zombie( std::string name ) {
 }
 
 Zombie::~Zombie( void ) {
-	if (this->_name == "Foo")
-		std::cout << "Foo has been destroyed" << std::endl;
-	else
-		std::cout << "<" << this->_name << "> has been destroyed" << std::endl;
+	std::cout  << this->_name << " has been destroyed" << std::endl;
 	return;
 }

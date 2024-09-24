@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 18:11:54 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/20 15:17:33 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/24 12:44:26 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ class Contact {
 
 	Contact(void);
 	Contact(const Contact& other);
-	Contact& operator=(const Contact& other);
 	~Contact(void);
 	void set_nickname(Contact *contact);
 	void set_first_name(Contact *contact);
