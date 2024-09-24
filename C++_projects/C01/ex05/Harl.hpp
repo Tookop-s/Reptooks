@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 16:14:34 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/24 10:47:24 by anferre          ###   ########.fr       */
+/*   Created: 2024/09/24 11:10:14 by anferre           #+#    #+#             */
+/*   Updated: 2024/09/24 11:38:57 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#ifndef HARL_HPP
+# define HARL_HPP
 
-Zombie* zombieHorde( int N, std::string name ) {
-	Zombie* horde = nullptr;
+#include <iostream>
+
+class Harl
+{
+	public:
+
+	void complain( std::string level );
+
+	private:
 	
-	try {
-		horde = new Zombie[N];
-	}
-	catch (const std::bad_alloc& e) {
-		std::cerr << "Allocation failed: " << e.what() << std::endl;
-		return nullptr;
-	}
-	for (int i = 0; i < N; i++) {
-		horde[i].setName(name);
-	}
-	return horde;
-}
+	void debug( void );
+	void info( void );
+	void warning( void );
+	void error( void );
+	
+};
+
+
+#endif
