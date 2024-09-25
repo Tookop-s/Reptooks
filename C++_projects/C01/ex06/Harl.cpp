@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:10:11 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/24 15:08:53 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:50:13 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void Harl::complain(std::string level) {
 			return;
 		}
 	}
-	std::cout << "Invalid level" << std::endl;
+	std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
 }
 
 
