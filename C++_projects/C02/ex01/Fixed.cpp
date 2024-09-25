@@ -6,11 +6,12 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:33:32 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/25 14:11:56 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/25 17:58:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
+#include <cmath>
 
 Fixed::Fixed( void ) : _value(0) {
 	std::cout << "Default constructor called" << std::endl;
@@ -42,4 +43,28 @@ Fixed& Fixed::operator=( Fixed const & src ) {
 	std::cout << "Copy assignement operator called" << std::endl;
 	this->_value = src.getRawBits();
 	return *this;
+}
+
+Fixed::Fixed( int const value ) {
+	std::cout << "Int constructor called" << std::endl;
+	this->_value = value << this->_bits;
+}
+
+// 1 << 8 = 256 = 2^8 scaling factor to move the decimal point
+Fixed::Fixed( float const value ) {
+	std::cout << "Float constructor called" << std::endl;
+	this->_value = roundf(value * (1 << this->_bits));
+}
+
+float Fixed::toFloat( void ) const {
+	return (float)this->_value / (1 << this->_bits);
+}
+
+int Fixed::toInt( void ) const {
+	return this->_value >> this->_bits;
+}
+
+std::ostream& operator<<( std::ostream& o, Fixed const& src) {
+	o << src.toFloat();
+	return o;
 }
