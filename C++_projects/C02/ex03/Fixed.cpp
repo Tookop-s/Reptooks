@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:33:32 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/26 16:43:36 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/26 14:59:19 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,3 @@ Fixed& Fixed::min( Fixed & a, Fixed & b ) {
 Fixed const & Fixed::min( Fixed const & a, Fixed const & b ) {
 	return (a < b ? a : b);
 }
-
-//https://www.notion.so/C-1049a7fe5c91804fa04fe409dd69a3cb?pvs=4#10d9a7fe5c918055a90cd3f337fbd408
