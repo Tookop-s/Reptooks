@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:43:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/23 16:49:15 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/26 17:55:46 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int main( void ) {
 	std::string* stringPTR = &str;
 	std::string& stringREF = str;
 
-	std::cout << "Address of the string variable :" << &str << std::endl;
-	std::cout << "Address of stringPTR :" << stringPTR << std::endl;
-	std::cout << "Address of stringREF :" << &stringREF << std::endl;
+	std::cout << "Address of the string variable : " << &str << std::endl;
+	std::cout << "Address of stringPTR : " << stringPTR << std::endl;
+	std::cout << "Address of stringREF : " << &stringREF << std::endl;
 
-	std::cout << "Value of the string variable :" << str << std::endl;
-	std::cout << "stringPTR pointing to :" << *stringPTR << std::endl;
-	std::cout << "stringREF pointing to :" << stringREF << std::endl;
+	std::cout << "Value of the string variable : " << str << std::endl;
+	std::cout << "stringPTR pointing to : " << *stringPTR << std::endl;
+	std::cout << "stringREF pointing to : " << stringREF << std::endl;
 	return 0;
 }
