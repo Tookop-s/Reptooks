@@ -6,13 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:52:26 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/23 17:41:12 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/27 11:34:38 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HumanB.hpp"
 
-HumanB::HumanB( std::string name) : _name(name) {
+HumanB::HumanB( std::string name) : _name(name), _weapon(NULL) {
 	return ;
 }
 

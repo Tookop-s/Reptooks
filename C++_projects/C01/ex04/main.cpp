@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:50:01 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/24 11:06:31 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/27 11:37:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 		}
 		if (!file)
 		{
-			std::cout << "error openning te file" << argv[1] << std::endl;
+			std::cout << "error openning the file : " << argv[1] << std::endl;
 			return 1;
 		}
 		std::ofstream outputfile((filename + ".replace").c_str());
