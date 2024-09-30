@@ -6,17 +6,23 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:52:26 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/27 11:34:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/30 13:49:09 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HumanB.hpp"
 
-HumanB::HumanB( std::string name) : _name(name), _weapon(NULL) {
+HumanB::HumanB(const std::string& name) : _name(name), _weapon(NULL) {
+	if (name.empty())
+		throw std::invalid_argument("Name cannot be empty");
+	if (DEBUG)
+		std::cout << "HumanB constructor called" << std::endl;
 	return ;
 }
 
 HumanB::~HumanB( void ) {
+	if (DEBUG)
+		std::cout << "HumanB destructor called" << std::endl;
 	return ;
 }
 

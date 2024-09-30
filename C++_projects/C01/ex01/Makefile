@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/09/23 16:21:01 by anferre          ###   ########.fr        #
+#    Updated: 2024/09/30 13:35:40 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,12 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 
 DEPS = $(OBJS:.o=.d)
 
+ifeq ($(DEBUG), true)
+	CFLAGS += -DDEBUG=true
+else
+	CFLAGS += -DDEBUG=false
+endif
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -36,6 +42,11 @@ $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
 	$(CC)  $(CFLAGS) -MMD -c -o $@ $<
 
+debug: 
+	$(MAKE) DEBUG=true re
+
+release:
+	$(MAKE) DEBUG=false re
 
 clean:
 	$(RM) $(OBJS) $(OBJ_DIR)
@@ -45,7 +56,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug release
 
 -include $(DEPS)
 

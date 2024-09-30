@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:52:33 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/24 14:07:16 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/30 13:42:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class HumanB {
 
 	public:
 
-		HumanB( std::string name );
+		HumanB(const std::string& name );
 		~HumanB( void );
 
 		void setWeapon( Weapon& weapon);

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:52:41 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/27 11:31:47 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/30 13:51:54 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 #include <iostream>
 #include <string>
 
+#ifndef DEBUG
+# define DEBUG true
+#endif
 class Weapon {
 
 	public:
 
 		Weapon( void );
-		Weapon( std::string type );
+		Weapon(const std::string& type );
 		~Weapon( void );
 		
 		void setType( std::string type );

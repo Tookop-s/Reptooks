@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:52:31 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/23 17:20:54 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/30 14:10:16 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class HumanA {
 
 	public:
 
-		HumanA( std::string name, Weapon& weapon );
+		HumanA( const std::string& name, Weapon& weapon );
 		~HumanA( void );
 
 		void attack( void ) const;

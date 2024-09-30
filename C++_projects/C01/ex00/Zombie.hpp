@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:23:16 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/26 17:51:54 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/30 14:09:51 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@
 
 #include <iostream>
 
+#ifndef DEBUG
+# define DEBUG true
+#endif
+
 class Zombie {
 	
 	public :
 	
+		Zombie( void );
+		Zombie( std::string name );
+		~Zombie( void );
 
-	Zombie( void);
-	Zombie( std::string name);
-	~Zombie( void);
-	void announce( void);
+		void announce( void);
 	
 	private:
 		std::string _name;

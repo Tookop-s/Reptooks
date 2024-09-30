@@ -6,21 +6,29 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:52:39 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/27 11:32:04 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/30 13:53:17 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Weapon.hpp"
 
 Weapon::Weapon( void ) {
+	if (DEBUG)
+		std::cout << "default Weapon constructor called" << std::endl;
 	return ;
 }
 
-Weapon::Weapon( std::string type ): _type(type) {
+Weapon::Weapon(const std::string& type ): _type(type) {
+	if (type.empty())
+		throw std::invalid_argument("Type cannot be empty");
+	if (DEBUG)
+		std::cout << "Weapon constructor called" << std::endl;
 	return ;
 }
 
 Weapon::~Weapon( void ) {
+	if (DEBUG)
+		std::cout << "Weapon destructor called" << std::endl;
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:13:21 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/23 16:35:46 by anferre          ###   ########.fr       */
+/*   Updated: 2024/09/30 12:32:32 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,20 @@ void Zombie::setName(std::string name) {
 }
 
 Zombie::Zombie( void ) : _name("default") {
+	if (DEBUG)
+		std::cout << "Zombie created named : default" << std::endl;
 	return;
 }
 
 Zombie::Zombie( std::string name ) : _name(name) {
+	if (DEBUG)
+		std::cout << "Zombie created named : " << name << std::endl;
 	Zombie::announce();
 	return;
 }
 
 Zombie::~Zombie( void ) {
-	std::cout << "<" << this->_name << "> has been destroyed" << std::endl;
+	if (DEBUG)
+		std::cout << "<" << this->_name << "> has been destroyed" << std::endl;
 	return;
 }

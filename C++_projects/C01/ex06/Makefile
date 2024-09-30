@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/09/24 11:52:32 by anferre          ###   ########.fr        #
+#    Updated: 2024/09/30 14:04:13 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ $(NAME): $(OBJS)
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
 	$(CC)  $(CFLAGS) -MMD -c -o $@ $<
-
 
 clean:
 	$(RM) $(OBJS) $(OBJ_DIR)
