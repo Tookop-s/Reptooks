@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:33:59 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/25 13:47:08 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/01 11:43:37 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class Fixed {
 		Fixed( Fixed const & src );
 		~Fixed( void );
 		Fixed & operator=( Fixed const & src );
+		
 		int getRawBits( void ) const;
 		void setRawBits( int const raw );
 		
