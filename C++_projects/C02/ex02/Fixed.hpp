@@ -15,6 +15,9 @@
 
 #include <iostream>
 
+#ifndef DEBUG
+# define DEBUG false
+#endif
 
 class Fixed {
 	

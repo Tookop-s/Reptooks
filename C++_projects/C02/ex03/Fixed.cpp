@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:33:32 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/26 14:59:19 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/02 11:59:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,46 @@
 #include <cmath>
 
 Fixed::Fixed( void ) : _value(0) {
-	// std::cout << "Default constructor called" << std::endl;
+	if (DEBUG)
+		std::cout << "Default constructor called" << std::endl;
 	return;
 }
 
 Fixed::Fixed( Fixed const & src ) {
-	// std::cout << "Copy constructor called" << std::endl;
+	if (DEBUG)
+		std::cout << "Copy constructor called" << std::endl;
 	*this = src;
 	return;
 }
 
 Fixed::~Fixed( void ) {
-	// std::cout << "Destructor called" << std::endl;
+	if (DEBUG)
+		std::cout << "Destructor called" << std::endl;
 	return;
 }
 
 int Fixed::getRawBits( void ) const {
-	// std::cout << "getRawBits member function called" << std::endl;
+	if (DEBUG)
+		std::cout << "getRawBits member function called" << std::endl;
 	return this->_value;
 }
 
 void Fixed::setRawBits( int const raw ) {
-	// std::cout << "setrawBits member function called" << std::endl;
+	if (DEBUG)
+		std::cout << "setrawBits member function called" << std::endl;
 	this->_value = raw;
 }
 
 Fixed::Fixed( int const value ) {
-	// std::cout << "Int constructor called" << std::endl;
+	if (DEBUG)
+		std::cout << "Int constructor called" << std::endl;
 	this->_value = value << this->_bits;
 }
 
 // 1 << 8 = 256 = 2^8 scaling factor to move the decimal point
 Fixed::Fixed( float const value ) {
-	// std::cout << "Float constructor called" << std::endl;
+	if (DEBUG)
+		std::cout << "Float constructor called" << std::endl;
 	this->_value = roundf(value * (1 << this->_bits));
 }
 
@@ -59,7 +66,8 @@ int Fixed::toInt( void ) const {
 }
 
 Fixed& Fixed::operator=( Fixed const & rhs ) {
-	// std::cout << "Copy assignement operator called" << std::endl;
+	if (DEBUG)
+		std::cout << "Copy assignement operator called" << std::endl;
 	this->_value = rhs.getRawBits();
 	return *this;
 }

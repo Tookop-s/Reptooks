@@ -14,6 +14,7 @@
 # define FIXED_HPP
 
 #include <iostream>
+#include "Format.hpp"
 
 #ifndef DEBUG
 # define DEBUG false
