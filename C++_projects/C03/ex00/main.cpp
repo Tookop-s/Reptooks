@@ -5,24 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 16:43:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/02 18:10:50 by anferre          ###   ########.fr       */
+/*   Created: 2024/10/02 13:43:38 by anferre           #+#    #+#             */
+/*   Updated: 2024/10/02 14:57:19 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#include "ClapTrap.hpp"
 
 int main( void ) {
-	std::string str = "HI THIS IS BRAIN";
-	std::string* stringPTR = &str;
-	std::string& stringREF = str;
+	ClapTrap claptrap("Claptrap");
 
-	std::cout << "Address of the string variable : " << &str << std::endl;
-	std::cout << "Address of stringPTR : " << stringPTR << std::endl;
-	std::cout << "Address of stringREF : " << &stringREF << std::endl;
+	claptrap.takeDamage(5);
+	claptrap.beRepaired(10);
+	claptrap.takeDamage(16); //check the unsigned int is well handled
+	std::cout << std::endl;
 
-	std::cout << "Value of the string variable : " << str << std::endl;
-	std::cout << "stringPTR pointing to : " << *stringPTR << std::endl;
-	std::cout << "stringREF pointing to : " << stringREF << std::endl;
-	return 0;
+	ClapTrap claptrap2("claptrap2");
+
+	claptrap2.beRepaired(10);
+	std::cout << "attack 10 times :" << std::endl;
+	for(int i = 0; i < 10; i++)
+		claptrap2.attack("enemy");
+	std::cout << std::endl;
+	
+	claptrap2.takeDamage(1);
+	claptrap2.beRepaired(10);
+	std::cout << std::endl;
 }
