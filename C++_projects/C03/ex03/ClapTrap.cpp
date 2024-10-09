@@ -6,26 +6,26 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:22:28 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/09 14:32:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/09 17:28:25 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap( void ) : _name("default"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
+ClapTrap::ClapTrap( void ) : _name("default_clap_name"), _hitPoints(100), _energyPoints(100), _attackDamage(30) {
 	if (DEBUG)
 		std::cout << _GOLD << "ClapTrap default constructor called" << _END << std::endl;
 }
 
-ClapTrap::ClapTrap( std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
-	std::cout << _GOLD << "ClapTrap string constructor called" << _END << std::endl;
+ClapTrap::ClapTrap( std::string name) : _name(name), _hitPoints(100), _energyPoints(100), _attackDamage(30) {
+	if (DEBUG)
+		std::cout << _GOLD << "ClapTrap string constructor called" << _END << std::endl;
 }
 
 ClapTrap::ClapTrap( ClapTrap const & src) {
 	if (DEBUG)
 		std::cout << _GOLD << "ClapTrap copy constructor called" << _END << std::endl;
 	*this = src;
-	return;
 }
 
 ClapTrap& ClapTrap::operator=(ClapTrap const & rhs){
@@ -58,7 +58,7 @@ void ClapTrap::attack( std::string const & target ) {
 }
 
 void ClapTrap::beRepaired( unsigned int amount ) {
-	if (_hitPoints > 0 && _energyPoints > 0)
+	if (_hitPoints > 0 && _energyPoints > 0 && amount > 0)
 	{
 		std::cout << _GOLD << "ClapTrap " << this->_name << " is being repaired for " << amount << " points !" << _END << std::endl;
 		_hitPoints += amount;
@@ -77,7 +77,7 @@ void ClapTrap::takeDamage( unsigned int amount ) {
 			_hitPoints = 0;
 		else
 			_hitPoints -= amount;
-		std::cout << _GOLD<< "ClapTrap " << this->_name << " takes " << amount << " points of damage !" << _END << std::endl;
+		std::cout << _GOLD << "ClapTrap " << this->_name << " takes " << amount << " points of damage !" << _END << std::endl;
 	}
 	else if (_hitPoints <= 0)
 		std::cout << _GOLD << "ClapTrap " << this->_name << " is already dead cannot take more damage !" << _END << std::endl;

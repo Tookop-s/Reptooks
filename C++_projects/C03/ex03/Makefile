@@ -6,19 +6,19 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/10/09 15:58:59 by anferre          ###   ########.fr        #
+#    Updated: 2024/10/09 18:09:52 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ClapTrap
+NAME = DiamondTrap
 
 CXX = c++
 
-CFLAGSX = -Wall -Wextra -Werror -g3 -std=c++98 -IFormat
+CFLAGSX = -Wall -Wextra -Werror -g3 -std=c++98 -IFormat  -Wshadow
 
 RM = rm -rf
 
-SRCS =  main.cpp ClapTrap.cpp 
+SRCS =  main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 
 OBJ_DIR = objs
 

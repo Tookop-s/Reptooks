@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:05 by anferre           #+#    #+#             */
-/*   Updated: 2024/09/26 16:43:16 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/03 14:59:01 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ bool bsp( Point const a, Point const b, Point const c, Point const point) {
 	//cross product (point, c, a)
 	Fixed const a3 = (x - xc) * (ya - yc) - (xa - xc) * (y - yc);
 
-	if (a1 >= 0 && a2 >= 0 && a3 >= 0)
+	if (a1 > 0 && a2 > 0 && a3 > 0)
 		return true;
-	if (a1 <= 0 && a2 <= 0 && a3 <= 0)
+	if (a1 < 0 && a2 < 0 && a3 < 0)
 		return true;
 	return false;
 }

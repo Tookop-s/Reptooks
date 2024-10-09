@@ -6,11 +6,11 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/10/09 15:58:59 by anferre          ###   ########.fr        #
+#    Updated: 2024/10/09 15:59:16 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ClapTrap
+NAME = FragTrap
 
 CXX = c++
 
@@ -18,7 +18,7 @@ CFLAGSX = -Wall -Wextra -Werror -g3 -std=c++98 -IFormat
 
 RM = rm -rf
 
-SRCS =  main.cpp ClapTrap.cpp 
+SRCS =  main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 
 OBJ_DIR = objs
 
