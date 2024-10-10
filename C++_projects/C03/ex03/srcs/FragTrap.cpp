@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:50:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/10 13:19:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:24:01 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ FragTrap::FragTrap( void ) : ClapTrap("default") {
 	_hitPoints = 100;
 	_energyPoints = 100;
 	_attackDamage = 30;
+	_name = "default";
 	if (DEBUG)
 		std::cout << _SALMON << "FragTrap default constructor called" << _END << std::endl;
 	if (INFO)	
@@ -27,6 +28,7 @@ FragTrap::FragTrap( std::string name ) : ClapTrap(name) {
 	_hitPoints = 100;
 	_energyPoints = 100;
 	_attackDamage = 30;
+	_name = name;
 	if (DEBUG)
 		std::cout << _SALMON << "FragTrap string constructor called" << _END << std::endl;
 	if (INFO)	
