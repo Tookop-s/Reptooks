@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:22:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/09 15:59:56 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:02:15 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 #ifndef DEBUG
 # define DEBUG true
+# define INFO true
 #endif
 
 class ClapTrap {

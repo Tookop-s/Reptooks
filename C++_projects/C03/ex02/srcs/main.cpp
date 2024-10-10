@@ -6,26 +6,38 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:02:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/09 18:04:20 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/10 13:02:01 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
-#include "DiamondTrap.hpp"
 
 void testDefaultConstructor( void ) {
 	std::cout << std::endl << _BOLD << _BLUE << "default constructor test :" << _END << std::endl << std::endl;
 	
-	DiamondTrap diamond;
+	{
+		FragTrap frag;
+	}
+	std::cout << std::endl;
+	{
+		ScavTrap scav;
+	}
 }
 
 void testStringConstructor( void ) {
 	std::cout << _BOLD << _BLUE << "string constructor test :" << _END << std::endl << std::endl;
 	try
 	{
-		// DiamondTrap diamond0(NULL);
-		DiamondTrap diamond("DiamondTrap");
+		{
+		// FragTrap frag(NULL);
+		FragTrap frag1("Fragtrap");	
+		}
+		std::cout << std::endl;
+		{
+		// ScavTrap scav(NULL);
+		ScavTrap scav1("Scavtrap");
+		}
 	}
 	catch (std::exception &e)
 	{
@@ -37,8 +49,17 @@ void testCopyConstructor( void ) {
 	std::cout << _BOLD << _BLUE << "copy constructor test :" << _END << std::endl << std::endl;
 	try
 	{
-		DiamondTrap diamond("DiamondTrap");
-		DiamondTrap diamond2(diamond);
+		{
+		// FragTrap frag(NULL);
+		FragTrap frag1("Fragtrap");
+		FragTrap frag2(frag1);
+		}
+		std::cout << std::endl;
+		{
+		// ScavTrap scav(NULL);
+		ScavTrap scav1("ScavTrap");
+		ScavTrap scav2(scav1);
+		}
 	}
 	catch (std::exception &e)
 	{
@@ -49,9 +70,19 @@ void testCopyConstructor( void ) {
 void testAssignementOperator( void ) {
 	std::cout << _BOLD << _BLUE << "assignement operator test :" << _END << std::endl << std::endl;
 	try {
-		DiamondTrap diamond("DiamondTrap");
-		DiamondTrap diamond2("DiamondTrap2");
-		diamond2 = diamond;
+		{
+		// FragTrap frag0(NULL);
+		FragTrap frag("Fragtrap");
+		FragTrap frag2("Fragtrap2");
+		frag2 = frag;
+		}
+		std::cout << std::endl;
+		{
+		// ScavTrap scav0(NULL);
+		ScavTrap scav("ScavTrap");
+		ScavTrap scav2("ScavTrap2");
+		scav2 = scav;
+		}
 	}
 	catch (std::exception &e)
 	{
@@ -62,14 +93,27 @@ void testAssignementOperator( void ) {
 void testAttack( void ) { 
 	std::cout << _BOLD << _BLUE << "attack test :" << _END << std::endl << std::endl;
 	try {
-		DiamondTrap diamond("DiamondTrap");
-		diamond.attack("enemy");
-		diamond.takeDamage(10);
-		diamond.attack("enemy");
-		diamond.beRepaired(10);
-		diamond.attack("enemy");
-		diamond.takeDamage(1000);
-		diamond.attack("enemy");
+		{
+		// FragTrap frag0(NULL);
+		FragTrap frag("Fragtrap");
+		frag.attack("target");
+		frag.takeDamage(90);
+		frag.attack("target");
+		frag.beRepaired(20);
+		frag.takeDamage(90);
+		frag.attack("target");
+		}
+		std::cout << std::endl;
+		{
+		// ScavTrap scav0(NULL);
+		ScavTrap scav("ScavTrap");
+		scav.attack("target");
+		scav.takeDamage(90);
+		scav.attack("target");
+		scav.beRepaired(20);
+		scav.takeDamage(90);
+		scav.attack("target");
+		}
 	}
 	catch (std::exception &e)
 	{
@@ -77,17 +121,12 @@ void testAttack( void ) {
 	}
 }
 
-void testWhoAmI( void ) {
-	std::cout << _BOLD << _BLUE << "whoAmI test :" << _END << std::endl << std::endl;
+void testGuardGate( void ) {
+	std::cout << _BOLD << _BLUE << "guardGate test :" << _END << std::endl << std::endl;
 	try {
-		DiamondTrap diamond("DiamondTrap");
-		diamond.whoAmI();
-		diamond.guardGate();
-		diamond.highFivesGuys();
-		DiamondTrap diamond2;
-		diamond2.whoAmI();
-		diamond.guardGate();
-		diamond.highFivesGuys();
+		// ScavTrap scav0(NULL);
+		ScavTrap scav("ScavTrap");
+		scav.guardGate();
 	}
 	catch (std::exception &e)
 	{
@@ -95,9 +134,21 @@ void testWhoAmI( void ) {
 	}
 }
 
+void testHighFivesGuys( void ) {
+	std::cout << _BOLD << _BLUE << "highFivesGuys test :" << _END << std::endl << std::endl;
+	try {
+		// FragTrap frag0(NULL);
+		FragTrap frag("Fragtrap");
+		frag.highFivesGuys();
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << _RED << e.what() << _END << std::endl;
+	}
+}
 
 int main( void ) {
-	std::cout << _BOLD << _RED << "Starting tests..." << _END << std::endl << std::endl;
+	std::cout << _BOLD << _RED << "Starting tests..." << _END << std::endl;
 	testDefaultConstructor();
 	std::cout << std::endl;
 	testStringConstructor();
@@ -108,7 +159,9 @@ int main( void ) {
 	std::cout << std::endl;
 	testAttack();
 	std::cout << std::endl;
-	testWhoAmI();
+	testGuardGate();
+	std::cout << std::endl;
+	testHighFivesGuys();
 	std::cout << std::endl << _BOLD << _GREEN << _BLINK << "All tests completed." << _END << std::endl << std::endl;
 	return 0;
 }

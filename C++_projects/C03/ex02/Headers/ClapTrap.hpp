@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:22:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/09 15:59:52 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:02:36 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 #ifndef DEBUG
 # define DEBUG true
+# define INFO true
 #endif
 
 class ClapTrap {
@@ -35,10 +36,10 @@ class ClapTrap {
 		void        beRepaired( unsigned int amount );
 
 	protected:
-		std::string _name;
-		unsigned int _hitPoints;
-		unsigned int _energyPoints;
-		unsigned int _attackDamage;
+		std::string		_name;
+		unsigned int	_hitPoints;
+		unsigned int	_energyPoints;
+		unsigned int	_attackDamage;
 };
 
 

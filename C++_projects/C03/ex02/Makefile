@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/10/09 15:59:16 by anferre          ###   ########.fr        #
+#    Updated: 2024/10/10 12:11:45 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,20 @@ NAME = FragTrap
 
 CXX = c++
 
-CFLAGSX = -Wall -Wextra -Werror -g3 -std=c++98 -IFormat
+
+INCLUDE_DIR = -IFormat -IHeaders
+CFLAGSX = -Wall -Wextra -Werror -g3 -std=c++98 $(INCLUDE_DIR)
+
 
 RM = rm -rf
 
-SRCS =  main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
+SRCS_DIR = srcs
+SRCS_FILES =  main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
+SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
 OBJ_DIR = objs
 
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:$(SRCS_DIR)/%.cpp=%.o))
 
 DEPS = $(OBJS:.o=.d)
 
@@ -37,7 +42,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CXX) $(CFLAGSX) -o $@ $^
 
-$(OBJ_DIR)/%.o: %.cpp
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.cpp
 	@mkdir -p $(@D)
 	$(CXX)  $(CFLAGSX) -MMD -c -o $@ $<
 

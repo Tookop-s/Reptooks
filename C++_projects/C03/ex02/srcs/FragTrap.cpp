@@ -6,25 +6,40 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:50:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/09 16:11:47 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:01:23 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap( void ) : ClapTrap() {
+FragTrap::FragTrap( void ) : ClapTrap("default") {
+	_hitPoints = 100;
+	_energyPoints = 100;
+	_attackDamage = 30;
 	if (DEBUG)
 		std::cout << _SALMON << "FragTrap default constructor called" << _END << std::endl;
+	if (INFO)	
+		std::cout << _CYAN << " name : " << _name << " |  hitPoints : " << _hitPoints << " |  energyPoints : " \
+		<< _energyPoints << " |  attackDamage : " << _attackDamage << _END << std::endl;	
 }
 
 FragTrap::FragTrap( std::string name ) : ClapTrap(name) {
+	_hitPoints = 100;
+	_energyPoints = 100;
+	_attackDamage = 30;
 	if (DEBUG)
 		std::cout << _SALMON << "FragTrap string constructor called" << _END << std::endl;
+	if (INFO)	
+		std::cout << _CYAN << " name : " << _name << " |  hitPoints : " << _hitPoints << " |  energyPoints : " \
+		<< _energyPoints << " |  attackDamage : " << _attackDamage << _END << std::endl;	
 }
 
 FragTrap::FragTrap( FragTrap const & src) : ClapTrap(src) {
 	if (DEBUG)
 		std::cout << _SALMON << "FragTrap copy constructor called" << _END << std::endl;
+	if (INFO)	
+		std::cout << _CYAN << " name : " << _name << " |  hitPoints : " << _hitPoints << " |  energyPoints : " \
+		<< _energyPoints << " |  attackDamage : " << _attackDamage << _END << std::endl;	
 }
 
 FragTrap::~FragTrap( void ) {
@@ -38,6 +53,9 @@ FragTrap& FragTrap::operator=(FragTrap const & rhs) {
 	ClapTrap::operator=(rhs);
 	if (DEBUG)
 		std::cout << _SALMON << "FragTrap assignement operator called" << _END << std::endl;
+	if (INFO)	
+		std::cout << _CYAN << " name : " << _name << " |  hitPoints : " << _hitPoints << " |  energyPoints : " \
+		<< _energyPoints << " |  attackDamage : " << _attackDamage << _END << std::endl;	
 	return *this;
 }
 

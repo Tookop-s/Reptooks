@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:22:25 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/09 16:14:40 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:00:02 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 # define CLAPTRAP_HPP
 
 #include <iostream>
+#include <string>
 #include "Format.hpp"
 
 #ifndef DEBUG
-# define DEBUG false
+# define DEBUG true
+# define INFO true
 #endif
 
 class ClapTrap {
@@ -33,11 +35,11 @@ class ClapTrap {
 		void        takeDamage( unsigned int amount );
 		void        beRepaired( unsigned int amount );
 
-	private:
-		std::string _name;
-		unsigned int _hitPoints;
-		unsigned int _energyPoints;
-		unsigned int _attackDamage;
+	protected:
+		std::string		_name;
+		unsigned int	_hitPoints;
+		unsigned int	_energyPoints;
+		unsigned int	_attackDamage;
 };
 
 
