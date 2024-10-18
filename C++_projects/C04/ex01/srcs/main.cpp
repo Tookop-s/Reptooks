@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:26:11 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 22:51:12 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/18 23:09:01 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,26 @@
 int main()
 {
 	Animal *animals[4];
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		animals[i] = new Dog();
-		animals[i + 2] = new Cat();
+		if (i % 2 == 0)
+		{
+			animals[i] = new Dog();
+			std::cout << std::endl;
+		}
+		else
+		{
+			animals[i] = new Cat();
+			std::cout << std::endl;
+		}
 	}
-	Animal *copy = animals[0];
-	delete copy;
+	
+	*animals[0] = *animals[2];
+	std::cout << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		delete animals[i];
+		std::cout << std::endl;
 	}
 	return 0;
 }

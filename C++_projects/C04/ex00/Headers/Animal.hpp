@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:15 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 14:53:06 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/18 23:10:57 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Animal {
 		Animal( void );
 		virtual ~Animal( void );
 		Animal( Animal const & src );
-		Animal & operator=( Animal const & rhs );
+		virtual Animal & operator=( Animal const & rhs );
 
 		virtual void makeSound( void ) const;
 		virtual std::string getType( void ) const;

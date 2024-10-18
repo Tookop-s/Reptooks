@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 22:17:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 22:48:21 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/18 23:02:22 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 #include <iostream>
 #include "Format.hpp"
 
-#define DEBUG true
+#ifndef DEBUG
+# define DEBUG true
+# define INFO true
+#endif
 
 class Brain
 {
