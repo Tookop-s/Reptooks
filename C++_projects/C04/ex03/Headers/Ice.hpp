@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.hpp                                          :+:      :+:    :+:   */
+/*   Ice.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 22:17:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:15:25 by anferre          ###   ########.fr       */
+/*   Created: 2024/10/21 15:11:59 by anferre           #+#    #+#             */
+/*   Updated: 2024/10/21 15:58:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BRAIN_HPP
-#define BRAIN_HPP
+#ifndef ICE_HPP
+#define ICE_HPP
 
-#include <iostream>
-#include "Format.hpp"
+#include "AMateria.hpp"
+#include "ICharacter.hpp"
 
-#ifndef DEBUG
-# define DEBUG true
-# define INFO true
-#endif
-
-class Brain
+class Ice : public AMateria
 {
 	public:
-	
-		Brain( void );
-		Brain(const Brain &src);
-		Brain &operator=(const Brain &rhs);
-		~Brain( void );
+		Ice();
+		Ice(Ice const & src);
+		Ice & operator=(Ice const & rhs);
+		virtual ~Ice();
 
-		void setIdea(std::string idea, int index);
-		std::string getIdea(int index) const;
-	
-		std::string ideas[100];
+		AMateria* clone() const;
+		void use(ICharacter& target);
 };
 
 #endif

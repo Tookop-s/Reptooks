@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:34:45 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 15:03:56 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:00:09 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ WrongCat::~WrongCat( void ) {
 WrongCat::WrongCat( WrongCat const & src ) {
 	if (DEBUG)
 		std::cout << _KAKI << "WrongCat copy constructor called" << _END << std::endl;
-	*this = src;
+	this->_type = src._type;
 }
 
 WrongCat& WrongCat::operator=( WrongCat const & rhs ) {

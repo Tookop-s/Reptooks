@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:30:46 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 15:01:43 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:00:01 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ WrongAnimal::~WrongAnimal( void ) {
 WrongAnimal::WrongAnimal( WrongAnimal const & src ) {
 	if (DEBUG)
 		std::cout << _BORDEAUX << "WrongAnimal copy constructor called" << _END << std::endl;
-	*this = src;
+	this->_type = src._type;
 }
 
 WrongAnimal& WrongAnimal::operator=( WrongAnimal const & rhs ) {

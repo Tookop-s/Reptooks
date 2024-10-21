@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:22:28 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/10 14:02:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 17:14:01 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ ClapTrap& ClapTrap::operator=(ClapTrap const & rhs){
 	return *this;
 }
 
-ClapTrap::~ClapTrap( void ){
+ClapTrap::~ClapTrap( void ) {
 	if (DEBUG)
 		std::cout << _GOLD << "ClapTrap destructor called" << _END << std::endl;
 }

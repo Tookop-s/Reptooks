@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:06 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 14:25:22 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 14:25:09 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "Format.hpp"
 #include "Brain.hpp"
 
-Dog::Dog( void ) {
+Dog::Dog( void ) : AAnimal() {
 	if (DEBUG)
 		std::cout << _GOLD << "Dog default constructor called" << _END << std::endl;
 	this->_brain = new Brain();
 	this->_type = "Dog";
 }
 
-Dog::Dog( Dog const & src ) : Animal(src) {
+Dog::Dog( Dog const & src ) : AAnimal(src) {
 	if (DEBUG)
 		std::cout << _GOLD << "Dog copy constructor called" << _END << std::endl;
 	this->_type = src._type;
@@ -33,7 +33,7 @@ Dog& Dog::operator=( Dog const & rhs ) {
 		return *this;
 	if (DEBUG)
 		std::cout << _GOLD << "Dog assignement operator called" << _END << std::endl;
-	Animal::operator=(rhs);
+	AAnimal::operator=(rhs);
 	this->_type = rhs._type;
 	if (this->_brain)
 		delete this->_brain;

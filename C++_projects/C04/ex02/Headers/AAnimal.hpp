@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   AAnimal.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 14:00:18 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:19:48 by anferre          ###   ########.fr       */
+/*   Created: 2024/10/18 14:00:15 by anferre           #+#    #+#             */
+/*   Updated: 2024/10/21 14:22:17 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAT_HPP
-# define CAT_HPP
+#ifndef ANIMAL_HPP
+# define ANIMAL_HPP
 
 #include <iostream>
-#include "Animal.hpp"
-#include "Brain.hpp"
 
-class Cat : public Animal {
-	
+#ifndef DEBUG
+# define DEBUG true
+# define INFO true
+#endif
+
+class AAnimal {
+
 	public : 
-		Cat( void );
-		~Cat( void );
-		Cat( Cat const & src );
-		Cat & operator=( Cat const & rhs );
+	
+		AAnimal( void );
+		AAnimal( AAnimal const & src );
+		AAnimal & operator=( AAnimal const & rhs );
+		virtual ~AAnimal( void );
 
-		void makeSound( void ) const;
-		std::string getType( void ) const;
-		void setIdea(std::string idea, int index);
-		std::string getIdea(int index) const;
-	protected :
+		virtual void makeSound( void ) const = 0;
+		virtual std::string getType( void ) const = 0;
+
+	protected : 
+
 		std::string _type;
-	private : 
-		Brain* _brain;
 };
+
+
 
 #endif

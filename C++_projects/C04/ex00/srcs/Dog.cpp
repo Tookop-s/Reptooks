@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:06 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 14:57:24 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 14:25:31 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Dog::~Dog( void ) {
 Dog::Dog( Dog const & src ) {
 	if (DEBUG)
 		std::cout << _GOLD << "Dog copy constructor called" << _END << std::endl;
-	*this = src;
+	this->_type = src._type;
 }
 
 Dog& Dog::operator=( Dog const & rhs ) {
@@ -40,7 +40,7 @@ Dog& Dog::operator=( Dog const & rhs ) {
 }
 
 void Dog::makeSound( void ) const {
-	std::cout << _GOLD << "Dog bark" << _END << std::endl;
+	std::cout << _GOLD << "Dog waf" << _END << std::endl;
 }
 
 

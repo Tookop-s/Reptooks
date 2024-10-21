@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 14:56:11 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:59:18 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Animal::~Animal( void ) {
 Animal::Animal( Animal const & src ) {
 	if (DEBUG)
 		std::cout << _BROWN << "Animal copy constructor called" << _END << std::endl;
-	*this = src;
+	this->_type = src._type;
 }
 
 Animal& Animal::operator=( Animal const & rhs ) {

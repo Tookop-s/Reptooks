@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:11 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 22:43:48 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:45:30 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ Cat::Cat( void ) : Animal() {
 Cat::Cat( Cat const & src ) : Animal(src) {
 	if (DEBUG)
 		std::cout << _ORANGE << "Cat copy constructor called" << _END << std::endl;
-	*this = src;
+	this->_type = src._type;
+	this->_brain = new Brain(*src._brain);
 }
 
 Cat& Cat::operator=( Cat const & rhs ) {
@@ -52,4 +53,15 @@ void Cat::makeSound( void ) const {
 
 std::string Cat::getType( void ) const {
 	return this->_type;
+}
+
+void Cat::setIdea(std::string idea, int index) {
+	if (this->_brain)
+		this->_brain->setIdea(idea, index);
+}
+
+std::string Cat::getIdea(int index) const {
+	if (this->_brain)
+		return this->_brain->getIdea(index);
+	return "No brain";
 }

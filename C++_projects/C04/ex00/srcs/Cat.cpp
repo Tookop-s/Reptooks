@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:11 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 14:59:27 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:59:41 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Cat::~Cat( void ) {
 Cat::Cat( Cat const & src ) {
 	if (DEBUG)
 		std::cout << _ORANGE << "Cat copy constructor called" << _END << std::endl;
-	*this = src;
+	this->_type = src._type;
 }
 
 Cat& Cat::operator=( Cat const & rhs ) {

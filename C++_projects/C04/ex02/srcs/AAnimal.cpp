@@ -1,48 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.cpp                                         :+:      :+:    :+:   */
+/*   AAnimal.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:58:17 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 15:04:15 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Format.hpp"
 
-Animal::Animal( void ) {
+AAnimal::AAnimal( void ) {
 	if (DEBUG)
-		std::cout << _BROWN << "Animal default constructor called" << _END << std::endl;
-	this->_type = "Animal";
+		std::cout << _BROWN << "AAnimal default constructor called" << _END << std::endl;
+	this->_type = "AAnimal";
 }
 
-Animal::~Animal( void ) {
+AAnimal::AAnimal( AAnimal const & src ) {
 	if (DEBUG)
-		std::cout << _BROWN << "Animal default destructor called" << _END << std::endl;
-}
-
-Animal::Animal( Animal const & src ) {
-	if (DEBUG)
-		std::cout << _BROWN << "Animal copy constructor called" << _END << std::endl;
+		std::cout << _BROWN << "AAnimal copy constructor called" << _END << std::endl;
 	this->_type = src._type;
 }
 
-Animal& Animal::operator=( Animal const & rhs ) {
+AAnimal& AAnimal::operator=( AAnimal const & rhs ) {
 	if (this == &rhs)
 		return *this;
 	if (DEBUG)
-		std::cout << _BROWN << "Animal assignement operator called" << _END << std::endl;
+		std::cout << _BROWN << "AAnimal assignement operator called" << _END << std::endl;
 	this->_type = rhs._type;
 	return *this;
 }
 
-std::string Animal::getType( void ) const {
-	return this->_type;
-}
-
-void Animal::makeSound( void ) const {
-	std::cout << _BROWN << "Animal makes a sound" << _END << std::endl;
+AAnimal::~AAnimal( void ) {
+	if (DEBUG)
+		std::cout << _BROWN << "AAnimal default destructor called" << _END << std::endl;
 }

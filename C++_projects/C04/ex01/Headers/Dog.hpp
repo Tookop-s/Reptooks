@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:20 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 22:26:07 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:21:12 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ class Dog : public Animal {
 
 		void makeSound(void) const;
 		std::string getType(void) const;
+		void setIdea(std::string idea, int index);
+		std::string getIdea(int index) const;
 
 	protected:
 		std::string _type;

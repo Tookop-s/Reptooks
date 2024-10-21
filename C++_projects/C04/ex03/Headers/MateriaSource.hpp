@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.hpp                                          :+:      :+:    :+:   */
+/*   MateriaSource.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 22:17:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:15:25 by anferre          ###   ########.fr       */
+/*   Created: 2024/10/21 16:06:47 by anferre           #+#    #+#             */
+/*   Updated: 2024/10/21 16:55:23 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BRAIN_HPP
-#define BRAIN_HPP
+#ifndef MATERIASOURCE_HPP
+# define MATERIASOURCE_HPP
 
-#include <iostream>
-#include "Format.hpp"
+#include "IMateriaSource.hpp"
 
-#ifndef DEBUG
-# define DEBUG true
-# define INFO true
-#endif
-
-class Brain
+class MateriaSource : public IMateriaSource
 {
-	public:
-	
-		Brain( void );
-		Brain(const Brain &src);
-		Brain &operator=(const Brain &rhs);
-		~Brain( void );
-
-		void setIdea(std::string idea, int index);
-		std::string getIdea(int index) const;
-	
-		std::string ideas[100];
+	protected :
+		AMateria*	_inventory[4];
+	public : 
+		MateriaSource();
+		MateriaSource(MateriaSource const & src);
+		MateriaSource & operator=(MateriaSource const & rhs);
+		~MateriaSource();
+		
+		void learnMateria(AMateria*);
+		AMateria* createMateria(std::string const & type);
 };
 
 #endif
