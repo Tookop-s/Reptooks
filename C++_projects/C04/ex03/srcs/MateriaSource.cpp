@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:32:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 17:47:24 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/22 00:09:14 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void MateriaSource::learnMateria(AMateria* m)
 			return ;
 		}
 	}
-	std::cout << "Inventory is full" << std::endl;
+	std::cout << _BOLD _RED << "Inventory is full" << _END << std::endl;
 }
 
 AMateria* MateriaSource::createMateria(std::string const & type)
