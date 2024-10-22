@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:43:52 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 17:52:34 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/22 15:13:57 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ Character::~Character()
 	for (int i = 0; i < 4; i++)
 	{
 		if (this->_inventory[i])
-		{
 			delete this->_inventory[i];
-			std::cout << "Materia deleted " << i << std::endl;
-		}
 	}
 }
 
@@ -80,19 +77,31 @@ void Character::equip(AMateria* m)
 			return ;
 		}
 	}
-	std::cout << "Inventory full" << std::endl;
+	std::cout << _BOLD _RED << "Inventory full" << _END << std::endl;
 }
 
 void Character::unequip(int idx)
 {
-	if (idx < 0 || idx >= 4 || !this->_inventory[idx])
+	if (idx < 0 || idx >= 4)
 		return ;
-	this->_inventory[idx] = NULL; // need to save the address of the materia to delete it later on 
+	if (this->_inventory[idx] == NULL)
+	{
+		std::cout << _BOLD _RED << "No materia to unequip" << _END << std::endl;
+		return ;
+	}
+	else
+		this->_inventory[idx] = NULL; // need to save the address of the materia to delete it later on 
 }
 
 void Character::use(int idx, ICharacter& target)
 {
 	if (idx < 0 || idx >= 4 || !this->_inventory[idx])
+	{
+		if (idx < 0 || idx >= 4)
+			std::cout << _BOLD _RED << "Index out of range" << _END << std::endl;
+		else
+			std::cout << _BOLD _RED << "No materia to use" << _END << std::endl;
 		return ;
+	}
 	this->_inventory[idx]->use(target);
 }

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:32:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/22 00:09:14 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:58:30 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ MateriaSource::~MateriaSource()
 	for (int i = 0; i < 4; i++)
 	{
 		if (_inventory[i])
-		{
 			delete _inventory[i];
-			std::cout << _DARKGREY << "Deleted " << i << _END << std::endl;	
-		}
 	}
 }
 
@@ -72,7 +69,6 @@ void MateriaSource::learnMateria(AMateria* m)
 		if (!_inventory[i])
 		{
 			_inventory[i] = m;
-			std::cout << _DARKGREY << "Learned " << m->getType() << _END << std::endl;
 			return ;
 		}
 	}
@@ -86,5 +82,6 @@ AMateria* MateriaSource::createMateria(std::string const & type)
 		if (_inventory[i] && _inventory[i]->getType() == type)
 			return _inventory[i]->clone();
 	}
+	std::cout << _BOLD _RED << "Materia not found" << _END << std::endl;
 	return 0;
 }
