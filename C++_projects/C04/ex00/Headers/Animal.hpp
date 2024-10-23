@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:15 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 23:10:57 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:28:52 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@
 
 #ifndef DEBUG
 # define DEBUG true
-# define INFO true
 #endif
 
 class Animal {
 
 	public : 
-	
 		Animal( void );
 		virtual ~Animal( void );
 		Animal( Animal const & src );
@@ -33,10 +31,7 @@ class Animal {
 		virtual std::string getType( void ) const;
 
 	protected : 
-
 		std::string _type;
 };
-
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:06 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 14:25:22 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:34:39 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ Dog& Dog::operator=( Dog const & rhs ) {
 }
 
 Dog::~Dog( void ) {
-	delete this->_brain;
+	if (this->_brain)
+		delete this->_brain;
 	if (DEBUG)
 		std::cout << _GOLD << "Dog default destructor called" << _END << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:18 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:19:48 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:35:44 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ class Cat : public Animal {
 		std::string getType( void ) const;
 		void setIdea(std::string idea, int index);
 		std::string getIdea(int index) const;
+		
 	protected :
 		std::string _type;
+		
 	private : 
 		Brain* _brain;
 };

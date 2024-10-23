@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 22:17:14 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:15:25 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:36:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ class Brain
 
 		void setIdea(std::string idea, int index);
 		std::string getIdea(int index) const;
-	
+		
+	protected:
 		std::string ideas[100];
 };
 

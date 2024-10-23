@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:11 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 12:59:41 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:31:33 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ Cat& Cat::operator=( Cat const & rhs ) {
 }
 
 void Cat::makeSound( void ) const {
-	std::cout << _ORANGE << "Cat meow" << _END << std::endl;
+	std::cout << _ORANGE << "Meow" << _END << std::endl;
 }
 
 std::string Cat::getType( void ) const {

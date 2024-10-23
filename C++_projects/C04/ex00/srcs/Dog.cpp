@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:06 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 14:25:31 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:31:29 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ Dog& Dog::operator=( Dog const & rhs ) {
 }
 
 void Dog::makeSound( void ) const {
-	std::cout << _GOLD << "Dog waf" << _END << std::endl;
+	std::cout << _GOLD << "Waf" << _END << std::endl;
 }
 
 

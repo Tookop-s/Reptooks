@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 22:17:26 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:53:46 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:40:40 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void Brain::setIdea(std::string idea, int index)
 {
 	if (index >= 0 && index < 100)
 		this->ideas[index] = idea;
+	else
+		std::cout << "Index out of bounds" << std::endl;
 }
 
 std::string Brain::getIdea(int index) const

@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:11 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 13:45:30 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:34:45 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ Cat& Cat::operator=( Cat const & rhs ) {
 }
 
 Cat::~Cat( void ) {
-	delete this->_brain;
+	if (this->_brain)
+		delete this->_brain;
 	if (DEBUG)
 		std::cout << _ORANGE << "Cat default destructor called" << _END << std::endl;
 }

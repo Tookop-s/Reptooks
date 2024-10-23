@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:00:18 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 14:51:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:32:48 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 class Cat : public Animal {
 	
 	public : 
-	
 		Cat( void );
 		~Cat( void );
 		Cat( Cat const & src );
@@ -28,8 +27,7 @@ class Cat : public Animal {
 		void makeSound( void ) const;
 		std::string getType( void ) const;
 
-	protected : 
-
+	protected :
 		std::string _type;
 };
 

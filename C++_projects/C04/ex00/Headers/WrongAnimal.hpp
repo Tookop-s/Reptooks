@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:31:01 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/18 14:52:53 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:32:44 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 class WrongAnimal {
 	
 	public : 
-	
 		WrongAnimal( void );
 		virtual ~WrongAnimal( void );
 		WrongAnimal( WrongAnimal const & src );
@@ -33,7 +32,6 @@ class WrongAnimal {
 		std::string getType( void ) const;
 
 	protected : 
-
 		std::string _type;
 };
 

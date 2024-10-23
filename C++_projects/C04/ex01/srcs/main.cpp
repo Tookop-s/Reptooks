@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:26:11 by anferre           #+#    #+#             */
-/*   Updated: 2024/10/21 14:00:02 by anferre          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:43:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void testcopyassign() {
 
 	cat.setIdea("chase the dog", 0);
 	std::cout << _BOLD << _RED << "Cat modified idea: " << cat.getIdea(0) << _END << std::endl;
-	std::cout << _BOLD << _RED << "Cat2 idea (should be chase the mouse) :  " << cat2.getIdea(0) << _END << std::endl
-			  << std::endl;
+	std::cout << _BOLD << _RED << "Cat2 idea (should be chase the mouse) :  " << cat2.getIdea(0) << _END << std::endl;
+	cat.setIdea("sleep", -1); // out of bounds
+	cat.setIdea("sleep", 100); // out of bounds
+	std::cout << std::endl;
 }
 
 int main()
