@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:40:09 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:20:23 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:08:04 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ const char *AForm::AFormAlreadySignedException::what() const throw()
 	return "Form is already signed";
 }
 
+const char *AForm::AFormNotSignedException::what() const throw()
+{
+	return "Form is not signed";
+}
+
 std::string AForm::getName() const
 {
 	return this->_name;
@@ -90,7 +95,7 @@ int AForm::getGradeToExecute() const
 void AForm::beSigned(Bureaucrat &bureaucrat)
 {
 	if (this->_signed)
-		throw AForm::FormAlreadySignedException();
+		throw AForm::AFormAlreadySignedException();
 	if (bureaucrat.getGrade() <= _gradeToSign)
 		this->_signed = true;
 	else

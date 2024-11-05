@@ -6,12 +6,12 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:16:54 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:27:29 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:06:34 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat() : _name("Default"), _grade(150)
 {
@@ -96,7 +96,7 @@ std::ostream &operator<<(std::ostream &o, Bureaucrat const &rhs)
 	return o;
 }
 
-void Bureaucrat::signForm(Form &form)
+void Bureaucrat::signForm(AForm &form)
 {
 	if (form.getSigned())
 		std::cout << _BLUE << getName() << _END << " signed " << _BLUE << form.getName() << _END << std::endl;
@@ -111,10 +111,15 @@ void Bureaucrat::signForm(Form &form)
 		
 }
 
-void Bureaucrat::executeForm(Form const &form)
+void Bureaucrat::executeForm(AForm const &form)
 {
-	if (AForm::execute(form))
-		std::cout << _BLUE << getName() << _END << " executed " << _BLUE << form.getName() << _END << std::endl;
-	else 
+	try
+	{
+		if (form.execute(*this))
+			std::cout << _BLUE << getName() << _END << " executed " << _BLUE << form.getName() << _END << std::endl;
+	}
+	catch (std::exception &e)
+	{
 		throw Bureaucrat::CantExecuteFormException();
+	}
 }

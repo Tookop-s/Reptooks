@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:34:01 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:49:42 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:42:39 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,17 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(PresidentialPardonForm
 	return (*this);
 }
 
+std::string PresidentialPardonForm::getTarget() const
+{
+	return (this->_target);
+}
+
 bool PresidentialPardonForm::execute(Bureaucrat const &executor) const
 {
 	if (executor.getGrade() > this->getGradeToExecute())
 		throw AForm::GradeTooLowException();
 	if (!this->getSigned())
-		throw AForm::FormNotSignedException();
+		throw AForm::AFormNotSignedException();
 	std::cout << this->_target << " has been pardoned by Zafod Beeblebrox" << std::endl;
 	return (true);
 }

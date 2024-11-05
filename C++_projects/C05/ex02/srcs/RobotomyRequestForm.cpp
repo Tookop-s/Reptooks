@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:45:46 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:49:38 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:42:45 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,21 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(RobotomyRequestForm const &c
 	return (*this);
 }
 
+std::string RobotomyRequestForm::getTarget() const
+{
+	return (this->_target);
+}
+
 bool RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
 	if (executor.getGrade() > this->getGradeToExecute())
 		throw AForm::GradeTooLowException();
 	if (!this->getSigned())
-		throw AForm::FormNotSignedException();
+		throw AForm::AFormNotSignedException();
 	std::cout << "*drilling noises*" << std::endl;
 	if (rand() % 2)
 		std::cout << _BLUE << this->_target << _END << " has been robotomized successfully" << std::endl;
 	else
 		std::cout << _BLUE << this->_target << _END << " robotomization failed" << std::endl;
+	return (true);
 }

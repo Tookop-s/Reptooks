@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*    ShrubberyCreationForm.cpp                         :+:      :+:    :+:   */
+/*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:37:29 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:53:45 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:42:58 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,68 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm co
 	return (*this);
 }
 
-bool ShrubberyCreationForm::execute(Bureaucrat const &executor) const
+//store the error message in a string and return it in the what() function
+ShrubberyCreationForm::FileNotOpenException::FileNotOpenException(std::string filename) : _msg("Error: Could not open file " + filename)
 {
-	if (executor.getGrade() > this->getGradeToExecute())
-		throw AForm::GradeTooLowException();
-	if (!this->getSigned())
-		throw AForm::FormNotSignedException();
-	std::ofstream file;
-	file.open(this->_target + "_shrubbery");
-	if (!file.is_open())
+}
+
+//store the error message in a string and return it in the what() function
+ShrubberyCreationForm::FileAlreadyExistsException::FileAlreadyExistsException(std::string filename) : _msg("Error: File " + filename + " already exists")
+{
+}
+
+const char* ShrubberyCreationForm::FileNotOpenException::what() const throw()
+{
+	return (_msg.c_str());
+}
+
+const char* ShrubberyCreationForm::FileAlreadyExistsException::what() const throw()
+{
+	return (_msg.c_str());
+}
+
+ShrubberyCreationForm::FileNotOpenException::~FileNotOpenException() throw()
+{
+}
+
+ShrubberyCreationForm::FileAlreadyExistsException::~FileAlreadyExistsException() throw()
+{
+}
+
+std::string ShrubberyCreationForm::getTarget() const
+{
+	return (this->_target);
+}
+
+bool copyFile(std::string filename)
+{
+	std::ifstream existingFile(filename.c_str());
+	if (existingFile.is_open())
 	{
-		std::cerr << "Error: Could not open file " << target << "_shrubbery" << std::endl;
-		return (false);
+		existingFile.close();
+		throw ShrubberyCreationForm::FileAlreadyExistsException(filename);
 	}
+	std::ofstream file(filename.c_str());
+	if (!file.is_open())
+		throw ShrubberyCreationForm::FileNotOpenException(filename);
 	file << "   *       *       *   " << std::endl;
-    file << "  ***     ***     ***  " << std::endl;
-    file << " *****   *****   ***** " << std::endl;
+	file << "  ***     ***     ***  " << std::endl;
+	file << " *****   *****   ***** " << std::endl;
     file << "******* ******* *******" << std::endl;
     file << "   |       |       |   " << std::endl;
 	file.close();
+	return (true);
+}
+
+bool ShrubberyCreationForm::execute(Bureaucrat const &executor) const
+{
+	std::string filename = this->_target + "_shrubbery";
+
+	if (executor.getGrade() > this->getGradeToExecute())
+		throw AForm::GradeTooLowException();
+	if (!this->getSigned())
+		throw AForm::AFormNotSignedException();
+	if (!copyFile(filename))
+		return (false);
 	return (true);
 }

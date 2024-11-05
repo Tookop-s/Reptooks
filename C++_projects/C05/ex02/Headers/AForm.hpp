@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:29:05 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:23:44 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:03:14 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,22 @@ class AForm
 				virtual const char* what() const throw();
 		};
 
-		class FormAlreadySignedException: public std::exception {
+		class AFormAlreadySignedException: public std::exception {
 			public : 
 				virtual const char* what() const throw();
 		};
 
-		class FormNotSignedException: public std::exception {
+		class AFormNotSignedException: public std::exception {
 			public : 
 				virtual const char* what() const throw();
 		};
-
-		
 
 		std::string getName() const;
 		bool getSigned() const;
 		int getGradeToSign() const;
 		int getGradeToExecute() const;
-		virtual void beSigned(Bureaucrat &bureaucrat);
-		virtual bool execute(Bureaucrat const &executor) const;
+		void beSigned(Bureaucrat &bureaucrat);
+		virtual bool execute(Bureaucrat const &executor) const = 0;
 };
 
 std::ostream &operator<<(std::ostream &o, AForm const &rhs);

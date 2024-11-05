@@ -6,11 +6,11 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/11/04 15:28:08 by anferre          ###   ########.fr        #
+#    Updated: 2024/11/05 13:37:48 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = BureaucratForm
+NAME = Forms
 
 CXX = c++
 
@@ -20,7 +20,7 @@ CFLAGSX = -Wall -Wextra -Werror -g3 -std=c++98 $(INCLUDE_DIR)
 RM = rm -rf
 
 SRCS_DIR = srcs
-SRCS_FILES = main.cpp Bureaucrat.cpp Form.cpp
+SRCS_FILES = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
 OBJ_DIR = objs

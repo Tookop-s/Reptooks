@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:29:15 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:53:35 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:42:22 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class PresidentialPardonForm : public AForm
 {
 	private :
-		std::string const	_target;
+		std::string	_target;
 
 	public :
 		PresidentialPardonForm();
@@ -28,6 +28,7 @@ class PresidentialPardonForm : public AForm
 
 		PresidentialPardonForm &operator=(PresidentialPardonForm const &copy);
 
+		std::string getTarget() const;
 		bool execute(Bureaucrat const &executor) const;
 };
 
