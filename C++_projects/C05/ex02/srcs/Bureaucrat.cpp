@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:16:54 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/05 13:06:34 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:31:07 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,15 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 
 const char *Bureaucrat::CantExecuteFormException::what() const throw()
 {
-	return "Bureaucrat can't execute the form";
+	return _msg.c_str();
+}
+
+Bureaucrat::CantExecuteFormException::CantExecuteFormException(const std::string &msg) : _msg("Bureaucrat can't execute the form : " + msg)
+{
+}
+
+Bureaucrat::CantExecuteFormException::~CantExecuteFormException() throw()
+{
 }
 
 std::string Bureaucrat::getName() const
@@ -120,6 +128,6 @@ void Bureaucrat::executeForm(AForm const &form)
 	}
 	catch (std::exception &e)
 	{
-		throw Bureaucrat::CantExecuteFormException();
+		throw Bureaucrat::CantExecuteFormException(e.what());
 	}
 }

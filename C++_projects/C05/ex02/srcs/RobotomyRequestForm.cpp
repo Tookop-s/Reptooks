@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:45:46 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/05 13:42:45 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:30:24 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool RobotomyRequestForm::execute(Bureaucrat const &executor) const
 		throw AForm::GradeTooLowException();
 	if (!this->getSigned())
 		throw AForm::AFormNotSignedException();
-	std::cout << "*drilling noises*" << std::endl;
+	std::cout << _BORDEAUX << "*drilling noises*" << _END << std::endl;
 	if (rand() % 2)
 		std::cout << _BLUE << this->_target << _END << " has been robotomized successfully" << std::endl;
 	else

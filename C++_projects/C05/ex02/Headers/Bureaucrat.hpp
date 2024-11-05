@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:16:51 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/04 16:25:10 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:25:00 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ class Bureaucrat
 		};
 		
 		class CantExecuteFormException: public std::exception {
+			private : 
+				std::string _msg;
 			public : 
+				CantExecuteFormException(const std::string &msg);
+				virtual ~CantExecuteFormException() throw();
 				virtual const char* what() const throw();
 		};
 		

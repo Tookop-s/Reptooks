@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:16:28 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/05 13:45:02 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:31:27 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void testSignedGradeShrubberyCreationForm()
 	//testing beSigned, execute and executeForm + beSigned grade too low exception
 	try
 	{
-		std::cout << _GREEN << "ShrubberyCreationForm" << _END << std::endl;
 		ShrubberyCreationForm f1("F1");
 		Bureaucrat b1("B1", 1);
 		Bureaucrat b2("B2", 146);
@@ -73,7 +72,6 @@ void testSignedGradeShrubberyCreationForm()
 		std::cout << _BLUE << f1.getName() << _END << " signed is : " << _BLUE << (f1.getSigned() ? "true" : "false") << _END << std::endl;
 		
 		f1.beSigned(b1);
-		f1.execute(b1);
 		b1.executeForm(f1);
 		
 		std::cout << _BLUE << f1.getName() << _END << " signed is : " << _BLUE << (f1.getSigned() ? "true" : "false") << _END << std::endl;
@@ -84,6 +82,7 @@ void testSignedGradeShrubberyCreationForm()
 	{
 		std::cout << _RED << e.what() << _END << std::endl;
 	}
+	std::cout << std::endl;
 	// testing execute grade too low exception
 	try
 	{
@@ -93,12 +92,16 @@ void testSignedGradeShrubberyCreationForm()
 		std::cout << _BLUE << f1.getName() << _END << " signed is : " << _BLUE << (f1.getSigned() ? "true" : "false") << _END << std::endl;
 
 		f1.beSigned(b1);
+		
+		std::cout << _BLUE << f1.getName() << _END << " signed is : " << _BLUE << (f1.getSigned() ? "true" : "false") << _END << std::endl;
+		
 		f1.execute(b1);
 	}
 	catch (std::exception &e)
 	{
 		std::cout << _RED << e.what() << _END << std::endl;
 	}
+	std::cout << std::endl;
 	//testing file already exists exception
 	try
 	{
@@ -108,7 +111,10 @@ void testSignedGradeShrubberyCreationForm()
 		std::cout << _BLUE << f1.getName() << _END << " signed is : " << _BLUE << (f1.getSigned() ? "true" : "false") << _END << std::endl;
 
 		f1.beSigned(b1);
-		f1.execute(b1);
+		
+		std::cout << _BLUE << f1.getName() << _END << " signed is : " << _BLUE << (f1.getSigned() ? "true" : "false") << _END << std::endl;
+		
+		b1.executeForm(f1);
 	}
 	catch (std::exception &e)
 	{
@@ -121,7 +127,6 @@ void testSignedGradeRobotomyRequestForm()
 	//testing beSigned, execute and executeForm + beSigned grade too low exception
 	try 
 	{
-		std::cout << _GREEN << "RobotomyRequestForm" << _END << std::endl;
 		RobotomyRequestForm f2("F2");
 		Bureaucrat b1("B1", 1);
 		Bureaucrat b2("B2", 73);
@@ -129,6 +134,9 @@ void testSignedGradeRobotomyRequestForm()
 		std::cout << _BLUE << f2.getName() << _END << " signed is : " << _BLUE << (f2.getSigned() ? "true" : "false") << _END << std::endl;
 		
 		f2.beSigned(b1);
+
+		std::cout << _BLUE << f2.getName() << _END << " signed is : " << _BLUE << (f2.getSigned() ? "true" : "false") << _END << std::endl;
+		
 		f2.execute(b1);
 		b1.executeForm(f2);
 		f2.execute(b1);
@@ -141,6 +149,7 @@ void testSignedGradeRobotomyRequestForm()
 	{
 		std::cout << _RED << e.what() << _END << std::endl;
 	}
+	std::cout << std::endl;
 	//execute no sign exception and Bureaucrat executeForm exception
 	try
 	{
@@ -162,7 +171,6 @@ void testSignedGradePresidentialPardonForm()
 		//regular cases PresidentialPardonForm beSigned, executeForm + beSigned exception
 	try
 	{
-		std::cout << _GREEN << "PresidentialPardonForm" << _END << std::endl;
 		PresidentialPardonForm f3("F3");
 		Bureaucrat b1("B1", 1);
 		Bureaucrat b2("B2", 26);
@@ -170,6 +178,9 @@ void testSignedGradePresidentialPardonForm()
 		std::cout << _BLUE << f3.getName() << _END << " signed is : " << _BLUE << (f3.getSigned() ? "true" : "false") << _END << std::endl;
 
 		f3.beSigned(b1);
+
+		std::cout << _BLUE << f3.getName() << _END << " signed is : " << _BLUE << (f3.getSigned() ? "true" : "false") << _END << std::endl;
+
 		b1.executeForm(f3);
 		
 		
