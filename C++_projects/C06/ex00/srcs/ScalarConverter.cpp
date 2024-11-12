@@ -6,12 +6,13 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:34:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/12 17:41:08 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/12 17:48:34 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 #include <sstream>
+#include <cstdlib>
 #include <iomanip>
 #include <limits>
 #include <string>
@@ -139,6 +140,7 @@ static bool convertPseudoLiterals(const std::string &input)
 static void convertChar(const std::string &input)
 {
 	char c = input[0];
+	char c = input[0];
 	if (std::isprint(static_cast<int>(c)))
 		std::cout << "char: '" << c << "'" << std::endl;
 	else
@@ -181,7 +183,23 @@ static void convertFloat(const std::string &input)
 		std::cout << static_cast<int>(f) << std::endl;
 	else
 		std::cout << "impossible" << std::endl;
-	std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
+	std::cout << "float: ";
+	if (input == "-0.0")
+	{
+		std::cout << "float: -0.0f" << std::endl;
+	}
+	else if (input == "0.0")
+	{
+		std::cout << "float: 0.0f" << std::endl;
+	}
+	else if (f >= std::numeric_limits<float>::min() && f <= std::numeric_limits<float>::max())
+		std::cout << std::fixed << std::setprecision(1) << static_cast<float>(f) << "f" << std::endl;
+	else if (f > std::numeric_limits<float>::max())
+		std::cout << "+inff" << std::endl;
+	else if (f < -std::numeric_limits<float>::max())
+		std::cout << "-inff" << std::endl;
+	else
+		std::cout << "impossible" << std::endl;
 	std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(f) << std::endl;
 }
 
@@ -239,6 +257,8 @@ void ScalarConverter::convert(std::string input)
 {
 	if (convertPseudoLiterals(input))
 		return;
+	if (input.size() == 1 && !std::isdigit(input[0]))
+	{
 	if (input.size() == 1 && !std::isdigit(input[0]))
 	{
 		convertChar(input);

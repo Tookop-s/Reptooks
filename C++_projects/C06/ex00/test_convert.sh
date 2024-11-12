@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/11 17:20:37 by anferre           #+#    #+#              #
-#    Updated: 2024/11/12 17:34:50 by anferre          ###   ########.fr        #
+#    Updated: 2024/11/12 17:48:59 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,11 @@ declare -a tests=(
     "42"            # Integer input
     "43.0"          # Double input
     "44.0f"         # Float input with 'f' suffix
+    "a"           # Character input
+	" "			# Space character
+	$'\t'			# Tab character
+    "42.0"          # Double input
+    "42.0f"         # Float input with 'f' suffix
     "a"           # Character input
 	" "			# Space character
 	$'\t'			# Tab character
