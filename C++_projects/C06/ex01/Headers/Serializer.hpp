@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Serializer.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 16:53:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/12 11:13:28 by anferre          ###   ########.fr       */
+/*   Created: 2024/11/11 15:34:50 by anferre           #+#    #+#             */
+/*   Updated: 2024/11/12 12:12:07 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScalarConverter.hpp"
+#ifndef SERIALIZER_HPP
+# define SERIALIZER_HPP
 
+#include "Data.hpp"
+#include <iostream>
+#include <stdint.h>
 
-int main(int argc, char **argv)
+class Serializer
 {
-	if (argc != 2)
-	{
-		std::cout << "Usage: ./convert [input]" << std::endl;
-		return 1;
-	}
-	ScalarConverter::convert(argv[1]);
-	return 0;
-}
+	private:
+		Serializer();
+		Serializer(Serializer const &copy);
+		Serializer &operator=(Serializer const &rhs);
+		~Serializer();
+	
+	public:
+
+		static uintptr_t    serialize(Data *ptr);
+		static Data    *deserialize(uintptr_t raw);
+};
+
+#endif

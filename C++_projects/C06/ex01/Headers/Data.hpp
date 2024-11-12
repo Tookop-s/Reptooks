@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Data.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 16:53:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/12 11:13:28 by anferre          ###   ########.fr       */
+/*   Created: 2024/11/12 12:05:50 by anferre           #+#    #+#             */
+/*   Updated: 2024/11/12 12:06:10 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScalarConverter.hpp"
+#ifndef DATA_HPP
+# define DATA_HPP
 
+#include <iostream>
 
-int main(int argc, char **argv)
+struct Data
 {
-	if (argc != 2)
-	{
-		std::cout << "Usage: ./convert [input]" << std::endl;
-		return 1;
-	}
-	ScalarConverter::convert(argv[1]);
-	return 0;
-}
+	std::string s1;
+	int n;
+};
+
+#endif

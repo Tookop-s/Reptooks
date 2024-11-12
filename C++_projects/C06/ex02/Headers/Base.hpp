@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 16:53:53 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/12 11:13:28 by anferre          ###   ########.fr       */
+/*   Created: 2024/11/12 13:24:55 by anferre           #+#    #+#             */
+/*   Updated: 2024/11/12 14:13:39 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScalarConverter.hpp"
+#ifndef BASE_HPP
+# define BASE_HPP
 
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include "Format.hpp"
 
-int main(int argc, char **argv)
+class Base
 {
-	if (argc != 2)
-	{
-		std::cout << "Usage: ./convert [input]" << std::endl;
-		return 1;
-	}
-	ScalarConverter::convert(argv[1]);
-	return 0;
-}
+	public:
+		virtual ~Base() {};
+};
+
+
+class A : public Base {};
+
+class B : public Base {};
+
+class C : public Base {};
+
+Base *generate(void);
+void identify(Base* p);
+void identify(Base& p);
+
+#endif

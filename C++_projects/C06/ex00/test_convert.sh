@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/11 17:20:37 by anferre           #+#    #+#              #
-#    Updated: 2024/11/11 17:27:40 by anferre          ###   ########.fr        #
+#    Updated: 2024/11/12 11:22:22 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,13 @@
 # Define the path to the executable
 EXEC="./convert"
 
-# List of test cases
 declare -a tests=(
     "42"            # Integer input
     "42.0"          # Double input
     "42.0f"         # Float input with 'f' suffix
     "'a'"           # Character input
+	"' '"			# Space character
+	"'\t'"			# Tab character
     "nan"           # Pseudo-literal for double
     "nanf"          # Pseudo-literal for float
     "+inf"          # Positive infinity for double
@@ -53,7 +54,6 @@ declare -a tests=(
     "non-numeric"   # Invalid input
 )
 
-# Loop through each test case
 for input in "${tests[@]}"; do
     echo "Testing input: $input"
     $EXEC "$input"

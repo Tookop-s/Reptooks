@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:34:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/11 17:16:52 by anferre          ###   ########.fr       */
+/*   Updated: 2024/11/12 13:57:03 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ static bool convertPseudoLiterals(const std::string &input)
 	return false;
 }
 
-static void convertChar(const std::string& input) 
+static void convertChar(const std::string &input)
 {
 	char c = input[1];
-	std::cout << "char: " << c << std::endl;
+	if (std::isprint(static_cast<int>(c)))
+		std::cout << "char: '" << c << "'" << std::endl;
+	else
+		std::cout << "char: non displayable" << std::endl;
 	std::cout << "int: " << static_cast<int>(c) << std::endl;
 	std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(c) << "f" << std::endl;
 	std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(c) << std::endl;
@@ -108,7 +111,7 @@ static void convertFloat(const std::string &input)
 		std::cout << "non displayable" << std::endl;
 	else
 		std::cout << "impossible" << std::endl;
-	std::cout << "int : ";
+	std::cout << "int: ";
 	if (f >= std::numeric_limits<int>::min() && f <= std::numeric_limits<int>::max())
 		std::cout << static_cast<int>(f) << std::endl;
 	else
@@ -133,7 +136,15 @@ static void convertDouble(const std::string &input)
 	else
 		std::cout << "impossible" << std::endl;
 	std::cout << "float: ";
-	if (d >= std::numeric_limits<float>::min() && d <= std::numeric_limits<float>::max())
+	if (input == "-0.0")
+	{
+		std::cout << "float: -0.0f" << std::endl;
+	}
+	else if (input == "0.0")
+	{
+		std::cout << "float: 0.0f" << std::endl;
+	}
+	else if (d >= std::numeric_limits<float>::min() && d <= std::numeric_limits<float>::max())
 		std::cout << std::fixed << std::setprecision(1) << static_cast<float>(d) << "f" << std::endl;
 	else
 		std::cout << "impossible" << std::endl;
