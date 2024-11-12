@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/11 17:20:37 by anferre           #+#    #+#              #
-#    Updated: 2024/11/12 11:22:22 by anferre          ###   ########.fr        #
+#    Updated: 2024/11/12 17:34:50 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ EXEC="./convert"
 
 declare -a tests=(
     "42"            # Integer input
-    "42.0"          # Double input
-    "42.0f"         # Float input with 'f' suffix
-    "'a'"           # Character input
-	"' '"			# Space character
-	"'\t'"			# Tab character
+    "43.0"          # Double input
+    "44.0f"         # Float input with 'f' suffix
+    "a"           # Character input
+	" "			# Space character
+	$'\t'			# Tab character
     "nan"           # Pseudo-literal for double
     "nanf"          # Pseudo-literal for float
     "+inf"          # Positive infinity for double
