@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   iter.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookops <tookops@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 15:34:50 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/14 18:09:20 by tookops          ###   ########.fr       */
+/*   Created: 2024/11/14 17:22:01 by tookops           #+#    #+#             */
+/*   Updated: 2024/11/14 17:52:48 by tookops          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALARCONVERTER_HPP
-# define SCALARCONVERTER_HPP
+#ifndef ITER_HPP
+# define ITER_HPP
 
 #include <iostream>
+#include "Format.hpp"
 
-class ScalarConverter
+template <typename T, typename F>
+void iter(T *array, const size_t arrayLength, F func)
 {
-	private:
-		ScalarConverter();
-		ScalarConverter(ScalarConverter const &copy);
-		ScalarConverter &operator=(ScalarConverter const &rhs);
-		~ScalarConverter();
-	
-	public:
-
-		static void    convert(std::string input);
-};
+	for (size_t i = 0; i < arrayLength; i++)
+	{
+		func(array[i]);
+	}
+}
 
 #endif

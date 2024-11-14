@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   whatever.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookops <tookops@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 15:34:50 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/14 18:09:20 by tookops          ###   ########.fr       */
+/*   Created: 2024/11/14 17:22:01 by tookops           #+#    #+#             */
+/*   Updated: 2024/11/14 17:44:51 by tookops          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALARCONVERTER_HPP
-# define SCALARCONVERTER_HPP
+#ifndef WHATEVER_HPP
+# define WHATEVER_HPP
 
 #include <iostream>
 
-class ScalarConverter
+template< typename T >
+void	swap(T &a, T &b)
 {
-	private:
-		ScalarConverter();
-		ScalarConverter(ScalarConverter const &copy);
-		ScalarConverter &operator=(ScalarConverter const &rhs);
-		~ScalarConverter();
-	
-	public:
+	T tmp = a;
+	a = b;
+	b = tmp;
+}
 
-		static void    convert(std::string input);
-};
+template< typename T > 
+T const &min(T const &a, T const &b)
+{
+	return (a < b ? a : b);
+}
 
+template< typename T >
+T const &max(T const &a, T const &b)
+{
+	return (a > b ? a : b);
+}
 #endif
