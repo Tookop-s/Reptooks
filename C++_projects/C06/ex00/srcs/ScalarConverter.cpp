@@ -6,7 +6,7 @@
 /*   By: tookops <tookops@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:34:48 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/14 18:09:02 by tookops          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:36:25 by tookops          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,9 +258,7 @@ void ScalarConverter::convert(std::string input)
 		convertInt(input);
 		return;
 	}
-	catch (...)
-	{
-	}
+	catch (...) {}
 	try
 	{
 		if (input[input.size() - 1] == 'f')
@@ -269,8 +267,6 @@ void ScalarConverter::convert(std::string input)
 			return;	
 		}
 	}
-	catch (...)
-	{
-	}
+	catch (...) {}
 	convertDouble(input);
 }
