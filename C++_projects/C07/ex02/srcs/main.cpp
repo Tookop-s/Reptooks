@@ -19,7 +19,7 @@ void testIntArray(Array<int> &intArray)
 
 void testCopyConstructorAssignementOperator(Array<int> &intArray)
 {
-	Array<int> assignArray(MAX_VAL); 
+	Array<int> assignArray(MAX_VAL);
 	Array<int> copyArray = intArray;
 	assignArray = intArray;
 
@@ -99,7 +99,8 @@ int main()
 {
 	std::cout << _GOLD << "Testing default constructor (empty array)" << _END << std::endl;
 	Array<int> emptyArray;
-	std::cout << "Empty array size: " << _BLUE << emptyArray.size() << _END << std::endl << std::endl;
+	std::cout << "Empty array size: " << _BLUE << emptyArray.size() << _END << std::endl
+			  << std::endl;
 
 	Array<int> intArray(MAX_VAL);
 
