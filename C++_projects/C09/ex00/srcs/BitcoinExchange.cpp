@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookops <tookops@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:07:17 by tookops           #+#    #+#             */
-/*   Updated: 2024/11/26 16:15:42 by tookops          ###   ########.fr       */
+/*   Updated: 2024/11/26 17:49:05 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ BitcoinExchange::BitcoinExchange()
 	if (!file.is_open())
 		std::cerr << "Error: could not open file. " << std::endl;
 	std::getline(file, line);
-	int i = 0;
-	while (std::getline(file, line) && i < 5)
+	while (std::getline(file, line))
 	{
 		parseLineData(line);
-		i++;
 	}
 	file.close();
 }
@@ -37,7 +35,6 @@ void BitcoinExchange::parseLineData(const std::string &line)
 	if (std::getline(iss, date, ',') && iss >> dValue)
 	{
 		_data[date] = dValue;
-		std::cout << "Date: " << date << " => " << dValue << std::endl;
 	}
 }
 
@@ -58,13 +55,11 @@ void BitcoinExchange::processData(const std::string &filename)
 	std::string line;
 
 	if (!file.is_open())
-		throw std::runtime_error("Could not open file");
+		std::cerr << "Error: could not open file. " << std::endl;
 	std::getline(file, line);
-	int i = 0;
-	while (std::getline(file, line) && i < 5)
+	while (std::getline(file, line))
 	{
 		parseLine(line);
-		i++;
 	}
 	file.close();
 }
@@ -76,11 +71,14 @@ void BitcoinExchange::parseLine(const std::string &line)
 	double dValue;
 	if (std::getline(iss, date, '|') && iss >> dValue)
 	{
+		date = date.substr(0, 10);
 		if (isDateValid(date) && isValueValid(dValue))
 		{
 			printDateValue(date, dValue);
 		}
 	}
+	else 
+		std::cerr << "Error: bad input => " << line << std::endl;
 }
 
 bool BitcoinExchange::isDateValid(const std::string &date)
@@ -123,7 +121,7 @@ bool BitcoinExchange::isValueValid(const double &value)
 {
 	if (value < 0)
 	{
-		std::cerr << "Error: not a positive number" << std::endl;
+		std::cerr << "Error: not a positive number." << std::endl;
 		return false;
 	}
 	if (value > 1000)
@@ -136,15 +134,17 @@ bool BitcoinExchange::isValueValid(const double &value)
 
 void BitcoinExchange::printDateValue(const std::string &date, const double &value)
 {
-	std::cout << "Date: " << date << " => " << value << " = ";
+	std::cout << date << " => " << value << " = ";
 	std::map<std::string, double>::iterator it = _data.lower_bound(date);
 	if (it != _data.end() && it->first == date)
 	{
-		std::cout << it->second << std::endl;
+		std::cout << (it->second * value) << std::endl;
 	}
 	else if (it != _data.begin())
 	{
 		--it;
-		std::cout << it->second << std::endl;
+		std::cout << (it->second * value) << std::endl;
 	}
+	else
+		std::cerr << "Error: no previous data" << std::endl;
 }
