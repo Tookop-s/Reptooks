@@ -6,7 +6,7 @@
 #    By: anferre <anferre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:49:54 by gchamore          #+#    #+#              #
-#    Updated: 2024/11/28 16:45:11 by anferre          ###   ########.fr        #
+#    Updated: 2024/11/28 16:55:38 by anferre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,6 @@ OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:$(SRCS_DIR)/%.cpp=%.o))
 
 DEPS = $(OBJS:.o=.d)
-
-ifeq ($(DEBUG), true)
-	CFLAGSX += -DDEBUG=true
-else
-	CFLAGSX += -DDEBUG=false
-endif
 
 all: $(NAME)
 
