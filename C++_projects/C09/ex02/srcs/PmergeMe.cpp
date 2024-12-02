@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:39:56 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/29 16:29:00 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/02 16:38:59 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,38 +74,21 @@ void PmergeMe::sort(std::deque<int> &deq)
 
 void PmergeMe::merge(std::vector<int> &vec, std::vector<int> &left, std::vector<int> &right)
 {
-	size_t i = 0;
-	size_t j = 0;
-	int k = 0;
-	while (i < left.size() && j < right.size())
+	vec = left;
+	for (size_t i = 0; i < right.size(); i++)
 	{
-		if (left[i] < right[j])
-			vec[k++] = left[i++];
-		else
-			vec[k++] = right[j++];
+		std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), right[i]);
+		vec.insert(it, right[i]);
 	}
-	while (i < left.size())
-		vec[k++] = left[i++];
-	while (j < right.size())
-		vec[k++] = right[j++];
 }
 
 // use iterators to gain in speed
 void PmergeMe::merge(std::deque<int> &deq, std::deque<int> &left, std::deque<int> &right)
 {
-	std::deque<int>::iterator leftIt = left.begin();
-	std::deque<int>::iterator rightIt = right.begin();
-	std::deque<int>::iterator deqIt = deq.begin();
-
-	while (leftIt != left.end() && rightIt != right.end())
+	deq = left;
+	for (std::deque<int>::iterator rightIt = right.begin(); rightIt != right.end(); ++rightIt)
 	{
-		if (*leftIt < *rightIt)
-			*deqIt++ = *leftIt++;
-		else
-			*deqIt++ = *rightIt++;
-	}
-	while (leftIt != left.end())
-		*deqIt++ = *leftIt++;
-	while (rightIt != right.end())
-		*deqIt++ = *rightIt++;
+		std::deque<int>::iterator it = std::lower_bound(deq.begin(), deq.end(), *rightIt);
+		deq.insert(it, *rightIt);
+	}	
 }

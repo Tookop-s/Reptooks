@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:39:33 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/29 16:32:24 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/02 16:22:34 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ int main(int argc, char **argv)
 	PmergeMe pmm;
 	std::cout << "Before : ";
 	for (size_t i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << " ";
+	{
+		if (vec.size() <= 5 || (vec.size() > 5 && i < 4))
+			std::cout << vec[i] << " ";
+	}
+	if (vec.size() > 5)
+		std::cout << "[...]";
 	std::cout << std::endl;
 	std::clock_t startVec = std::clock();
 	pmm.sort(vec);
@@ -47,7 +52,12 @@ int main(int argc, char **argv)
 	std::clock_t endDeq = std::clock();
 	std::cout << "After : ";
 	for (size_t i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << " ";
+	{
+		if (vec.size() <= 5 || (vec.size() > 5 && i < 4))
+			std::cout << vec[i] << " ";
+	}
+	if (vec.size() > 5)
+		std::cout << "[...]";
 	std::cout << std::endl;
 	std::cout << "Time to process a range of 5 elements with std::[vector] : " << 1000.0 * (endVec - startVec) / CLOCKS_PER_SEC << " ms" << std::endl;
 	std::cout << "Time to process a range of 5 elements with std::[deque] : " << 1000.0 * (endDeq - startDeq) / CLOCKS_PER_SEC << " ms" << std::endl;
