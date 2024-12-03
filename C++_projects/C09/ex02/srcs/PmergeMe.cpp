@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:39:56 by anferre           #+#    #+#             */
-/*   Updated: 2024/12/02 16:38:59 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/03 18:05:39 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,39 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &src)
 	return *this;
 }
 
-// reserve to avoid reallocation and gain in speed
 void PmergeMe::sort(std::vector<int> &vec)
 {
 	if (vec.size() <= 1)
 		return;
-	std::vector<int> left;
-	std::vector<int> right;
-	int mid = vec.size() / 2;
-	left.reserve(mid);
-	right.reserve(vec.size() - mid);
-	for (int i = 0; i < mid; i++)
-		left.push_back(vec[i]);
-	for (size_t i = mid; i < vec.size(); i++)
-		right.push_back(vec[i]);
-	sort(left);
-	merge(vec, left, right);
+	std::vector<int> bigVec;
+	std::vector<int> smallVec;
+	std::vector<std::pair<int, int> > pairs;
+	if (vec[0] > vec[1])
+		pairs.push_back(std::make_pair(vec[0], vec[1]));
+	else
+		pairs.push_back(std::make_pair(vec[1], vec[0]));
+	for (size_t i = 0; i + 1 < vec.size(); i += 2)
+	{
+		if (vec[i] > vec[i + 1])
+		{
+			smallVec.push_back(vec[i + 1]);
+			bigVec.push_back(vec[i]);
+			if (pairs.back().first > vec[i])
+				pairs.back() = std::make_pair(vec[i], vec[i + 1]);
+		}
+		else
+		{
+			smallVec.push_back(vec[i]);
+			bigVec.push_back(vec[i + 1]);
+			if (pairs.back().first > vec[i + 1])
+				pairs.back() = std::make_pair(vec[i + 1], vec[i]);
+		}
+	}
+	std::vector<int> alone;
+	if (vec.size() % 2)
+		alone.push_back(vec.back());
+	sort(bigVec);
+	merge(vec, bigVec, smallVec, alone, pairs.front());
 }
 
 // use iterators to avoid reallocation and gain in speed
@@ -66,29 +83,76 @@ void PmergeMe::sort(std::deque<int> &deq)
 {
 	if (deq.size() <= 1)
 		return;
-	std::deque<int> left(deq.begin(), deq.begin() + deq.size() / 2);
-	std::deque<int> right(deq.begin() + deq.size() / 2, deq.end());
-	sort(left);
-	merge(deq, left, right);
+	std::deque<int> bigDeq;
+	std::deque<int> smallDeq;
+	std::deque<std::pair<int, int> > pairs; // first element is the big one
+	if (deq[0] > deq[1])
+		pairs.push_back(std::make_pair(deq[0], deq[1]));
+	else
+		pairs.push_back(std::make_pair(deq[1], deq[0]));
+	for (std::deque<int>::iterator it = deq.begin(); it + 1 != deq.end(); it += 2)
+	{
+		if (it == deq.end() || it + 1 == deq.end())
+			break;
+		if (*it > *(it + 1))
+		{
+			smallDeq.push_back(*(it + 1));
+			bigDeq.push_back(*it);
+			if (pairs.back().first > *it)
+				pairs.back() = std::make_pair(*(it), *(it + 1));
+		}
+		else
+		{
+			smallDeq.push_back(*it);
+			bigDeq.push_back(*(it + 1));
+			if (pairs.back().first > *(it + 1))
+				pairs.back() = std::make_pair(*(it + 1), *it);
+		}
+	}
+	std::deque<int> alone;
+	if (deq.size() % 2)
+		alone.push_back(deq.back());
+	sort(bigDeq);
+	merge(deq, bigDeq, smallDeq, alone, pairs.front());
 }
 
-void PmergeMe::merge(std::vector<int> &vec, std::vector<int> &left, std::vector<int> &right)
+void PmergeMe::merge(std::vector<int> &vec, std::vector<int> &bigVec, std::vector<int> &smallVec, std::vector<int> &alone, std::pair<int, int> &smallestPair)
 {
-	vec = left;
-	for (size_t i = 0; i < right.size(); i++)
+	vec = bigVec;
+	std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), smallestPair.second);
+	vec.insert(it, smallestPair.second);
+	for (size_t i = 0; i < smallVec.size() && smallVec[i] != smallestPair.second; i++)
 	{
-		std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), right[i]);
-		vec.insert(it, right[i]);
+		std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), smallVec[i]);
+		vec.insert(it, smallVec[i]);
+	}
+	if (!alone.empty())
+	{
+		std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), alone[0]);
+		vec.insert(it, alone[0]);
 	}
 }
 
-// use iterators to gain in speed
-void PmergeMe::merge(std::deque<int> &deq, std::deque<int> &left, std::deque<int> &right)
+// binary search : lower_bound
+void PmergeMe::merge(std::deque<int> &deq, std::deque<int> &bigDeq, std::deque<int> &smallDeq, std::deque<int> &alone, std::pair<int, int> &smallestPair)
 {
-	deq = left;
-	for (std::deque<int>::iterator rightIt = right.begin(); rightIt != right.end(); ++rightIt)
+	deq = bigDeq;
+	std::deque<int>::iterator it = std::lower_bound(deq.begin(), deq.end(), smallestPair.second);
+	deq.insert(it, smallestPair.second);
+	for (std::deque<int>::iterator it = smallDeq.begin(); it != smallDeq.end() && *it != smallestPair.second ; it++)
 	{
-		std::deque<int>::iterator it = std::lower_bound(deq.begin(), deq.end(), *rightIt);
-		deq.insert(it, *rightIt);
-	}	
+		std::deque<int>::iterator it2 = std::lower_bound(deq.begin(), deq.end(), *it);
+		deq.insert(it2, *it);
+	}
+	if (!alone.empty())
+	{
+		std::deque<int>::iterator it = std::lower_bound(deq.begin(), deq.end(), alone.front());
+		deq.insert(it, alone.front());
+	}
 }
+
+/*
+pair elements compare and split into large ans small keep track of the pairs
+recursivey sort the large elements with pairs inside the large and merge with binary search
+insert at the beginning the paired smallest element of the smaller large elements keep tack of the pairs with std::vector<std::pair<int, int>>,
+add the unpaired element last */

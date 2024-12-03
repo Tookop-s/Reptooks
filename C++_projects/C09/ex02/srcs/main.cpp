@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:39:33 by anferre           #+#    #+#             */
-/*   Updated: 2024/12/02 16:22:34 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/03 17:56:35 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int main(int argc, char **argv)
 	}
 
 	std::vector<int> vec;
+	int count = 0;
 	int tmp;
 	for (int i = 1; i < argc; i++)
 	{
@@ -32,6 +33,7 @@ int main(int argc, char **argv)
 			std::cout << "Please provide only positive numbers" << std::endl;
 			return 1;
 		}
+		count++;
 	}
 	std::deque<int> deq(vec.begin(), vec.end());
 	PmergeMe pmm;
@@ -51,15 +53,15 @@ int main(int argc, char **argv)
 	pmm.sort(deq);
 	std::clock_t endDeq = std::clock();
 	std::cout << "After : ";
-	for (size_t i = 0; i < vec.size(); i++)
+	for (size_t i = 0; i < deq.size(); i++)
 	{
-		if (vec.size() <= 5 || (vec.size() > 5 && i < 4))
-			std::cout << vec[i] << " ";
+		if (deq.size() <= 5 || (deq.size() > 5 && i < 4))
+			std::cout << deq[i] << " ";
 	}
 	if (vec.size() > 5)
 		std::cout << "[...]";
 	std::cout << std::endl;
-	std::cout << "Time to process a range of 5 elements with std::[vector] : " << 1000.0 * (endVec - startVec) / CLOCKS_PER_SEC << " ms" << std::endl;
-	std::cout << "Time to process a range of 5 elements with std::[deque] : " << 1000.0 * (endDeq - startDeq) / CLOCKS_PER_SEC << " ms" << std::endl;
+	std::cout << "Time to process a range of " << count << " elements with std::[vector] : " << 1000.0 * (endVec - startVec) / CLOCKS_PER_SEC << " ms" << std::endl;
+	std::cout << "Time to process a range of " << count << " elements with std::[deque] : " << 1000.0 * (endDeq - startDeq) / CLOCKS_PER_SEC << " ms" << std::endl;
 	return 0;
 }
