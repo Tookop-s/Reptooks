@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:07:29 by tookops           #+#    #+#             */
-/*   Updated: 2024/11/26 17:31:33 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:58:32 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int main(int argc, char **argv)
 {
-	if (argc != 2 || !argv[1])
+	if (argc != 2)
 	{
 		std::cerr << "Usage: ./bitcoinExchange [filename]" << std::endl;
 		return 1;
@@ -27,4 +27,6 @@ int main(int argc, char **argv)
 	BitcoinExchange exchange;
 	
 	exchange.processData(argv[1]);
+	
+	return 0;
 }

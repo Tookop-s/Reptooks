@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:39:56 by anferre           #+#    #+#             */
-/*   Updated: 2024/12/03 18:05:39 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:12:04 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void PmergeMe::sort(std::vector<int> &vec)
 		return;
 	std::vector<int> bigVec;
 	std::vector<int> smallVec;
+	bigVec.reserve(vec.size() / 2);
+	smallVec.reserve(vec.size() / 2);
 	std::vector<std::pair<int, int> > pairs;
 	if (vec[0] > vec[1])
 		pairs.push_back(std::make_pair(vec[0], vec[1]));
@@ -56,6 +58,8 @@ void PmergeMe::sort(std::vector<int> &vec)
 		pairs.push_back(std::make_pair(vec[1], vec[0]));
 	for (size_t i = 0; i + 1 < vec.size(); i += 2)
 	{
+		if (i == vec.size() || i + 1 == vec.size())
+			break;
 		if (vec[i] > vec[i + 1])
 		{
 			smallVec.push_back(vec[i + 1]);
@@ -121,8 +125,10 @@ void PmergeMe::merge(std::vector<int> &vec, std::vector<int> &bigVec, std::vecto
 	vec = bigVec;
 	std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), smallestPair.second);
 	vec.insert(it, smallestPair.second);
-	for (size_t i = 0; i < smallVec.size() && smallVec[i] != smallestPair.second; i++)
+	for (size_t i = 0; i < smallVec.size(); i++)
 	{
+		if (smallVec[i] == smallestPair.second)
+			continue;
 		std::vector<int>::iterator it = std::lower_bound(vec.begin(), vec.end(), smallVec[i]);
 		vec.insert(it, smallVec[i]);
 	}
@@ -139,8 +145,10 @@ void PmergeMe::merge(std::deque<int> &deq, std::deque<int> &bigDeq, std::deque<i
 	deq = bigDeq;
 	std::deque<int>::iterator it = std::lower_bound(deq.begin(), deq.end(), smallestPair.second);
 	deq.insert(it, smallestPair.second);
-	for (std::deque<int>::iterator it = smallDeq.begin(); it != smallDeq.end() && *it != smallestPair.second ; it++)
+	for (std::deque<int>::iterator it = smallDeq.begin(); it != smallDeq.end(); it++)
 	{
+		if (*it == smallestPair.second)
+			continue;
 		std::deque<int>::iterator it2 = std::lower_bound(deq.begin(), deq.end(), *it);
 		deq.insert(it2, *it);
 	}

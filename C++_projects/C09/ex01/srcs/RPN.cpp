@@ -6,7 +6,7 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:56:00 by anferre           #+#    #+#             */
-/*   Updated: 2024/11/28 16:54:20 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/04 15:03:34 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 RPN::RPN(std::string const &input)
 {
+	if (input.empty())
+	{
+		std::cerr << "Error: empty input" << std::endl;
+		return;
+	}
+	
 	try
 	{
 		std::string::size_type i = 0;

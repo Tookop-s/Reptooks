@@ -6,11 +6,39 @@
 /*   By: anferre <anferre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:39:33 by anferre           #+#    #+#             */
-/*   Updated: 2024/12/03 17:56:35 by anferre          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:26:29 by anferre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+#include <algorithm>
+
+
+void testSort(std::vector<int> &vec)
+{
+	std::deque<int> deq(vec.begin(), vec.end());
+	PmergeMe pmm;
+
+	printContainer(vec, "Before");
+
+	std::clock_t startVec = std::clock();
+	pmm.sort(vec);
+	std::clock_t endVec = std::clock();
+
+	std::clock_t startDeq = std::clock();
+	pmm.sort(deq);
+	std::clock_t endDeq = std::clock();
+
+	printContainer(deq, "After");
+
+	std::cout << "Time to process a range of " << vec.size() << " elements with std::[vector] : " << 1000.0 * (endVec - startVec) / CLOCKS_PER_SEC << " ms" << std::endl;
+	std::cout << "Time to process a range of " << deq.size() << " elements with std::[deque] : " << 1000.0 * (endDeq - startDeq) / CLOCKS_PER_SEC << " ms" << std::endl;
+
+	// if (isSorted(vec.begin(), vec.end()) && isSorted(deq.begin(), deq.end()))
+	// 	std::cout << "Sorting is correct." << std::endl;
+	// else
+	// 	std::cout << "Sorting is incorrect." << std::endl;
+}
 
 int main(int argc, char **argv)
 {
@@ -21,7 +49,6 @@ int main(int argc, char **argv)
 	}
 
 	std::vector<int> vec;
-	int count = 0;
 	int tmp;
 	for (int i = 1; i < argc; i++)
 	{
@@ -33,35 +60,7 @@ int main(int argc, char **argv)
 			std::cout << "Please provide only positive numbers" << std::endl;
 			return 1;
 		}
-		count++;
 	}
-	std::deque<int> deq(vec.begin(), vec.end());
-	PmergeMe pmm;
-	std::cout << "Before : ";
-	for (size_t i = 0; i < vec.size(); i++)
-	{
-		if (vec.size() <= 5 || (vec.size() > 5 && i < 4))
-			std::cout << vec[i] << " ";
-	}
-	if (vec.size() > 5)
-		std::cout << "[...]";
-	std::cout << std::endl;
-	std::clock_t startVec = std::clock();
-	pmm.sort(vec);
-	std::clock_t endVec = std::clock();
-	std::clock_t startDeq = std::clock();
-	pmm.sort(deq);
-	std::clock_t endDeq = std::clock();
-	std::cout << "After : ";
-	for (size_t i = 0; i < deq.size(); i++)
-	{
-		if (deq.size() <= 5 || (deq.size() > 5 && i < 4))
-			std::cout << deq[i] << " ";
-	}
-	if (vec.size() > 5)
-		std::cout << "[...]";
-	std::cout << std::endl;
-	std::cout << "Time to process a range of " << count << " elements with std::[vector] : " << 1000.0 * (endVec - startVec) / CLOCKS_PER_SEC << " ms" << std::endl;
-	std::cout << "Time to process a range of " << count << " elements with std::[deque] : " << 1000.0 * (endDeq - startDeq) / CLOCKS_PER_SEC << " ms" << std::endl;
+	testSort(vec);
 	return 0;
 }
