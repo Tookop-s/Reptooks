@@ -1,0 +1,77 @@
+parsing / [lexing](https://gist.github.com/VideoCarp/d7cec2195a7de370d850aead62fa09cd) (divide and tokenise string)
+
+
+ Lexer takes C source code as input and output token stream; Parser will consume the token stream and generate assembly code. [lexing_in_c](https://github.com/lotabout/write-a-C-interpreter/blob/master/tutorial/en/3-Lexer.md)
+
+
+ignore comments 
+
+decide of the different tokens : 
+	-Word
+	-operators/brackets/quotes
+
+	‘|’, ‘&’,  ‘(’, ‘)’, ‘<’, or ‘>’. && || ( ) whitespaces
+
+prioritize the tokens 
+
+lister par token ce qui est possible ou pas avec celui-ci 
+
+1: cmd input ok
+2: tokenization ok 
+3: parsing (arbre binaire) cur 
+4: expansion
+5: redirections 
+6: job control (&, | , &&, || )
+7: cmd exec
+8: output 
+9: clean
+10: prompt
+
+
+
+
+In summary, the parser in Bash takes a sequence of tokens, checks the syntax of the command, and executes the command if it's syntactically correct. The parser is responsible for understanding the structure of the command and coordinating its execution.
+
+Command Execution: The shell should be able to execute commands based on the PATH variable or using a relative or absolute path.
+
+Quotes: The shell should handle single quotes (' ') and double quotes (" "). Anything inside single quotes is treated as a literal string. Inside double quotes, the shell should interpret $ (dollar sign) for variable substitution but treat other characters as literal.
+
+Redirections: The shell should handle input redirection (<), output redirection (>), here-document (<<), and appending output redirection (>>).
+
+Pipes: The shell should handle pipes (|). The output of each command in the pipeline is connected via a pipe to the input of the next command.
+
+Environment Variables: The shell should handle environment variables, denoted by a dollar sign ($). These should expand to their values.
+
+Exit Status: The shell should handle $?, which should expand to the exit status of the most recently executed foreground pipeline.
+
+Signal Handling: The shell should handle signals like ctrl-C, ctrl-D, and ctrl-, behaving like bash.
+
+Built-in Commands: The shell should implement built-in commands like echo, cd, pwd, export, unset, env, and exit.
+
+Bonus Features: If the mandatory part is perfect, the shell should implement logical operators (&& and ||) with parentheses for priority, and wildcard (*) for the current working directory.
+
+construct the tree AST (abstract syntax tree)
+
+
+
+ Word Splitting: The results of the expansion are split into separate words. This is done based on the value of the IFS (Internal Field Separator) variable, which by default includes space, tab, and newline.
+
+Pathname Expansion: If any of the words resulting from the previous step contain wildcard characters (*, ?, and []), Bash replaces them with the sorted list of filenames that match the pattern.
+
+Command Lookup: Bash checks the first word of the command (the command name) against its list of built-in commands. If it finds a match, Bash executes the built-in command directly. If not, Bash looks for an external command with that name in the directories listed in the PATH environment variable.
+
+Redirection: If the command includes redirection operators (>, <, >>, 2>, etc.), Bash sets up the redirections. This may involve opening, closing, or duplicating file descriptors.
+
+Command Execution: If the command is a built-in, it's executed directly by Bash. If it's an external command, Bash forks a new process and the new process executes the command.
+
+Wait For Completion: If the command was run in the foreground, Bash waits for the command to complete and collects its exit status.
+
+Brace expansion
+Tilde expansion
+Parameter and variable expansion
+Command substitution
+Arithmetic expansion
+Process substitution
+Word splitting
+Pathname expansion (globbing)
+Quote removal

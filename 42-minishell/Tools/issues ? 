@@ -1,0 +1,14 @@
+operator = NULL when cmd exists ? 
+"hello" --> segfault 
+check if need spaces or if this should work ( echo "x") instead of ( echo "x" )
+echo "g" && echo "f" || echo "d" && ( echo "v" || echo "x" )
+
+edge cases 
+ec'ho' hello
+
+need to tokenize spaces so that we know for the output if it contains spaces or not 
+
+
+signal tests 
+
+/home/anferre/Pictures/Screenshots/Screenshot from 2024-06-06 14-29-22.png

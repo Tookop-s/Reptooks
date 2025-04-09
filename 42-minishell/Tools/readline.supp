@@ -1,0 +1,20 @@
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+
+// not sure the last one is needed 
+{
+	leak rl clear history
+	memcheck:Leak
+	...
+	fun: rl_clear_history
+}

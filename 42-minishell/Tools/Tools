@@ -1,0 +1,4 @@
+socket to recover valgrind output 
+
+nc -l 127.0.0.1 12345
+--log-socket=127.0.0.1:12345 ./executable

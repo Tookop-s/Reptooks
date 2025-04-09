@@ -1,0 +1,65 @@
+TO DO
+
+1 - Création du prompt et boucle principale :
+Mettre en place du prompt pour recevoir les inputs.
+Entrer dans une boucle d'attente d'inputs ou en mode veille.
+
+2 - Analyse de l'input :
+Lexing / Tokenisation : Diviser l'input en lexèmes ou tokens.
+Parsing : Analyser les lexèmes pour vérifier leur validité syntaxique et structurer les blocs de commandes et d'opérateurs.
+Créer un arbre syntaxique pour représenter la structure de la commande. 
+
+3 - Gestion des erreurs :
+Intégrer une gestion robuste des erreurs à chaque étape de l'analyse et du traitement des commandes. 
+Cela inclut la détection d'erreurs de syntaxe, d'erreurs d'exécution des commandes, etc.
+et organiser la sortie du serveur comme dans le vrai shell.
+
+4 - Gestion des chemins d'accès aux commandes :
+Assurer la validité des chemins d'accès aux commandes entrées par l'utilisateur.
+voir a quel moment on check les chemins d'acces.
+
+5 - Variables d'environnement :
+construire variable d'env (fd ?)
+Gérer les variables d'environnement telles que HOME, PATH, etc. 
+
+6 - Redirections et pipes :
+Intégrer la gestion des opérateurs de redirection (>, <) et des pipes (|) pour permettre la redirection des entrées/sorties standard entre les commandes.
+
+7 - Traitement de l'input et exécution des commandes :
+gerer les expansions
+Créer les fonctions correspondantes aux commandes identifiées pendant le parsing.
+Exécuter les fonctions correspondantes aux commandes analysées.
+
+8 - Historique des commandes :
+Implémenter une fonctionnalité d'historique des commandes qui permet aux utilisateurs de naviguer et de réexécuter les commandes précédentes.
+
+9 - Affichage des résultats et retour au prompt :
+Afficher le résultat du traitement ou de l'exécution des commandes dans le shell.
+Renvoyer le prompt pour indiquer que le minishell est prêt à recevoir de nouveaux inputs.
+
+10 - Gestion des signaux :
+Prendre en compte la gestion des signaux système qui vont venir perturber le fonctionnement actuel du shell.
+
+// void execute_tree(t_node *node)
+// {
+//     if (node == NULL)
+//         return ;
+//     execute_tree(node->left);
+//     if (node->token->type == token_word)
+//         execute_command(node->token->input);
+// 	else if (node->token->type == token_and_and)
+// 	{
+//         if (execute_command(node->left->token->input) == 0)
+//             execute_command(node->right->token->input);
+//     }
+// 	else if (node->token->type == token_or)
+// 	{
+//         if (execute_command(node->left->token->input) != 0)
+//             execute_command(node->right->token->input);
+//     }
+// 	else if (node->token->type == token_piped)
+//         execute_pipe(node->left->token->input, node->right->token->input);
+// 	else if (node->token->tree == token_direction)
+//         execute_redirect(node->left->token->input, node->right->token->input);
+//     execute_tree(node->right);
+// }

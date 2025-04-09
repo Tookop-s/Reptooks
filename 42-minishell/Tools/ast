@@ -1,0 +1,86 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+char *input;
+
+// Forward declarations
+int expression();
+
+int number() {
+	int result = *input - '0';
+	input++;
+	return result;
+}
+
+int factor() {
+	return number();
+}
+
+int term() {
+	int result = factor();
+	while (*input == '*') {
+		input++;
+		result *= factor();
+	}
+	return result;
+}
+
+int expression() {
+	int result = term();
+	while (*input == '+') {
+		input++;
+		result += term();
+	}
+	return result;
+}
+
+int main() {
+	input = "2+3*4";
+	printf("%d\n", expression());
+	return 0;
+}
+
+
+
+This parser works as follows:
+
+main calls expression to start parsing the input string.
+
+expression parses a term, then checks if the next character is a '+'. If it is, it consumes the '+' and parses another term, then adds the two together. It repeats this until it no longer sees a '+'.
+
+term parses a factor, then checks if the next character is a ''. If it is, it consumes the '' and parses another factor, then multiplies the two together. It repeats this until it no longer sees a '*'.
+
+factor just parses a number, which in this case is a single digit.
+
+number converts a single character to an integer by subtracting the ASCII value of '0'.
+
+This parser builds an AST implicitly: the structure of the AST is represented by the structure of the recursive calls. For example, the expression 2+3*4 is parsed as (2+(3*4)), which corresponds to the AST:
+
+  +
+ / \
+2   *
+   / \
+  3   4
+
+
+a || (b && c) && d
+
+  ||
+ / \
+a   &&
+    / \
+   &&  d
+  / \
+ b   c
+
+
+a || (b &&(c && d))
+
+  ||
+ / \
+a   &&
+	/ \
+   b   &&
+	  / \
+	 c   d
